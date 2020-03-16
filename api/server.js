@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const mongoURI = '';
+const mongoURI = 'mongodb+srv://violet:<password>@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority';
 
 mongoose.connect(
   mongoURI, 
@@ -43,7 +43,7 @@ mongoose.connect(
 
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// app.use('/users', users);
 app.use('/testAPI', testAPIRouter);
 
 app.get('/api/hello',(req,res) => {
