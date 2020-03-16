@@ -9,7 +9,7 @@ users.use(cors());
 
 process.env.SECRET_KEY='secret';
 
-users.post('/register', (req, res) => {
+users.post('register', (req, res) => {
   const today = new Date();
   const userData={
     first_name: req.body.first_name,
@@ -35,13 +35,14 @@ users.post('/register', (req, res) => {
             })
         })
       } else {
-        res.json({ error: 'User exists alredy' })
+        res.json({ error: 'User exists already' })
       }
     })
     .catch(err => {
       res.send('error: ', err)
     })
 })
+
 
 users.post('/login', (req, res) => {
   User.findOne({
@@ -73,6 +74,9 @@ users.post('/login', (req, res) => {
       res.send('error: ', err)
     })
 })
+
+
+
 
 users.get('/profile', (req, res) => {
   var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)

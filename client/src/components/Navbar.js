@@ -32,7 +32,7 @@ class Landing extends Component{
           </Link>
         </li>
         <li className="nav-item">
-          <a href="" onClick={this.logOut.bind(this)} className="nav-link">
+          <a href="/" onClick={this.logOut.bind(this)} className="nav-link">
             Logout
           </a>
         </li>
@@ -58,7 +58,7 @@ class Landing extends Component{
             >
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link to="/" classname="nav-link">
+                <Link to="/" className="nav-link">
                 Home
                 </Link>
               </li>
@@ -70,4 +70,4 @@ class Landing extends Component{
   }
 }
 
-export default withRouter(landing);
+export default withRouter(Landing);

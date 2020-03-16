@@ -1,45 +1,55 @@
-var createError = require('http-errors');
 var express = require('express');
-const bodyParser = require('body-parser');
+
+var createError = require('http-errors');
+var cors = require('cors');
+
+var bodyParser = require('body-parser');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var cors = require('cors');
-var indexRouter = require('./routes/index');
-var users = require('./routes/users');
-var testAPIRouter = require('./routes/testAPI');
+var indexRouter = require('./api/routes/index');
+var testAPIRouter = require('./api/routes/testAPI');
 
-const mongoose = require('mongoose');
-var app = express();
+// const MongoClient = require('mongodb').MongoClient;
+var mongoose= require('mongoose')
+var app = express();  
 
 
 const port = process.env.PORT || 9000;
 
-app.use('/users',users);
-
-
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'jade');
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const mongoURI = 'mongodb+srv://violet:<password>@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority';
+const mongoURI = 'mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority'
 
-mongoose.connect(
-  mongoURI, 
-  { useNewUrlParser: true }
-  )
+//  const client = new MongoClient( mongoURI, { useNewUrlParser: true });
+//  client.connect( err => {
+//    const collection=client.db("test").collection("devices");
+//    client.close();
+//  });
+mongoose
+  .connect(
+      mongoURI, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+    })
   .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err));
+  .catch(err => console.log(err))
 
+// err => {
+//   const collection = client.db("test").collection("devices");
+//   client.close();
 
-
+var Users = require('./api/routes/Users');
+app.use('/users',Users);
 
 
 app.use('/', indexRouter);
@@ -77,5 +87,7 @@ app.use(function(err, req, res, next) {
 });
 
 
-app.listen(port, () => console.log(`Server Listening on port ${port}`));
-module.exports = app;
+app.listen(port, () => console.log(`Server Listening on port ${port}`))
+
+
+// module.exports = app;

@@ -23,7 +23,7 @@ class Register extends Component{
 
     e.preventDefault()
 
-    const newuser = {
+    const newUser = {
       first_name: this.state.first_name,
       last_name: this.state.last_name,
       email: this.state.email,
@@ -31,7 +31,7 @@ class Register extends Component{
     }
 
     register(newUser).then(res => {
-      this.props.history.push( `/login`)
+      this.props.history.push('/login')
     })
   }
 
@@ -61,7 +61,7 @@ class Register extends Component{
                 name="last_name"
                 placeholder="Enter last name"
                 value={this.state.last_name}
-                onChange={this.onchange} 
+                onChange={this.onChange} 
                 />
             </div>
             <div className="form-group">
@@ -88,7 +88,8 @@ class Register extends Component{
             </div>
             <button
               type="submit"
-              className="btn btn-lg btn-primary btn-block">
+              className="btn btn-lg btn-primary btn-block"
+              onSubmit={this.onSubmit}>
               Register
               </button>
               </form>
