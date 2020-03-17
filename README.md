@@ -1,6 +1,6 @@
 # revolve
 Node.js Application For Reminders with React, MongoDB REST Archetype
-
+Messaging Text Notifications using Nexmo
 
 Features:
 1. Users sign up/sign in with username or email
