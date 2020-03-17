@@ -1,13 +1,20 @@
 // 'use strict';
 const express = require('express');
 const bodyParser = require('body-parser');
-const Nexmo = require('nexmo');
 const socketio = require('socket.io');
+const Nexmo = require('nexmo');
 
 const nexmo = new Nexmo({
-  apiKey: '',
-  apiSecret: '',
+  apiKey: 'df0eb028',
+  apiSecret: 'vgzyF8q3FPMz9Sep',
 }, { debug: true });
+
+const from = '17402426262';
+const to = '19143648047';
+const text = 'Hello from Nexmo';
+
+nexmo.message.sendSms(from, to, text);
+
 
 const createError = require('http-errors');
 const app = express();  
@@ -23,7 +30,7 @@ const testAPIRouter = require('./api/routes/testAPI');
 const Users = require('./api/routes/Users');
 
 // const MongoClient = require('mongodb').MongoClient;
-const mongoose= require('mongoose')
+const mongoose= require('mongoose');
 const port = process.env.PORT || 9000;
 
 // view engine setup
@@ -39,21 +46,31 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 
 app.use('/users',Users);
 
-const mongoURI = 'mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority'
-
+// const mongoURI = 'mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority';
+//mongodb+srv://violet:<password>@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority
 //  const client = new MongoClient( mongoURI, { useNewUrlParser: true });
 //  client.connect( err => {
 //    const collection=client.db("test").collection("devices");
 //    client.close();
 //  });
-mongoose
-  .connect(
-      mongoURI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err))
+
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
+});
+
+//mongoose
+  // .connect(
+  //     process.env.mongoURI || "mongodb://localhost/", {
+  //     useNewUrlParser: true,
+  //     useUnifiedTopology: true,
+  //   })
+  //   .then(() => console.log('MongoDB Connected'))
+  //   .catch(err => console.log(err))
 
 // err => {
 //   const collection = client.db("test").collection("devices");
@@ -77,20 +94,20 @@ app.post('/',(req, res) => {
   const { number, text } = req.body;
 
   nexmo.message.sendSms(
-    'VIRTUALNUMBER',number, text, { type: 'unicode' },
+    from, number, text, { type: 'unicode' },
     (err, responseData) => {
       if(err){
         console.log(err);
       } else {
         const { messages } = responseData;
         const { ['message-id']: id, ['to']: number, ['error-text']: error } = messages[0];
-        console.log(responseData);
+        console.dir(responseData);
         const data = {
           id, 
           number, 
           error
         };
-        
+        //emit to client
         io.emit('smsStatus', data);
       }
     }
@@ -140,4 +157,4 @@ io.on('connection', (socket) => {
   })
 });
 
-// module.exports = app;
+module.exports = app;

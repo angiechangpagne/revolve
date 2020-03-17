@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const register = newUser => {
   return axios
-    .post(`users/register`, {
+    .post('users/register', {
       first_name: newUser.first_name,
       last_name: newUser.last_name,
       email: newUser.email,
@@ -10,6 +10,19 @@ export const register = newUser => {
     })
     .then(response => {
       console.log('Registered')
+    })
+}
+
+export const message = newMessage => {
+  return axios
+    .post('users/message', {
+      number: newMessage.number,
+      message: newMessage.message,
+      scheduleSelect: newMessage.scheduleSelect,
+      response: newMessage.response
+    })
+    .then(response => {
+      console.log('Message send after')
     })
 }
 

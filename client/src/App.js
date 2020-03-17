@@ -29,6 +29,7 @@ class App extends Component {
     return (
       <Router>
       <div className="App">
+
         <Navbar />
       {/* <p className="App-intro">{this.state.apiResponse}</p> */}
         <div className="container">
@@ -39,6 +40,7 @@ class App extends Component {
           <Route exact path='/profile' component={Profile} />
         </div>
       </div>
+    
       </Router>  
     );
   }

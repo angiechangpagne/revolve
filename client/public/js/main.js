@@ -42,7 +42,7 @@ const fetchServer = ({ number, text }) => {
     });
 };
 
-function send(){
+function send() {
   const number = numberInput.value.replace(/\D/g, '');
   const text = textInput.value;
   const time = parseInt(scheduleSelect.value, 10);
