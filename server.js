@@ -1,4 +1,5 @@
 // 'use strict';
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const socketio = require('socket.io');
@@ -17,7 +18,7 @@ nexmo.message.sendSms(from, to, text);
 
 
 const createError = require('http-errors');
-const app = express();  
+const app = express(); //invoke express  
 
 const cors = require('cors');
 
@@ -26,12 +27,13 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const indexRouter = require('./api/routes/index');
 const testAPIRouter = require('./api/routes/testAPI');
-
+const router = require("express").Router();
 const Users = require('./api/routes/Users');
+const scheduler = require("./scheduler");
 
 // const MongoClient = require('mongodb').MongoClient;
 const mongoose= require('mongoose');
-const port = process.env.PORT || 9000;
+const port = process.env.PORT || 3001;
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
@@ -46,7 +48,7 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 
 app.use('/users',Users);
 
-// const mongoURI = 'mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority';
+const mongoURI = 'mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority';
 //mongodb+srv://violet:<password>@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority
 //  const client = new MongoClient( mongoURI, { useNewUrlParser: true });
 //  client.connect( err => {
@@ -54,24 +56,36 @@ app.use('/users',Users);
 //    client.close();
 //  });
 
-const MongoClient = require('mongodb').MongoClient;
+//const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
+// const client = new MongoClient(uri, { useNewUrlParser: true });
+// client.connect(err => {
+//   const collection = client.db("test").collection("devices");
+//   // perform actions on the collection object
+//   client.close();
+// });
+mongoose.Promise=global.Promise=global.Promise;
+
+mongoose.connect(
+  process.env.mongoURI || "mongodb://localhost/revolve", {
+    useMongoClient: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    }
+    ).then(() => console.log('MongoDB Connected')).catch(err => console.log(err));
+
+const db = mongoose.connection;
+
+db.on("error",(err) => {
+  console.log("Mongoose Error: ", err);
 });
 
-//mongoose
-  // .connect(
-  //     process.env.mongoURI || "mongodb://localhost/", {
-  //     useNewUrlParser: true,
-  //     useUnifiedTopology: true,
-  //   })
-  //   .then(() => console.log('MongoDB Connected'))
-  //   .catch(err => console.log(err))
+db.once("open", () => {
+  console.log("Mongoose conection successful.");
+});
 
+
+scheduler.start();
 // err => {
 //   const collection = client.db("test").collection("devices");
 //   client.close();
@@ -85,6 +99,12 @@ app.use('/testAPI', testAPIRouter);
 
 app.get('/', (req, res) => {
   res.render('index');
+});
+
+//react-router handles route on client side
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirnmame, "client/build/index.html"));
+
 });
 
 //catching a form submit
@@ -145,10 +165,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-
-const server = app.listen(port, () => console.log(`Server Listening on port ${port}`));
-
-
 const io = socketio(server);
 io.on('connection', (socket) => {
   console.log('Connected socket io');
@@ -156,5 +172,7 @@ io.on('connection', (socket) => {
     console.log('Disconnected Socket io');
   })
 });
+
+const server = app.listen(port, () => console.log(`🌎  ==> Server Listening on port ${port}`));
 
 module.exports = app;
