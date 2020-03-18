@@ -1,7 +1,12 @@
 // 'use strict';
 require('dotenv').config();
+
+//declare dependencies
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+
+
 const socketio = require('socket.io');
 const Nexmo = require('nexmo');
 
@@ -22,7 +27,6 @@ const app = express(); //invoke express
 
 const cors = require('cors');
 
-const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const indexRouter = require('./api/routes/index');
