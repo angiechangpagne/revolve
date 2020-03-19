@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './LoginForm.css';
-import API from '../../Utils/api';
+import API from '../../Utils/API';
 import Modal from 'react-modal';
 import Cookies2 from 'js-cookie';
 
@@ -50,7 +50,7 @@ class LoginForm extends Component {
 
   componentDidMount() {
     if(this.state.userCookie){
-      window.location.href = "/user"; //: window..href="/"
+      window.location.href = '/user'; //: window..href="/"
     }
   }
 
@@ -92,7 +92,7 @@ class LoginForm extends Component {
     //if all client-side input validation pass
     if(this.state.loginEmail && this.state.loginPassword){
       //send request to server for provided user login creds
-      API.getUser({
+      API.getUser({ 
         email : this.state.loginEmail,
         password : this.state.loginPassword
       })
@@ -158,7 +158,7 @@ class LoginForm extends Component {
       });
     }
     //else if all input values are no empty
-    else if(signUpFirstName && signUpLastNamse && signUpEmail && signUpPassword && signUpPhone && isEmailUnique){
+    else if(signUpFirstName && signUpLastName && signUpEmail && signUpPassword && signUpPhone && isEmailUnique){
       API.saveUser({
         firstName : signUpFirstName,
         lastName : signUpLastName, 

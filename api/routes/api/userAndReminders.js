@@ -13,7 +13,7 @@ router.route('/signup')
 router.route('/user/:userid/reminder/:id*?')
   .get(appController.get)
   .post(appController.create)
-  .put(apController.update)
+  .put(appController.update)
   .delete(appController.remove);
 
 module.exports = router;

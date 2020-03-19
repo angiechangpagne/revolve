@@ -4,8 +4,8 @@ import Navbar from './components/Navbar';
 import Landing from './Pages/Landing';
 
 import User from './Pages/User';
-import Login from './components/Login';
-import Register from './components/Register';
+import LoginForm from './components/LoginForm';
+// import Register from './components/Register';
 import Profile from './components/Profile'; 
 import './App.css';
 
@@ -37,9 +37,9 @@ class App extends Component {
         <Switch>
         <Route exact path="/" component={Landing} />
         
-        <Route exact path='/register' component={Register} />
+        {/* <Route exact path='/register' component={Register} /> */}
         <Route exact path='/user' component={User} />
-        <Route exact path='/login' component={Login} />
+        <Route exact path='/login' component={LoginForm} />
         <Route exact path='/profile' component={Profile} />
         </Switch>
         </div>

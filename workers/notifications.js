@@ -1,4 +1,4 @@
-const Reminder = require('../models').Reminder;
+const Reminder = require('../api/models').Reminder;
 
 const notifications = () => {
   return {

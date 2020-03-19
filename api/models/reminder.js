@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
 const Twilio = require('twilio');
-const config = require('../config');
+const config = require('../../config');
 
 const reminderSchema = new mongoose.Schema({
   reminderName: {

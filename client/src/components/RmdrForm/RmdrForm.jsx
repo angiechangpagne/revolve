@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import API from '../../Utils/api';
+import API from '../../Utils/API';
 import './RmdrForm.css';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css'
 
 import Select from 'react-select';
-import 'react-select/dist/react-select.css';
-import PlaceesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+// import 'react-select/dist/react-select.css';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 class RmdrForm extends Component{
   state = {

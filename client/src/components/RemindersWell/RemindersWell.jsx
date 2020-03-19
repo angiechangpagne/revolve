@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
-import API from '../../Utils/api';
+import API from '../../Utils/API';
 import RmdrForm from '../RmdrForm';
 import Reminder from '../Reminder';
 
@@ -64,7 +64,7 @@ class RemindersWell extends Component{
     });
     this.loadReminders();
 
-    console.log('onupdate reminder')
+    console.log('on update reminder')
   }
 
   loadReminders = () => {
@@ -110,7 +110,7 @@ class RemindersWell extends Component{
           </div>
           <h4 className="animated headShake"> Past Reminders</h4>
           <div className="well" id="past-well">
-            {passRmdrs.map(rmdr => 
+            {pastRmdrs.map(rmdr => 
                 <Reminder 
                     rmdr={rmdr}
                     key={rmdr._id}
@@ -119,7 +119,7 @@ class RemindersWell extends Component{
             )}
           </div>
           <Modal isOpen={this.state.isModalOpen}>
-            <Rmdr user={user}
+            <Reminder user={user}
               rmdrId={rmdrId}
               rmdrName={rmdrName}
               rmdrTime={rmdrTime}

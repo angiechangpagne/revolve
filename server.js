@@ -35,7 +35,6 @@ mongoose.Promise=global.Promise=global.Promise;
 //Connect to MongoDB
 mongoose.connect(
   process.env.mongoURI || "mongodb://localhost/revolve", {
-    useMongoClient: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
     }
@@ -54,9 +53,6 @@ db.once("open", () => {
 
 //run reminder notification scheduler
 scheduler.start();
-
-
-
 
 
 const socketio = require('socket.io');
@@ -190,6 +186,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+const server = app.listen(port, () => console.log(`🌎  ==> Server Listening on port ${port}`));
+
 const io = socketio(server);
 io.on('connection', (socket) => {
   console.log('Connected socket io');
@@ -198,6 +196,5 @@ io.on('connection', (socket) => {
   })
 });
 
-const server = app.listen(port, () => console.log(`🌎  ==> Server Listening on port ${port}`));
 
 module.exports = server;

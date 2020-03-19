@@ -5,7 +5,7 @@
   "author": "angiechangpgne",
   "license": "MIT",
   "private": true,
-  "proxy": "http://localhost:3000/",
+  "proxy": "http://localhost:3005/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",

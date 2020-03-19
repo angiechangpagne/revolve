@@ -1,0 +1,28 @@
+#map {
+
+  height: 555px;
+  width: 800px;
+  top: 40px;
+  left: -250px;
+  /*right : 200px;*/
+  position: relative;
+  display: inline-block;
+}
+
+#map {
+  margin-left: 300px;
+}
+#pac-input {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 400px;
+}
+
+#pac-input:focus {
+  border-color: #2D3A4E;
+}
