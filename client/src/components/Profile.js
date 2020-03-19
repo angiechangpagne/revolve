@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import jwt_decode from 'jwt-decode';
+import React, { Component } from './node_modules/react';
+import jwt_decode from './node_modules/jwt-decode';
 
 class Profile extends Component {
   constructor(){

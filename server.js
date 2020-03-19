@@ -5,6 +5,58 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose= require('mongoose');
+const routes = require('./api/routes'); //all the routes in the api routes folder
+const app = express(); //invoke express  
+const router = express.Router();
+const port = process.env.PORT || 3001;
+//notification scheduler 
+const scheduler = require('./scheduler');
+
+//configure body parser for AJAX requests
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+//serve static assets
+app.use(express.static("client/build"));
+
+//add routes to be used in our app
+app.use(routes);
+
+//react-router handles route on client side
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirnmame, "client/build/index.html"));
+});
+
+const mongoURI = 'mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority';
+//set up a promise in mongoose
+mongoose.Promise=global.Promise=global.Promise;
+
+//Connect to MongoDB
+mongoose.connect(
+  process.env.mongoURI || "mongodb://localhost/revolve", {
+    useMongoClient: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    }
+    ).then(() => console.log('MongoDB Connected')).catch(err => console.log(err));
+
+const db = mongoose.connection;
+
+//show any mongoose errors
+db.on("error", (err) => {
+  console.log("Mongoose Error: ", err);
+});
+//once logged in to db through mongoose, log a success message
+db.once("open", () => {
+  console.log("Mongoose conection successful.");
+});
+
+//run reminder notification scheduler
+scheduler.start();
+
+
+
 
 
 const socketio = require('socket.io');
@@ -23,7 +75,6 @@ nexmo.message.sendSms(from, to, text);
 
 
 const createError = require('http-errors');
-const app = express(); //invoke express  
 
 const cors = require('cors');
 
@@ -31,13 +82,9 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const indexRouter = require('./api/routes/index');
 const testAPIRouter = require('./api/routes/testAPI');
-const router = require("express").Router();
 const Users = require('./api/routes/Users');
-const scheduler = require("./scheduler");
 
 // const MongoClient = require('mongodb').MongoClient;
-const mongoose= require('mongoose');
-const port = process.env.PORT || 3001;
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
@@ -45,14 +92,12 @@ const port = process.env.PORT || 3001;
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
-app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, 'public')));
 
 app.use('/users',Users);
 
-const mongoURI = 'mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority';
 //mongodb+srv://violet:<password>@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority
 //  const client = new MongoClient( mongoURI, { useNewUrlParser: true });
 //  client.connect( err => {
@@ -68,28 +113,8 @@ const uri = "mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retry
 //   // perform actions on the collection object
 //   client.close();
 // });
-mongoose.Promise=global.Promise=global.Promise;
-
-mongoose.connect(
-  process.env.mongoURI || "mongodb://localhost/revolve", {
-    useMongoClient: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    }
-    ).then(() => console.log('MongoDB Connected')).catch(err => console.log(err));
-
-const db = mongoose.connection;
-
-db.on("error",(err) => {
-  console.log("Mongoose Error: ", err);
-});
-
-db.once("open", () => {
-  console.log("Mongoose conection successful.");
-});
 
 
-scheduler.start();
 // err => {
 //   const collection = client.db("test").collection("devices");
 //   client.close();
@@ -105,11 +130,7 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-//react-router handles route on client side
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirnmame, "client/build/index.html"));
 
-});
 
 //catching a form submit
 app.post('/',(req, res) => {
@@ -179,4 +200,4 @@ io.on('connection', (socket) => {
 
 const server = app.listen(port, () => console.log(`🌎  ==> Server Listening on port ${port}`));
 
-module.exports = app;
+module.exports = server;
