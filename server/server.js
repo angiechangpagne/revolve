@@ -1,5 +1,5 @@
 // 'use strict';
-require('dotenv').config();
+// require('dotenv').config();
 
 //declare dependencies
 const path = require('path');
@@ -130,44 +130,44 @@ const uri = "mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retry
 
 
 //catching a form submit
-app.post('/',(req, res) => {
-  res.send(req.body);
-  console.log(req.body);
-  const { number, text } = req.body;
+// app.post('/',(req, res) => {
+//   res.send(req.body);
+//   console.log(req.body);
+//   const { number, text } = req.body;
 
-  nexmo.message.sendSms(
-    from, number, text, { type: 'unicode' },
-    (err, responseData) => {
-      if(err){
-        console.log(err);
-      } else {
-        const { messages } = responseData;
-        const { ['message-id']: id, ['to']: number, ['error-text']: error } = messages[0];
-        console.dir(responseData);
-        const data = {
-          id, 
-          number, 
-          error
-        };
-        //emit to client
-        io.emit('smsStatus', data);
-      }
-    }
-  );
-});
+//   nexmo.message.sendSms(
+//     from, number, text, { type: 'unicode' },
+//     (err, responseData) => {
+//       if(err){
+//         console.log(err);
+//       } else {
+//         const { messages } = responseData;
+//         const { ['message-id']: id, ['to']: number, ['error-text']: error } = messages[0];
+//         console.dir(responseData);
+//         const data = {
+//           id, 
+//           number, 
+//           error
+//         };
+//         //emit to client
+//         io.emit('smsStatus', data);
+//       }
+//     }
+//   );
+// });
 
 
-app.get('/api/hello',(req,res) => {
-  res.send({ express: 'Hello Halfaxa'});
-});
+// app.get('/api/hello',(req,res) => {
+//   res.send({ express: 'Hello Halfaxa'});
+// });
 
-app.post('/api/world', (req, res) => {
-  console.log('req is', req.body);
-  // console.log('res on line 35 of server is',res);
-  res.send(
-    `POST response is: ${req.body.post}`,
-  );
-});
+// app.post('/api/world', (req, res) => {
+//   console.log('req is', req.body);
+//   // console.log('res on line 35 of server is',res);
+//   res.send(
+//     `POST response is: ${req.body.post}`,
+//   );
+// });
 
 // catch 404 and forward to error handler
 app.use((req, res, next) =>  {

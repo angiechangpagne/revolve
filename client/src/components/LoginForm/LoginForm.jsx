@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './LoginForm.css';
-import API from '../../Utils/api';
+import api from '../../Utils/api';
 import Modal from 'react-modal';
 import Cookies2 from 'js-cookie';
 
@@ -92,7 +92,7 @@ class LoginForm extends Component {
     //if all client-side input validation pass
     if(this.state.loginEmail && this.state.loginPassword){
       //send request to server for provided user login creds
-      API.getUser({ 
+      api.getUser({ 
         email : this.state.loginEmail,
         password : this.state.loginPassword
       })
@@ -158,8 +158,8 @@ class LoginForm extends Component {
       });
     }
     //else if all input values are no empty
-    else if(signUpFirstName && signUpLastName && signUpEmail && signUpPassword && signUpPhone && isEmailUnique){
-      API.saveUser({
+    else if (signUpFirstName && signUpLastName && signUpEmail && signUpPassword && signUpPhone && isEmailUnique){
+      api.saveUser({
         firstName : signUpFirstName,
         lastName : signUpLastName, 
         email : signUpEmail, 
@@ -265,7 +265,6 @@ class LoginForm extends Component {
           }
         </form>
         <div className="col-sm-offset-2 col-sm-5">
-          <hr></hr>
           <p id="need-acct" className="animated bounceInLeft">Need an account?<span><a id="sign-up" onClick={this.openModal}>&nbsp;&nbsp;&nbsp;SIGN UP</a></span></p>
         </div>
       </section>

@@ -12,7 +12,7 @@ const ExtractTextPlguin = require('extract-text-webpack')
 module.exports = {
   entry: [
     'webpack/hot/dev-server',
-    'webpack-dev-server/client?http://localhost:8080',
+    'webpack-dev-server/client?http://localhost:3001',
     path.resolve(__dirname, 'src/index.jsx')
   ],
   output: {
@@ -35,7 +35,7 @@ module.exports = {
     hot: true,
     inline: true, 
     progress: true,
-    contentBase: './app',
+    contentBase: './index',
     port: 8080,
     open: true
   },

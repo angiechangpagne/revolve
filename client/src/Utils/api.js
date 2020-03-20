@@ -1,15 +1,15 @@
 import axios from 'axios';
 
-export default {
+const api = {
   //get user document from User Collection
   getUser: (loginData) => {
     //console.log("In the api call function");
-    return axios.post('/api/login', loginData);
+    return axios.post(`/api/login`, loginData);
   },
   //save new user into database
   saveUser : (userData) => {
     console.log("User data line 10 of api frontend", userData);
-    return axios.post('/api/signup', userData);
+    return axios.post(`/api/signup`, userData);
   }, 
   //get all reminders for the current user
   getUserReminders : (userId) => {
@@ -28,3 +28,6 @@ export default {
     return axios.delete(`/api/user/${userId}/rmdr/${rmdrId}`);
   }
 };
+
+
+export default api;

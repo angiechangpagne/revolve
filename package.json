@@ -42,6 +42,7 @@
     "open-browser-webpack-plugin": "0.0.5",
     "prettier": "^1.19.1",
     "progress-bar-webpack-plugin": "^2.1.0",
+    "react-modal": "^3.11.2",
     "react-places-autocomplete": "^7.2.1",
     "react-scripts": "^3.4.0",
     "react-select": "^3.0.8",
