@@ -1,15 +1,15 @@
 const express = require('express');
-const users = express.Router();
+const router = express.Router();
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 //users middleware import
 const User = require('../models/user');
-users.use(cors());
+router.use(cors());
 
 process.env.SECRET_KEY='secret';
 
-users.post('register', (req, res) => {
+router.post('register', (req, res) => {
   const today = new Date();
   const userData={
     first_name: req.body.first_name,
@@ -44,7 +44,7 @@ users.post('register', (req, res) => {
 })
 
 
-users.post('/login', (req, res) => {
+router.post('/login', (req, res) => {
   User.findOne({
     email: req.body.email
   })

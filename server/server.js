@@ -6,7 +6,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose= require('mongoose');
-const routes = require('./api/routes'); //all the routes in the api routes folder
+const routes = require('./routes'); //all the routes in the api routes folder
 const app = express(); //invoke express  
 const router = express.Router();
 const port = process.env.PORT || 3001;
@@ -25,16 +25,16 @@ app.use(routes);
 
 //react-router handles route on client side
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirnmame, "client/build/index.html"));
+  res.sendFile(path.join(__dirname, "client/build/index.html"));
 });
 
-const mongoURI = 'mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority';
+const MONGODC_URI = 'mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority';
 //set up a promise in mongoose
 mongoose.Promise=global.Promise=global.Promise;
 
 //Connect to MongoDB
 mongoose.connect(
-  process.env.mongoURI || "mongodb://localhost/revolve", {
+  process.env.MONGODB_URI || "mongodb://localhost/revolve", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     }
@@ -46,9 +46,10 @@ const db = mongoose.connection;
 db.on("error", (err) => {
   console.log("Mongoose Error: ", err);
 });
+
 //once logged in to db through mongoose, log a success message
 db.once("open", () => {
-  console.log("Mongoose conection successful.");
+  console.log("Mongoose connection successful.");
 });
 
 //run reminder notification scheduler
@@ -76,9 +77,9 @@ const cors = require('cors');
 
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const indexRouter = require('./api/routes/index');
-const testAPIRouter = require('./api/routes/testAPI');
-const Users = require('./api/routes/Users');
+// const indexRouter = require('./routes/index');
+// const testAPIRouter = require('./api/routes/testAPI');
+// const Users = require('./routes/Users');
 
 // const MongoClient = require('mongodb').MongoClient;
 
@@ -92,7 +93,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, 'public')));
 
-app.use('/users',Users);
+// app.use('/users',Users);
 
 //mongodb+srv://violet:<password>@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority
 //  const client = new MongoClient( mongoURI, { useNewUrlParser: true });
@@ -117,14 +118,14 @@ const uri = "mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retry
 
 
 
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
 // app.use('/users', users);
-app.use('/testAPI', testAPIRouter);
+// app.use('/testAPI', testAPIRouter);
 
 
-app.get('/', (req, res) => {
-  res.render('index');
-});
+// app.get('/', (req, res) => {
+//   res.render('index');
+// });
 
 
 
@@ -169,12 +170,12 @@ app.post('/api/world', (req, res) => {
 });
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) =>  {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) =>  {
   // set locals, only providing error in development
   console.log('line 33 of app with res.locals:', res.locals);
   res.locals.message = err.message;

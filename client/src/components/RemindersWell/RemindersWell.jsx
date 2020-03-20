@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
-import API from '../../Utils/API';
-import RmdrForm from '../RmdrForm';
-import Reminder from '../Reminder';
+import API from '../../Utils/api';
+// import RmdrForm from '../RmdrForm/RmdrForm';
+import Reminder from '../Reminder/Reminder';
 
 class RemindersWell extends Component{
   state = {
@@ -45,9 +45,9 @@ class RemindersWell extends Component{
 
   handleRenderMap = (rmdr) => {
     this.setState({
-      lat: rmdr.coordinates.lat,
-      lng: rmdr.coordinates.lng,
-      address: rmdr.address,
+      lat : rmdr.coordinates.lat,
+      lng : rmdr.coordinates.lng,
+      address : rmdr.address,
       isMapModalOpen: true
     })
   }
@@ -96,7 +96,7 @@ class RemindersWell extends Component{
       <div>
         <div className="container">
           <h4 className="animated headShake" id="UpcomingEvents"> Revolve Reminders </h4>
-          <div className="well" id="upcming-well">
+          <div className="well" id="upcoming-well">
             {upcomingRmdrs.map(rmdr => 
             <div>
               <Reminder 

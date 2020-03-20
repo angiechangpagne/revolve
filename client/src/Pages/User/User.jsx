@@ -1,12 +1,12 @@
-import React, {Component } from 'react';
-import Human from "../../Components/Human";
+import React, { Component } from 'react';
+import Human from "../../components/Human/Human";
 import "./User.css";
-import NavBar from "../../Components/NavBar";
-import RmdrForm from "../../Components/RmdrForm";
-import RemindersWell from "../../Components/RemindersWell";
+import NavBar from "../../components/NavBar/NavBar";
+import RmdrForm from "../../components/RmdrForm/RmdrForm";
+import RemindersWell from "../../components/RemindersWell/RemindersWell";
 import Cookies2 from "js-cookie";
-import MapRender from "../../Components/Map";
-import LinkGoogleMaps from "../../Components/LinkGoogleMaps";
+import MapRender from "../../components/Map/Map";
+import LinkGoogleMaps from "../../components/LinkGoogleMaps/LinkGoogleMaps";
 
 class User extends Component {
   render(){

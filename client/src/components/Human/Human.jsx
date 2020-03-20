@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import "./Human.css";
 
 const Human = (props) => {

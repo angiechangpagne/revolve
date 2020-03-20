@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import API from '../../Utils/API';
+import API from '../../Utils/api';
 import './RmdrForm.css';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import 'react-datepicker/dist/react-datepicker.css'
-
+import 'react-datepicker/dist/react-datepicker.css';
 import Select from 'react-select';
-// import 'react-select/dist/react-select.css';
+//css for react select
+//import 'react-select/dist/react-select.css';
+//require for auto completie address as input form 
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 class RmdrForm extends Component{

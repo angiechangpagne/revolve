@@ -9,12 +9,12 @@ module.exports = {
     db.Reminder.create(req.body)
       .then(dbRmdr => {
         console.log(dbRmdr); //if create success reminder find user id and push it to user's reminder array
-        return db.User.findOneAndUpdate({ _id: userId }, {$push: { reinders: dbRmdr._id }}, { new: true });
+        return dbUser.findOneAndUpdate({ _id: userId }, {$push: { reinders: dbRmdr._id }}, { new: true });
         //res.json(dbRmdr)
       })
-      .then(dbRmdr => {
+      .then(dbUser => {
         //if user updated successfully, send response back to client in json
-        return res.json(dbRmdr)
+        return res.json(dbUser)
       })
       .catch(err => res.status(422).json(err));
   },
@@ -35,9 +35,10 @@ module.exports = {
         if(dbRmdr){
           console.log('Updating Reminder');
           dbRmdr.reminderName = req.body.reminderName;
-          dbRmdr.date = req.body.data;
+          dbRmdr.date = req.body.date;
           dbRmdr.time = req.body.time;
-          dbRmdr.notification = req.body.reminderNumber;
+          dbRmdr.notification = req.body.notification;
+          dbRmdr.notificationNumber = req.body.reminderNumber;
           dbRmdr.notificationLabel = req.body.notificationLabel;
           dbRmdr.save((err, dbRmdr) => {
             if(err) console.log(err);

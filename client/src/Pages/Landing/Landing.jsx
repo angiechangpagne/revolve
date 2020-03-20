@@ -1,6 +1,6 @@
 import React from 'react';
-import LoginForm from '../../Components/LoginForm';
-import Human from '../../Components/Human';
+import LoginForm from '../../components/LoginForm/LoginForm';
+import Human from '../../components/Human/Human';
 import './Landing.css';
 
 const Landing = (props) => {

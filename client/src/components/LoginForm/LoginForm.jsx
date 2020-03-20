@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './LoginForm.css';
-import API from '../../Utils/API';
+import API from '../../Utils/api';
 import Modal from 'react-modal';
 import Cookies2 from 'js-cookie';
 
