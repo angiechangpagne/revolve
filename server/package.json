@@ -2,18 +2,18 @@
   "name": "revolve",
   "version": "1.0.0",
   "description": "nodejs login with jwt token",
-  "entry": "server.js",
+  "main": "server.js",
   "scripts": {
-    "start": "cd client && react-scripts start",
+    "start": " node server.js",
     "start:prod": "pushstate-server build",
     "build": "react-scripts build",
-    "client": "cd client && yarn start",
+    "lint": "eslint \"**/*.jsx\"",
     "server": "yarn build && nodemon server.js --watch",
     "deploy": "yarn buid && git add . && git commit -m \"Building for production\" && git push heroku master",
     "test": "react-scripts test --env=jsdom",
     "postinstall": "yarn build",
     "prod": "node server.js",
-    "dev": "concurrently --kill-others-on-fail \"yarn== server\" \"yarn client\"",
+    "dev": "nodemon --exec NODE_ENV=development babel-node server/server.js",
     "eject": "react-scripts eject"
   },
   "dependencies": {

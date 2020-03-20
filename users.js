@@ -4,7 +4,7 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 //users middleware import
-const User = require('../models/user');
+const User = require('./server/models/user');
 router.use(cors());
 
 process.env.SECRET_KEY='secret';

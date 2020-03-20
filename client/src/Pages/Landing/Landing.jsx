@@ -7,6 +7,7 @@ const path = require('path');
 const Landing = (props) => {
   // console.log("props on line 7 of landin",props);
   return (
+    <React.Fragment>
     <div>
        
         <div className="container">
@@ -24,6 +25,7 @@ const Landing = (props) => {
           </div>
         </Human>
       </div>
+    </React.Fragment>
   )
 }
 export default Landing;

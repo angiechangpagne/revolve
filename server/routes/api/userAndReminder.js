@@ -7,7 +7,7 @@ router.route('/login')
   .post(userController.findOne);
 
 //Matches with "/api/signup"
-router.route('/api/signup')
+router.route('api/signup')
   .post(userController.create);
 
 router.route('/user/:userid/rmdr/:id*?')
