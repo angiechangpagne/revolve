@@ -8,7 +8,7 @@ const Landing = (props) => {
 
   return (
   <div>
-      <Human backgroundImage="">
+      <Human backgroundImage="../../assets/background.jpg">
 
         <div className="arrow-container animated fadeInDown">
           <div className="arrow-2">

@@ -1,7 +1,15 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
-const Twilio = require('twilio');
-const config = require('../../config');
+// const Twilio = require('twilio');
+// const config = require('../../config');
+const Nexmo = require('nexmo');
+const nexmo = new Nexmo({
+  apiKey: 'df0eb028',
+  apiSecret: 'vgzyF8q3FPMz9Sep',
+}, { debug: true });
+const from = '17402426262';
+const to = '19143648047';
+const text = 'Hello from Nexmo';
 
 const reminderSchema = new mongoose.Schema({
   reminderName: {
@@ -64,30 +72,53 @@ reminderSchema.statics.sendNotifications = (callback) => {
     });
 
     const sendNotifications = (reminders) => {
-      
-      
-      // const client = new Twilio(config.twilioAccount$id, config.twilioAuthToken);
-      // reminders.forEach((reminder) => {
-      //   const message = {
-      //     to: `+1${reminder.reminderNumber}`,
-      //     from: config.twilioPhoneNumber,
-      //     body: `Hi! Just a reminder to ${reminder.reminderName} is up in ${reminder.notificationLabel}!`,
-      //   };
-
-      //   client.reminders.create(reminder, (err, res) => {
-      //     if(err) {
-      //       console.log(err);
-      //     } else {
-      //       let phoneNumber = reminder.reminderNumber;
-      //       console.log(`Reminder sent to ${phoneNumber}`);
-      //     }
-      //   });
-      // });
-      // if(callback) {
-      //   callback.call();
-      // }
+      reminders.forEach((reminder) => {
+        to = `+1${reminder.reminderNumber}`;
+        from='17402426262';
+        text= `Hi! Just a reminder to ${reminder.reminderName} is up in ${reminder.notificationLabel}!`;
+        nexmo.message.sendSms(from, to, text);
+        
+        nexmo.message.sendSms(
+          from, number, text, { type: 'unicode' },
+          (err, responseData) => {
+            if(err){ 
+              console.log(err);
+            } else {
+              const { messages } = responseData;
+              const { ['message-id']: id, ['to']: number, ['error-text']: error } = messages[0];
+              console.dir(responseData);
+                const data = {
+                  id, 
+                  number, 
+                  error
+                };
+              //emit to client
+                io.emit('smsStatus', data);              
+              }
+        });
+      })
     }
-};
+    if(callback) {
+      callback.call();
+    }
+                      // ``const client = new Twilio(config.twilioAccount$id, config.twilioAuthToken);
+                      // reminders.forEach((reminder) => {
+                      //   const message = {
+                      //     to: `+1${reminder.reminderNumber}`,
+                      //     from: config.twilioPhoneNumber,
+                      //     body: `Hi! Just a reminder to ${reminder.reminderName} is up in ${reminder.notificationLabel}!`,
+                      //   };
+
+                      //   client.reminders.create(reminder, (err, res) => {
+                        //     if(err) {
+                        //       console.log(err);
+                        //     } else {
+                        //       let phoneNumber = reminder.reminderNumber;
+                        //       console.log(`Reminder sent to ${phoneNumber}`);
+                        //     }
+                      //    });
+                      //  }) ``
+}
 
 reminderSchema.statics.updateNotifications = () => {
   console.log("I am finding an expired reminder");
