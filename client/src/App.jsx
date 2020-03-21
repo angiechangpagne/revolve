@@ -29,6 +29,7 @@ class App extends Component {
   render(){
     return (
       <React.Fragment>
+      {
       <Router>
       <div className="App">
 
@@ -47,8 +48,9 @@ class App extends Component {
         </div>
       </div>
       </Router>  
+      }
       </React.Fragment>
-    );
+    )
   }
 }
 

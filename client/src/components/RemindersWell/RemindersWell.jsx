@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
-import API from '../../Utils/api';
+import api from '../../Utils/api';
 // import RmdrForm from '../RmdrForm/RmdrForm';
 import Reminder from '../Reminder/Reminder';
 
@@ -26,7 +26,7 @@ class RemindersWell extends Component{
 
   handleDelete = (rmdr) => {
     const { user } = this.props;
-    API.deleteUserReminder(user._id, rmdr._id)
+    api.deleteUserReminder(user._id, rmdr._id)
       .then(() => {
         this.loadReminders();
       });
@@ -70,7 +70,7 @@ class RemindersWell extends Component{
   loadReminders = () => {
     console.log('I am trying to load reminders');
 
-    API.getUserReminders(this.props.user._id)
+    api.getUserReminders(this.props.user._id)
       .then(res => {
         console.log("I got my reminders back!");
         console.log(res.data[0].reminders);

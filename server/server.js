@@ -1,32 +1,42 @@
 // 'use strict';
 // require('dotenv').config();
-
 //declare dependencies
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose= require('mongoose');
-const routes = require('./routes/api'); //all the routes in the api routes folder
+//require routers
+const apiRouter = require('/api/userAndReminder'); //all the routes in the api routes folder
 const app = express(); //invoke express  
-const router = express.Router();
+// const router = express.Router();
 const port = process.env.PORT || 3001;
 //notification scheduler 
+
+const createError = require('http-errors');
+
+const cors = require('cors');
+
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const scheduler = require('./scheduler');
 
-//configure body parser for AJAX requests
-app.use(bodyParser.urlencoded({ extended: false }));
+//configure body parser for AJAX requests, request body
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //serve static assets
-app.use(express.static("client/build"));
+app.use(express.static(path.resolve(__dirname, 'client/public/assets')));
 
 //add routes to be used in our app
-app.use(routes);
+app.use('/api/signup',apiRouter);
+app.use('/api/login', apiRouter);
 
+
+app.use(logger('dev'));
 //react-router handles route on client side
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, "client/build/index.html"));
-});
+app.get('/', (req, res) => 
+  res.status(200).sendFile(path.resolve(__dirname, '../client/public/index.html'))
+);
 
 const MONGODC_URI = 'mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority';
 //set up a promise in mongoose
@@ -71,12 +81,7 @@ const text = 'Hello from Nexmo';
 nexmo.message.sendSms(from, to, text);
 
 
-const createError = require('http-errors');
 
-const cors = require('cors');
-
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
 // const indexRouter = require('./routes/index');
 // const testAPIRouter = require('./api/routes/testAPI');
 // const Users = require('./routes/Users');
@@ -111,7 +116,7 @@ const uri = "mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retry
 //   client.close();
 // });
 
-
+// app.set('index',__dirname, )
 // err => {
 //   const collection = client.db("test").collection("devices");
 //   client.close();
@@ -123,12 +128,9 @@ const uri = "mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retry
 // app.use('/testAPI', testAPIRouter);
 
 
-// app.get('/', (req, res) => {
-//   res.render('index');
-// });
-
-
-
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve(__dirname,'public', 'index.html'))
+});
 //catching a form submit
 // app.post('/',(req, res) => {
 //   res.send(req.body);
@@ -149,17 +151,22 @@ const uri = "mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retry
 //           number, 
 //           error
 //         };
-//         //emit to client
+//         //emit ato client
 //         io.emit('smsStatus', data);
 //       }
 //     }
 //   );
 // });
 
-
-// app.get('/api/hello',(req,res) => {
-//   res.send({ express: 'Hello Halfaxa'});
-// });
+// app.use('/signup', routes);
+app.post('/api/signup',apiRoutes, (req,res,next) => {
+  console.log('in post line 161');
+  res.status(200).json();
+  next()
+//   // res.send('/signup', routes);
+//   // router.post('/signup', routes);
+//   // .route('/signup');
+})
 
 // app.post('/api/world', (req, res) => {
 //   console.log('req is', req.body);
@@ -198,4 +205,4 @@ io.on('connection', (socket) => {
 });
 
 
-module.exports = server;
+module.exports = app;

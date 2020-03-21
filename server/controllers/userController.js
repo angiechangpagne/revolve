@@ -2,11 +2,10 @@ const express = require('express');
 const db = require('../models');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-
-const router = express.Router();
-
+const fetch = require('node-fetch');
+// const router = express.Router();
 //userController methods
-module.exports = {
+const userController = {
   findOne: (req, res) => {
     console.log(req.body.email);
     db.User
@@ -67,3 +66,5 @@ module.exports = {
         .catch(err => res.status(422).json(err));
     }
 };
+
+module.exports = userController;

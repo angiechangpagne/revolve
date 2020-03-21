@@ -5,43 +5,40 @@ import Modal from 'react-modal';
 import Cookies2 from 'js-cookie';
 
 class LoginForm extends Component {
-  state = {
-    //state is for existing user login input element values
-    loginEmail : "",
-    loginPassword : "",
-    //state to aid validate existing user login
-    isLoginEmailEmpty: false,
-    isLoginPasswordEmpty: false,
-    isValidEmail: true, 
-    isValidPassword: true,
-
-    //state for new user input values
-    signUpFirstName : "",
-    signUpLastName : "",
-    signUpEmail : "",
-    signUpPassword: "",
-    signUpPhone: "",
-    emailValidation: "",
-    //states to aid validating new user input values
-    isSignUpFirstNameEmpty: false,
-    isSignUpLastNameEmpty: false,
-    isSignUpEmailEmpty: false,
-    isSignUpPasswordEmpty: false, 
-    isSignUpPhoneEmpty: false,
-    isEmailUnique: true, 
-    isEmailValid: true,
-
-    //open/close the state for the modal
-    modalIsOpen: false,
-
-    //state for user cookie
-    userCookie: ""
-  };
+        state = {
+          //state is for existing user login input element values
+          loginEmail : "",
+          loginPassword : "",
+          //state to aid validate existing user login
+          isLoginEmailEmpty: false,
+          isLoginPasswordEmpty: false,
+          isValidEmail: true, 
+          isValidPassword: true,
+          //state for new user input values
+          signUpFirstName : "",
+          signUpLastName : "",
+          signUpEmail : "",
+          signUpPassword: "",
+          signUpPhone: "",
+          emailValidation: "",
+          //states to aid validating new user input values
+          isSignUpFirstNameEmpty: false,
+          isSignUpLastNameEmpty: false,
+          isSignUpEmailEmpty: false,
+          isSignUpPasswordEmpty: false, 
+          isSignUpPhoneEmpty: false,
+          isEmailUnique: true, 
+          isEmailValid: true,
+          //open/close the state for the modal
+          modalIsOpen: false,
+          //state for user cookie
+          userCookie: ""
+        };
 
   emailValidate(email) {
     //if email doesn't exist, let it pass through
     //else, check if email is valid
-    return /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email);
+    return (/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email));
   }
 
   componentWillMount() {
@@ -99,14 +96,14 @@ class LoginForm extends Component {
       .then(res => {
         console.log('res',res);
         //if email and password are valid
-        if(res.data.isValidEmail && res.data.isValidPassword) {
+        if(res.data.isValidEmail && res.data.isValidPassword){
           //a GET request for "/home"
-          //axios.get("/user");
+          axios.get("/user");
           Cookies2.set('user', res.data.userInfo);
           window.location.href="/user";
         }
         //else if email provided isn't in the db
-        else if (!res.data.isValidEmail){
+        else if (!res.data.isValidEmail) {
           //update state
           this.setState({
             isValidEmail: false
@@ -126,7 +123,7 @@ class LoginForm extends Component {
 
   handleSignupFormSubmit = (event) => {
     //prevent page form refreshing by default
-    event.preventDefault();
+    // event.preventDefault();
     console.log("I clicked the save new user butten");
     const {
       signUpFirstName,
@@ -136,7 +133,6 @@ class LoginForm extends Component {
       signUpPhone,
       isEmailUnique
     } = this.state;
-
 
     //assign input value and validation states in array of objects
     const createNewUserStates = [
@@ -177,14 +173,13 @@ class LoginForm extends Component {
       })
       .catch(err => console.log(err));
     }
-  };
-
-  render(){
+  }
+  render() {
     console.log('state before render', this.state);
     return (
       <div>
       <Modal 
-        id="modal"
+        id="modal" 
         className="col-sm-6 col-sm-offset-3 animated pulse"
         isOpen={this.state.modalIsOpen}>
         <form id="form" className="topBefore animated headShake">
@@ -245,7 +240,6 @@ class LoginForm extends Component {
               </div>
             }
           <input id="email" type="password" placeholder="password" value={this.state.loginPassword} name="loginPassword" onChange={this.handleInputChange} type="password" id="input-password" className="loginHover"></input>
-            
             {this.state.isLoginPasswordEmpty &&
               <div id="error-password-left-empty">
                 <p className="error text-center">Please enter your password!</p>
@@ -257,7 +251,6 @@ class LoginForm extends Component {
               </div>
             }  
           <input id="submit" type="submit" value="Sign In!" className="loginHover" onClick={this.handleLoginFormSubmit}></input>
-
           {!this.state.isValidEmail &&
             <div id="error-username-not-exist">
               <p className="error text-center">Sorry! Your email or password is incorrect</p>
@@ -265,7 +258,7 @@ class LoginForm extends Component {
           }
         </form>
         <div className="col-sm-offset-2 col-sm-5">
-          <p id="need-acct" className="animated bounceInLeft">Need an account?<span><a id="sign-up" onClick={this.openModal}>&nbsp;&nbsp;&nbsp;SIGN UP</a></span></p>
+        <p id="need-acct" className="animated bounceInLeft">Need an account?<span><a id="sign-up" onClick={this.openModal}>&nbsp;&nbsp;&nbsp;SIGN UP</a></span></p>
         </div>
       </section>
     </div>
