@@ -3,16 +3,16 @@ const path = require('path');
 // const lodash = require('lodash');
 // const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 // const chalk = require('chalk');
-const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+// const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ExtractTextPlguin = require('extract-text-webpack')
+// const CleanWebpackPlugin = require('clean-webpack-plugin');
+// const ExtractTextPlguin = require('extract-text-webpack')
 // const outputDirectory = './dist/js/';
 
 module.exports = {
   entry: [
     //entry point to app
-    './client/src/index.js',
+    './client/src/index.jsx',
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -23,7 +23,7 @@ module.exports = {
   mode: 'development',
   devServer: {
     //Docker host required
-    host: '0.0.0.0',
+    // host: '0.0.0.0',
     //host: localhost, port for the webpack dev server
     port: 8080,
     //match output path
@@ -53,14 +53,15 @@ module.exports = {
     rules: [
       { 
         test: /.(js|jsx)$/, 
-        include: path.resolve(__dirname, 'app'), 
+        // include: path.resolve(__dirname, 'index'), 
         exclude: /node_modules/, 
-        use: {loader: 'babel-loader', },
+        use: {
+          loader: 'babel-loader', },
       },
       { 
         test: /\.(css|scss)$/, 
         exclude: /node_modules/,
-        include: path.resolve(__dirname, 'app'), 
+        // include: path.resolve(__dirname, 'index'), 
         use: ['style-loader','css-loader'],
       },
       {

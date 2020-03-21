@@ -1,8 +1,7 @@
-const express = require('express');
 const db = require('../models');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const fetch = require('node-fetch');
+// const fetch = require('node-fetch');
 // const router = express.Router();
 //userController methods
 const userController = {
@@ -35,7 +34,7 @@ const userController = {
       })
       .catch(err => res.status(422).json(err));
     },
-    create: (req, res) => {
+    create: (req, res, next) => {
       console.log(req.body);
       db.User
         .findOne({
@@ -55,15 +54,16 @@ const userController = {
                 password : hash,
                 mobileNumber : req.body.mobileNumber
               })
-              // .then(result => res.json({ isEmailUnique : true }))
-              // .catch(err => res.status(422).json(err));
+                .then(result => res.json({ isEmailUnique : true }))
+                // .catch(err => res.status(422).json(err));
             });
-            res.json({ isEmailUnique : true });
+            // res.json({ isEmailUnique : true });
           } else{
             res.json({ isEmailUnique : false })
           }
         })
-        .catch(err => res.status(422).json(err));
+        .catch(err => res.status(422).json(err))
+        return next();
     }
 };
 

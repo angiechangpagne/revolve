@@ -4,9 +4,8 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose= require('mongoose');
 //require routers
-const apiRouter = require('/api/userAndReminder'); //all the routes in the api routes folder
+const apiRouter = require('./api/userAndReminder'); //all the routes in the api routes folder
 const app = express(); //invoke express  
 // const router = express.Router();
 const port = process.env.PORT || 3001;
@@ -21,46 +20,22 @@ const logger = require('morgan');
 const scheduler = require('./scheduler');
 
 //configure body parser for AJAX requests, request body
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //serve static assets
-app.use(express.static(path.resolve(__dirname, 'client/public/assets')));
+app.use('/assets', express.static(path.resolve(__dirname, '../client/public/assets')));
+// app.use(express.static(path.resolve(__dirname, 'client/public/assets')));
 
 //add routes to be used in our app
-app.use('/api/signup',apiRouter);
-app.use('/api/login', apiRouter);
+app.use('/api',apiRouter);
 
 
-app.use(logger('dev'));
+// app.use(logger('dev'));
 //react-router handles route on client side
 app.get('/', (req, res) => 
   res.status(200).sendFile(path.resolve(__dirname, '../client/public/index.html'))
 );
-
-const MONGODC_URI = 'mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority';
-//set up a promise in mongoose
-mongoose.Promise=global.Promise=global.Promise;
-
-//Connect to MongoDB
-mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/revolve", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    }
-    ).then(() => console.log('MongoDB Connected')).catch(err => console.log(err));
-
-const db = mongoose.connection;
-
-//show any mongoose errors
-db.on("error", (err) => {
-  console.log("Mongoose Error: ", err);
-});
-
-//once logged in to db through mongoose, log a success message
-db.once("open", () => {
-  console.log("Mongoose connection successful.");
-});
 
 //run reminder notification scheduler
 scheduler.start();

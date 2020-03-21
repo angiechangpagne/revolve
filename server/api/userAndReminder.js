@@ -7,12 +7,18 @@ router.route('/login')
   .post(userController.findOne);
 
 //Matches with "/api/signup"
-// router.route('/signup')
-//   .post(userController.create);
-router.post('/signup', 
-  userController.create(req,res),
-  (req,res) => res.status(200).json()
-);
+router.route('/signup')
+  .post(userController.create(req,res,
+    (req,res) => res.status(200).json(res.locals))
+    );
+  
+  // router.post('/signup', 
+  // userController.create(req,res),
+  // (req,res) => {
+  //   res.status(200).json(res.locals);
+  // }
+    
+// );
 
 router.route('/user/:userid/rmdr/:id*?')
   .get(rmdrController.get)
