@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+// const Dotenv = require('dotenv-webpack');
 // const lodash = require('lodash');
 // const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 // const chalk = require('chalk');
@@ -11,9 +12,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: [
-    //entry point to app
     './client/src/index.jsx',
   ],
+    //entry point to app
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
@@ -23,7 +24,7 @@ module.exports = {
   mode: 'development',
   devServer: {
     //Docker host required
-    // host: '0.0.0.0',
+    host: '0.0.0.0',
     //host: localhost, port for the webpack dev server
     port: 8080,
     //match output path
@@ -52,11 +53,12 @@ module.exports = {
   module: {
     rules: [
       { 
-        test: /.(js|jsx)$/, 
+        test: /\.jsx?$/,
         // include: path.resolve(__dirname, 'index'), 
-        exclude: /node_modules/, 
+        exclude: path.resolve(__dirname, 'node_modules'),
         use: {
-          loader: 'babel-loader', },
+          loader: 'babel-loader'
+         },
       },
       { 
         test: /\.(css|scss)$/, 
@@ -86,7 +88,10 @@ module.exports = {
     //     chalk.green.bold(':percent') +
     //     ' (:elapsed seconds)',
     // }),
-    new webpack.HotModuleReplacementPlugin({
+    // new webpack.HotModuleReplacementPlugin({
+    //   template: './client/public/index.html',
+    // }),
+    new HtmlWebpackPlugin({
       template: './client/public/index.html',
     }),
     // new OpenBrowserPlugin({ url: `http://localhost:3001` })

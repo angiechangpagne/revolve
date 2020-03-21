@@ -5,6 +5,7 @@
   "main": "server/server.js",
   "scripts": {
     "start": "nodemon server/server.js",
+    "start:ci": "node server/server.js",
     "dev": "NODE_ENV=development nodemon ./server/server.js & webpack-dev-server --open --hot --inline --progress --colors --watch --content-base ./",
     "start:prod": "pushstate-server build",
     "build": "cd client && yarn install && yarn build",
@@ -19,7 +20,12 @@
   "author": "angiechangpagne",
   "license": "MIT",
   "dependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-react": "^7.9.1",
     "babel": "^6.23.0",
+    "babel-loader": "^8.1.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-watch": "^7.0.0",
     "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "chalk": "^3.0.0",
@@ -37,6 +43,7 @@
     "jsonwebtoken": "^8.5.1",
     "jws": "^4.0.0",
     "jwt-decode": "^2.2.0",
+    "jwt-simple": "^0.5.6",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
@@ -71,6 +78,11 @@
   "devDependencies": {
     "concurrently": "^4.1.2",
     "nodemon": "^2.0.2"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "server/data/*",
+      "client/*"
+    ]
   }
-  
 }

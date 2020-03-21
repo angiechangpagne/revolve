@@ -1,0 +1,18 @@
+{
+  "presets": [ "es2016", "react", "stage-3","@babel/preset-env" ],
+  "plugins": [
+    "react-hot-loader/babel",
+    "transform-object-assign",
+    ["transform-react-remove-prop-types", {
+      "mode": "wrap",
+      "ignoreFilenames": ["node_modules"]
+    }],
+    ["babel-plugin-root-import", {
+      "rootPathSuffix": "src",
+      "rootPathPrefix": "@"
+    }, {
+      "rootPathSuffix": "/",
+      "rootPathPrefix": "~"
+    }]
+  ]
+}
