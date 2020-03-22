@@ -4,7 +4,7 @@
   "description": "revolve",
   "main": "server/server.js",
   "scripts": {
-    "start": "nodemon server/server.js",
+    "start": "concurrently \"node server\" \"node client\"",
     "start:ci": "node server/server.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "start:prod": "pushstate-server build",

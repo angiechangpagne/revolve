@@ -8,7 +8,7 @@ const app = express(); //invoke express  instance
 //require routers
 const apiRouter = require('./api/userAndReminder'); //all the routes in the api routes folder
 // const router = express.Router();
-const port = process.env.PORT || 3001;
+const port = 3001;
 //notification scheduler 
 
 const createError = require('http-errors');
@@ -24,7 +24,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //serve static assets
-app.use('/assets', express.static(path.resolve(__dirname, '../client/public/assets')));
+console.log("in line 26 of express server and dirname is", __dirname);
+// app.use('/assets', express.static(path.resolve(__dirname, '../client/public/assets')));
+app.use('/public', express.static(path.resolve(__dirname,'public')));
 // app.use(express.static(path.resolve(__dirname, 'client/public/assets')));
 
 //add routes to be used in our app
@@ -169,15 +171,15 @@ app.use((err, req, res, next) =>  {
   res.render('error');
 });
 
-const server = app.listen(port, () => console.log(`🌎  ==> Server Listening on port ${port}`));
+const server=app.listen(port, () => console.log(`🌎  ==> Server Listening on port ${port}`));
 
-const io = socketio(server);
-io.on('connection', (socket) => {
-  console.log('Connected socket io');
-  io.on('disconnect', () => {
-    console.log('Disconnected Socket io');
-  })
-});
+// const io = socketio(server);
+// io.on('connection', (socket) => {
+//   console.log('Connected socket io');
+//   io.on('disconnect', () => {
+//     console.log('Disconnected Socket io');
+//   })
+// });
 
 
 module.exports = app;

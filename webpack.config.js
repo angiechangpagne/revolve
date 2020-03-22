@@ -28,7 +28,7 @@ module.exports = {
     //Docker host required
     host: '0.0.0.0',
     //host: localhost, port for the webpack dev server
-    port: 3001,
+    port: 8080,
     //match output path
     contentBase: path.resolve(__dirname,'./server/server'),
     //enable of hot module reload

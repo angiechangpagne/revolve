@@ -7,6 +7,8 @@ Features:
 2. View, Add, Edit reminders(dashboard)
 3. Get text notifications or emails when reminders are due
 
+Server localhost:3001
+Client: localhost:3000
 
 Client:
 -google maps react
