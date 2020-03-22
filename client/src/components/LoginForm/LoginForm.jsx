@@ -47,7 +47,7 @@ class LoginForm extends Component {
 
   componentDidMount() {
     if(this.state.userCookie){
-      window.location.href = './User/User'; //: window..href="/"
+      window.location.href = "/user"; //: window..href="/"
     }
   }
 
@@ -94,11 +94,13 @@ class LoginForm extends Component {
       })
       .then(res => {
         console.log('res',res);
-        //if email and password are valid
+        console.log('res.data',res.data);
+        console.log('res.userInfo',res.userInfo);
+        //if email and password are valid check res, res.data or res.userInfo
         if(res.data.isValidEmail && res.data.isValidPassword){
           //a GET request for "/home"
-          api.get("/user");
-          Cookies2.set('user', res.data.userInfo);
+          // api.getUserReminders(res._id);
+          Cookies2.set('user', res.data);
           window.location.href="/user";
         }
         //else if email provided isn't in the db
@@ -145,7 +147,8 @@ class LoginForm extends Component {
     this.setState({ isEmailValid: !signUpEmail || this.emailValidate(signUpEmail) });
 
     //if any of the input values are empty
-    if(!signUpFirstName || !signUpLastName || !signUpEmail || !signUpPassword || !signUpPhone){
+    if(!signUpFirstName || !signUpLastName || !signUpEmail || !signUpPassword || !signUpPhone)
+    {
       //set validation states to their approprate values
       createNewUserStates.forEach(stateElement => {
         const inputExist = !!stateElement.input;
@@ -153,7 +156,8 @@ class LoginForm extends Component {
       });
     }
     //else if all input values are no empty
-    else if (signUpFirstName && signUpLastName && signUpEmail && signUpPassword && signUpPhone && isEmailUnique){
+    else if (signUpFirstName && signUpLastName && signUpEmail && signUpPassword && signUpPhone && isEmailUnique)
+    {
       api.saveUser({
         firstName : signUpFirstName,
         lastName : signUpLastName, 
@@ -168,9 +172,11 @@ class LoginForm extends Component {
         } else {
           this.setState({ isEmailUnique: false });
         }
-      }).catch(err => console.log(err));
+      })
+      .catch(err => console.log(err));
     }
-  }
+  };
+
   render() {
     console.log('state before render', this.state);
     return (

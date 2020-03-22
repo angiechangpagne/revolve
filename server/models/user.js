@@ -13,7 +13,7 @@ mongoose.connect(
     }
     ).then(() => console.log('MongoDB Connected')).catch(err => console.log(err));
     //show any mongoose errors
-var db = mongoose.connection;
+const db = mongoose.connection;
 // //show any mongoose errors
 
 db.on("error", (err) => {

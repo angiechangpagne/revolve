@@ -4,7 +4,7 @@
   "description": "revolve",
   "main": "server/server.js",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "concurrently --kill-others node server/server.js",
     "start:ci": "concurrently \"nodemon server\" \"node client\"",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "docker-dev:hot": "docker-compose -f docker-compose-dev-hot.yml up",
