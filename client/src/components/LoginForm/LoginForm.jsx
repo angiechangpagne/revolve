@@ -161,19 +161,14 @@ class LoginForm extends Component {
         password : signUpPassword, 
         mobileNumber : signUpPhone
       })
-      // .then(res => {
-      //   console.log('res on line 170 of Login Form is', res)
-      //   if(res.data.isEmailUnique){
-      //     this.closeModal();
-      //   } else {
-      //     this.setState({ isEmailUnique: false });
-      //   }
-      // }).catch(err => console.log(err));
-      if(signUpEmail.isEmailUnique){
-         this.closeModal();
-      } else {
-         this.setState({ isEmailUnique: false });
-      }
+      .then(res => {
+        console.log('res on line 170 of Login Form is', res)
+        if(res.data.isEmailUnique){
+          this.closeModal();
+        } else {
+          this.setState({ isEmailUnique: false });
+        }
+      }).catch(err => console.log(err));
     }
   }
   render() {

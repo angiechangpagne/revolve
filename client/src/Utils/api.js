@@ -7,11 +7,10 @@ const api = {
     return axios.post('/api/login', loginData);
   },
   //save new user into database
-  saveUser : async (userData) => {
-    console.log("User data line 10 of api frontend", userData);
-    let res = axios.post(`/api/signup`, userData)
-    console.log('axios response after await', res);
-      // .then(resp => {
+  saveUser : (userData) => {
+    // console.log("User  line 10 of api frontend", userData);
+    return axios.post('/api/signup', userData);
+      // .then(resp => {data
       //   console.log('status code', `${resp.statusCode}`);
       //   axios.interceptors.response.use((resp) => {
       //     console.log("Response was received");

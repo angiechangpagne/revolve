@@ -31,8 +31,7 @@ const userController = {
                 res.json({ isValidPassword : false });
               }
             }) 
-      })
-      .catch(err => res.status(422).json(err));
+      }).catch(err => res.status(422).json(err));
     },
     create: (req, res, next) => {
       console.log(req.body);
@@ -43,7 +42,7 @@ const userController = {
         .then(dbUser => {
           //no existing email found, we add the user for registration
           if(!dbUser) {
-            console.log("in Usercontroller, Adding this user to the DB");
+            console.log("in User controller, Adding this user to the DB");
 
             bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
               console.log('this is the hash: '+ hash);
@@ -52,21 +51,21 @@ const userController = {
               db.User.create({
                 firstName, lastName, email, password, mobileNumber
               }).then(()=> {
-                  // res.locals.user=userDoc;
                   res.json({ isEmailUnique : true });
-                  res.send('added to database backend');
                   // next();
+                }).then(() => {
+                  console.log('added to database backend');
                 }).catch(err =>{
                   res.status(422).json(err);
                 });
             });
-            // res.json({ isEmailUnique : true });
           } else {
-            res.json({ isEmailUnique : false })
-            next();
+            res.json({ isEmailUnique : false }).then(()=> {
+              console.log('this email is not unique');
+              // next();
+            });
           }
-        })
-        // .catch(err => res.status(422).json(err));
+        }).catch(err => res.status(422).json(err));
     }
 };
 
