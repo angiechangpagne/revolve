@@ -4,20 +4,22 @@ const path = require('path');
 // const lodash = require('lodash');
 // const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 // const chalk = require('chalk');
-// const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 // const ExtractTextPlguin = require('extract-text-webpack')
 // const outputDirectory = './dist/js/';
 
 module.exports = {
   entry: [
-    './client/src/index.jsx',
+    // 'webpack/hot/dev-server',
+    // 'webpack-dev-server/client?http://localhost:3001',
+    path.resolve(__dirname, './client/src/index.jsx',)
   ],
     //entry point to app
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/',
+    publicPath: "/",
     filename: 'bundle.js',
   },
   devtool: 'eval-source-map',
@@ -26,11 +28,12 @@ module.exports = {
     //Docker host required
     host: '0.0.0.0',
     //host: localhost, port for the webpack dev server
-    port: 8080,
+    port: 3001,
     //match output path
-    contentBase: path.resolve(__dirname,'dist'),
+    contentBase: path.resolve(__dirname,'./server/server'),
     //enable of hot module reload
     hot: true,
+    progress: true, 
     //match output 'publicPath'
     publicPath: '/',
     //fallback to root for other urls
@@ -54,16 +57,15 @@ module.exports = {
     rules: [
       { 
         test: /\.jsx?$/,
-        // include: path.resolve(__dirname, 'index'), 
+        include: path.resolve(__dirname, 'index'), 
         exclude: path.resolve(__dirname, 'node_modules'),
-        use: {
-          loader: 'babel-loader'
-         },
+        loader: 'babel-loader',
+        
       },
       { 
         test: /\.(css|scss)$/, 
         exclude: /node_modules/,
-        // include: path.resolve(__dirname, 'index'), 
+        include: path.resolve(__dirname, 'index'), 
         use: ['style-loader','css-loader'],
       },
       {
@@ -81,6 +83,10 @@ module.exports = {
       },
     ],
   },
+  resolve: {
+    //enable import jsx files
+    extensions: ['','.js', '.jsx']
+  },
   plugins: [
     // new ProgressBarPlugin({
     //   format: 
@@ -88,16 +94,12 @@ module.exports = {
     //     chalk.green.bold(':percent') +
     //     ' (:elapsed seconds)',
     // }),
-    // new webpack.HotModuleReplacementPlugin({
-    //   template: './client/public/index.html',
+    new CleanWebpackPlugin(['dist']),
+    new webpack.HotModuleReplacementPlugin(),
+    // new HtmlWebpackPlugin({
+    //   template: path.resolve(__dirname, 'client/public/index.html'),
     // }),
-    new HtmlWebpackPlugin({
-      template: './client/public/index.html',
-    }),
-    // new OpenBrowserPlugin({ url: `http://localhost:3001` })
-  ],
-  resolve: {
-    //enable import jsx files
-    extensions: ['.js', '.jsx'],
-  },
+    new OpenBrowserPlugin({ url: 'http://localhost:3001' 
+  })
+  ]
 };

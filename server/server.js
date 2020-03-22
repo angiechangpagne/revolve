@@ -4,9 +4,9 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const app = express(); //invoke express  instance
 //require routers
 const apiRouter = require('./api/userAndReminder'); //all the routes in the api routes folder
-const app = express(); //invoke express  
 // const router = express.Router();
 const port = process.env.PORT || 3001;
 //notification scheduler 
@@ -134,14 +134,14 @@ app.get('/', (req, res) => {
 // });
 
 // app.use('/signup', routes);
-app.post('/api/signup',apiRoutes, (req,res,next) => {
-  console.log('in post line 161');
-  res.status(200).json();
-  next()
+// app.post('/api/signup',apiRoutes, (req,res,next) => {
+//   console.log('in post line 161');
+//   res.status(200).json();
+//   next()
 //   // res.send('/signup', routes);
 //   // router.post('/signup', routes);
 //   // .route('/signup');
-})
+// })
 
 // app.post('/api/world', (req, res) => {
 //   console.log('req is', req.body);

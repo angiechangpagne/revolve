@@ -1,6 +1,11 @@
 {
-  "presets": [ "es2016", "react", "stage-3","@babel/preset-env" ],
+  "presets": [ "env", "@babel/preset-react", "stage-0","@babel/preset-env" ],
   "plugins": [
+    "react-html-attrs",
+    "@babel/plugin-proposal-class-properties",
+    "transform-class-properties",
+    "transform-decorators-legacy",
+    "transform-react-jsx-source",
     "react-hot-loader/babel",
     "transform-object-assign",
     ["transform-react-remove-prop-types", {
