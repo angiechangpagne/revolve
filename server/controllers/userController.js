@@ -43,28 +43,37 @@ const userController = {
         .then(dbUser => {
           //no existing email found, we add the user for registration
           if(!dbUser) {
-            console.log("Adding this user to the DB");
+            console.log("in Usercontroller, Adding this user to the DB");
 
             bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
               console.log('this is the hash: '+ hash);
+              const { firstName, lastName, email, password, mobileNumber }= req.body;
+              console.log('req.body',req.body);
               db.User.create({
-                firstName: req.body.firstName,
-                lastName : req.body.lastName,
-                email : req.body.email,
-                password : hash,
-                mobileNumber : req.body.mobileNumber
-              })
-                .then(result => res.json({ isEmailUnique : true }))
-                // .catch(err => res.status(422).json(err));
+                firstName, lastName, email, password, mobileNumber
+              }).then(()=> {
+                  // res.locals.user=userDoc;
+                  res.json({ isEmailUnique : true });
+                  res.send('added to database backend');
+                  // next();
+                }).catch(err =>{
+                  res.status(422).json(err);
+                });
             });
             // res.json({ isEmailUnique : true });
-          } else{
+          } else {
             res.json({ isEmailUnique : false })
+            next();
           }
         })
-        .catch(err => res.status(422).json(err))
-        return next();
+        // .catch(err => res.status(422).json(err));
     }
 };
 
+
+// firstName: req.body.firstName,
+//                 lastName : req.body.lastName,
+//                 email : req.body.email,
+//                 password : hash,
+//                 mobileNumber : req.body.mobileNumber
 module.exports = userController;

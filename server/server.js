@@ -1,6 +1,7 @@
 // 'use strict';
 // require('dotenv').config();
 //declare dependencies
+// const mongoose = require('mongoose')
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -11,27 +12,38 @@ const apiRouter = require('./api/userAndReminder'); //all the routes in the api 
 const port = 3001;
 //notification scheduler 
 
-const createError = require('http-errors');
-
-const cors = require('cors');
-
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const scheduler = require('./scheduler');
-
 //configure body parser for AJAX requests, request body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const createError = require('http-errors');
+const logger = require('morgan');
+const scheduler = require('./scheduler');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+app.use(cors());
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+//add routes to be used in our app
+app.use('/api',apiRouter);
+
+// app.post(`/api/signup`,(req, res, next) => {
+//   // apiRouter.route(`/signup`);
+//   console.log('about to go to api routes middleware from express server');
+//   app.use(`/signup`,apiRouter);
+
+//   next();
+// });
+
 
 //serve static assets
 console.log("in line 26 of express server and dirname is", __dirname);
 // app.use('/assets', express.static(path.resolve(__dirname, '../client/public/assets')));
 app.use('/public', express.static(path.resolve(__dirname,'public')));
 // app.use(express.static(path.resolve(__dirname, 'client/public/assets')));
-
-//add routes to be used in our app
-app.use('/api',apiRouter);
-
 
 // app.use(logger('dev'));
 //react-router handles route on client side
@@ -68,14 +80,10 @@ nexmo.message.sendSms(from, to, text);
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
-app.use(cors());
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use(express.static(path.resolve(__dirname, 'public')));
+
 
 // app.use('/users',Users);
+
 
 //mongodb+srv://violet:<password>@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority
 //  const client = new MongoClient( mongoURI, { useNewUrlParser: true });
@@ -85,7 +93,7 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 //  });
 
 //const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority";
+// const uri = "mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority";
 // const client = new MongoClient(uri, { useNewUrlParser: true });
 // client.connect(err => {
 //   const collection = client.db("test").collection("devices");
@@ -171,6 +179,12 @@ app.use((err, req, res, next) =>  {
   res.render('error');
 });
 
+
+// mongoose.connect(url,{useNewUrlParser: true})
+// .then(()=>{
+//   app.listen(port, () => console.log(`🌎  ==> Server Listening on port ${port}`));
+// })
+// .catch(err => console.log(err));
 const server=app.listen(port, () => console.log(`🌎  ==> Server Listening on port ${port}`));
 
 // const io = socketio(server);

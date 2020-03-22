@@ -1,7 +1,6 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
-
-const MONGODC_URI = 'mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority';
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const MONGODB_URI = 'mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority';
 //set up a promise in mongoose
 mongoose.Promise=global.Promise=global.Promise;
 //Connect to MongoDB
@@ -13,17 +12,21 @@ mongoose.connect(
     dbName: 'revolve'
     }
     ).then(() => console.log('MongoDB Connected')).catch(err => console.log(err));
-    const db = mongoose.connection;
+    //show any mongoose errors
+var db = mongoose.connection;
+// //show any mongoose errors
 
-//show any mongoose errors
 db.on("error", (err) => {
   console.log("Mongoose Error: ", err);
 });
-
 //once logged in to db through mongoose, log a success message
 db.once("open", () => {
   console.log("Mongoose connection successful.");
 });
+// //once logged in to db through mongoose, log a success message
+// db.once("open", () => {
+//   console.log("Mongoose connection successful.");
+// });
 // //Set up default mongoose connection
 // var mongoDB = 'mongodb://127.0.0.1/my_database';
 // mongoose.connect(mongoDB, { useNewUrlParser: true });

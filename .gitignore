@@ -1,3 +1,9 @@
+# General
+.DS_Store
+
+# output from webpack
+dist/
+
 # Logs
 logs
 *.log
@@ -102,3 +108,14 @@ dist
 
 # TernJS port file
 .tern-port
+
+# zip file for initial aws deployment
+*.zip
+
+
+# jest coverage
+coverage/
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

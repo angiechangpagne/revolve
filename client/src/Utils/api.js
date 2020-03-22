@@ -4,12 +4,25 @@ const api = {
   //get user document from User Collection
   getUser: (loginData) => {
     //console.log("In the api call function");
-    return axios.post(`/api/login`, loginData);
+    return axios.post('/api/login', loginData);
   },
   //save new user into database
-  saveUser : (userData) => {
+  saveUser : async (userData) => {
     console.log("User data line 10 of api frontend", userData);
-    return axios.post(`/api/signup`, userData);
+    let res = axios.post(`/api/signup`, userData)
+    console.log('axios response after await', res);
+      // .then(resp => {
+      //   console.log('status code', `${resp.statusCode}`);
+      //   axios.interceptors.response.use((resp) => {
+      //     console.log("Response was received");
+      //     return resp;
+      //   }, err => {
+      //     return Promise.reject(err);
+      //   });
+      // })
+      // .catch(error => {
+      //   console.log(error);
+      // });
   }, 
   //get all reminders for the current user
   getUserReminders : (userId) => {
@@ -17,7 +30,13 @@ const api = {
   }, 
   //save reminder for current user
   saveUserReminder : (userId, rmdrData) => {
-    return axios.post(`/api/user/${userId}/rmdr`, rmdrData);
+    axios.post(`/api/user/${userId}/rmdr`, rmdrData)
+      .then(response => console.log(response))
+      .catch(error => {
+        if(!error.status){
+          alert('unauthorized');
+        } //console.log(error.response)
+      });
   },
   //update reminder
   updateUserReminder : (userId, rmdrId, rmdrData) => {

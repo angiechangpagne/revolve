@@ -11,11 +11,11 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 // const outputDirectory = './dist/js/';
 
 module.exports = {
-  entry: [
+  entry: 
     // 'webpack/hot/dev-server',
     // 'webpack-dev-server/client?http://localhost:3001',
-    path.resolve(__dirname, './client/src/index.jsx',)
-  ],
+    // path.resolve(__dirname, 
+    './client/src/index.jsx',
     //entry point to app
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -30,7 +30,7 @@ module.exports = {
     //host: localhost, port for the webpack dev server
     port: 8080,
     //match output path
-    contentBase: path.resolve(__dirname,'./server/server'),
+    contentBase: path.resolve(__dirname,'dist'),
     //enable of hot module reload
     hot: true,
     progress: true, 
@@ -96,9 +96,10 @@ module.exports = {
     // }),
     new CleanWebpackPlugin(['dist']),
     new webpack.HotModuleReplacementPlugin(),
-    // new HtmlWebpackPlugin({
-    //   template: path.resolve(__dirname, 'client/public/index.html'),
-    // }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './client/public/index.html'),
+      // manifest: path.resolve(__dirname,'./client/public/manifest.json')
+    }),
     new OpenBrowserPlugin({ url: 'http://localhost:3001' 
   })
   ]

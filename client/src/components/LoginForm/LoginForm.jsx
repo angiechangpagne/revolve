@@ -47,7 +47,7 @@ class LoginForm extends Component {
 
   componentDidMount() {
     if(this.state.userCookie){
-      window.location.href = '/user'; //: window..href="/"
+      window.location.href = './User/User'; //: window..href="/"
     }
   }
 
@@ -85,7 +85,6 @@ class LoginForm extends Component {
 
     this.setState(newState);
 
-
     //if all client-side input validation pass
     if(this.state.loginEmail && this.state.loginPassword){
       //send request to server for provided user login creds
@@ -98,7 +97,7 @@ class LoginForm extends Component {
         //if email and password are valid
         if(res.data.isValidEmail && res.data.isValidPassword){
           //a GET request for "/home"
-          axios.get("/user");
+          api.get("/user");
           Cookies2.set('user', res.data.userInfo);
           window.location.href="/user";
         }
@@ -123,7 +122,7 @@ class LoginForm extends Component {
 
   handleSignupFormSubmit = (event) => {
     //prevent page form refreshing by default
-    // event.preventDefault();
+    event.preventDefault();
     console.log("I clicked the save new user butten");
     const {
       signUpFirstName,
@@ -162,16 +161,19 @@ class LoginForm extends Component {
         password : signUpPassword, 
         mobileNumber : signUpPhone
       })
-      .then(res => {
-        console.log('res on line 170 of Login Form is', res);
-
-        if(res.data.isEmailUnique){
-          this.closeModal();
-        } else {
-          this.setState({ isEmailUnique: false });
-        }
-      })
-      .catch(err => console.log(err));
+      // .then(res => {
+      //   console.log('res on line 170 of Login Form is', res)
+      //   if(res.data.isEmailUnique){
+      //     this.closeModal();
+      //   } else {
+      //     this.setState({ isEmailUnique: false });
+      //   }
+      // }).catch(err => console.log(err));
+      if(signUpEmail.isEmailUnique){
+         this.closeModal();
+      } else {
+         this.setState({ isEmailUnique: false });
+      }
     }
   }
   render() {

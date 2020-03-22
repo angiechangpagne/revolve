@@ -1,29 +1,27 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
-
-const MONGODC_URI = 'mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority';
-//set up a promise in mongoose
-mongoose.Promise=global.Promise=global.Promise;
-//Connect to MongoDB
-mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/revolve", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    //sets name of DB that collections are part of
-    dbName: 'revolve'
-    }
-    ).then(() => console.log('MongoDB Connected')).catch(err => console.log(err));
-    const db = mongoose.connection;
+// const MONGODC_URI = 'mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority';
+// //set up a promise in mongoose
+// mongoose.Promise=global.Promise=global.Promise;
+// //Connect to MongoDB
+// mongoose.connect(
+//   process.env.MONGODB_URI || "mongodb://localhost/revolve", {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     //sets name of DB that collections are part of
+//     dbName: 'revolve'
+//     }
+//     ).then(() => console.log('MongoDB Connected')).catch(err => console.log(err));
 
 //show any mongoose errors
-db.on("error", (err) => {
-  console.log("Mongoose Error: ", err);
-});
+// db.on("error", (err) => {
+//   console.log("Mongoose Error: ", err);
+// });
 
 //once logged in to db through mongoose, log a success message
-db.once("open", () => {
-  console.log("Mongoose connection successful.");
-});
+// db.once("open", () => {
+//   console.log("Mongoose connection successful.");
+// });
 // const Twilio = require('twilio');
 // const config = require('../../config');
 const Nexmo = require('nexmo');

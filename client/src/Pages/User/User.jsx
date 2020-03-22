@@ -19,7 +19,7 @@ class User extends Component {
         </div>
         <div className="row">
           <div className="col-sm-12">
-              <Human className="clearfix" backgroundImage="">
+              <Human className="clearfix" backgroundImage="../../public/assets/background.jpg">
                 <div className="row">
                   <div className="col-sm-4">
                     <RmdrForm user={user} />
