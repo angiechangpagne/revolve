@@ -13,7 +13,7 @@ const Landing = (props) => {
        
         <div className="container">
           <div className="col-sm-8 col-sm-offset-2">
-            <a id="foo"> <LoginForm /></a>
+            <a id="foo"> <LoginForm> {props} </LoginForm></a>
           </div>
         </div>
         <br></br><br></br>

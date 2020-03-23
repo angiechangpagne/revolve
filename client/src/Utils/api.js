@@ -9,7 +9,20 @@ const api = {
   //save new user into database
   saveUser : (userData) => {
     // console.log("User  line 10 of api frontend", userData);
-    return axios.post('/api/signup', userData);
+    const params = new URLSearchParams();
+// params.append('event_id', eventId);
+// params.append('item_id', itemId);
+// params.append('description', description);
+    return axios.post('/api/signup', userData, {
+      headers: {
+        'Content-type': 'application/json',
+      }
+    });
+    // axios({
+    //   method: 'post',
+    //   url: '/api/event/item',
+    //   data: params
+    // })
       // .then(resp => {data
       //   console.log('status code', `${resp.statusCode}`);
       //   axios.interceptors.response.use((resp) => {
@@ -29,7 +42,7 @@ const api = {
   }, 
   //save reminder for current user
   saveUserReminder : (userId, rmdrData) => {
-    axios.post(`/api/user/${userId}/rmdr`, rmdrData)
+    return axios.post(`/api/user/${userId}/rmdr`, rmdrData)
       .then(response => console.log(response))
       .catch(error => {
         if(!error.status){

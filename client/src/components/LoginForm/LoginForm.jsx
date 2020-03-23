@@ -5,36 +5,45 @@ import Modal from 'react-modal';
 import Cookies2 from 'js-cookie';
 
 class LoginForm extends Component {
-        state = {
-          //state is for existing user login input element values
-          loginEmail : "",
-          loginPassword : "",
-          //state to aid validate existing user login
-          isLoginEmailEmpty: false,
-          isLoginPasswordEmpty: false,
-          isValidEmail: true, 
-          isValidPassword: true,
-          //state for new user input values
-          signUpFirstName : "",
-          signUpLastName : "",
-          signUpEmail : "",
-          signUpPassword: "",
-          signUpPhone: "",
-          emailValidation: "",
-          //states to aid validating new user input values
-          isSignUpFirstNameEmpty: false,
-          isSignUpLastNameEmpty: false,
-          isSignUpEmailEmpty: false,
-          isSignUpPasswordEmpty: false, 
-          isSignUpPhoneEmpty: false,
-          isEmailUnique: true, 
-          isEmailValid: true,
-          //open/close the state for the modal
-          modalIsOpen: false,
-          //state for user cookie
-          userCookie: ""
-        };
+  constructor(props){
+    super(props);
+    this.state = {
+      //state is for existing user login input element values
+      loginEmail : props ? props.loginEmail : "",
+      loginPassword : props ? props.loginPassword : "",
+      //state to aid validate existing user login
+      isLoginEmailEmpty: false,
+      isLoginPasswordEmpty: false,
+      isValidEmail: true, 
+      isValidPassword: true,
+      //state for new user input values
+      signUpFirstName : "",
+      signUpLastName : "",
+      signUpEmail : "",
+      signUpPassword: "",
+      signUpPhone: "",
+      emailValidation: "",
+      //states to aid validating new user input values
+      isSignUpFirstNameEmpty: false,
+      isSignUpLastNameEmpty: false,
+      isSignUpEmailEmpty: false,
+      isSignUpPasswordEmpty: false, 
+      isSignUpPhoneEmpty: false,
+      isEmailUnique: true, 
+      isEmailValid: true,
+      //open/close the state for the modal
+      modalIsOpen: false,
+      //state for user cookie
+      userCookie: ""
+    };
 
+    this.handleInputChange=this.handleInputChange.bind(this);
+    this.openModal=this.openModal.bind(this);
+    this.closeModal=this.closeModal.bind(this);
+    this.handleLoginFormSubmit=this.handleLoginFormSubmit.bind(this);
+    this.handleSignupFormSubmit=this.handleSignupFormSubmit.bind(this);
+  }
+        
   emailValidate(email) {
     //if email doesn't exist, let it pass through
     //else, check if email is valid
@@ -80,6 +89,8 @@ class LoginForm extends Component {
 
     loginUserStates.forEach(({input, validation}) => {
       const inputExist = !!input;
+      //truthy of value
+      console.log('inputExist', inputExist);
       newState[validation] = !inputExist;
     });
 
@@ -152,10 +163,11 @@ class LoginForm extends Component {
       //set validation states to their approprate values
       createNewUserStates.forEach(stateElement => {
         const inputExist = !!stateElement.input;
+        console.log('if input exists in create', inputExist);
         this.setState({ [stateElement.validation]: !inputExist });
       });
     }
-    //else if all input values are no empty
+    //else if all input values are not empty
     else if (signUpFirstName && signUpLastName && signUpEmail && signUpPassword && signUpPhone && isEmailUnique)
     {
       api.saveUser({
@@ -166,11 +178,13 @@ class LoginForm extends Component {
         mobileNumber : signUpPhone
       })
       .then(res => {
-        console.log('res on line 170 of Login Form is', res)
+        console.log('res on line 170 of Login Form is', res) //promise chain response from server request
         if(res.data.isEmailUnique){
+          this.setState({ isEmailUnique: res.data.isEmailUnique });
           this.closeModal();
         } else {
           this.setState({ isEmailUnique: false });
+          console.log('email already in use');
         }
       })
       .catch(err => console.log(err));

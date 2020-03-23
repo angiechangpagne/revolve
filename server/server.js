@@ -3,9 +3,9 @@
 //declare dependencies
 // const mongoose = require('mongoose')
 const path = require('path');
-const express = require('express');
-const bodyParser = require('body-parser');
-const app = express(); //invoke express  instance
+var express = require('express');
+var bodyParser = require('body-parser');
+var app = express(); //invoke express  instance
 //require routers
 const apiRouter = require('./api/userAndReminder'); //all the routes in the api routes folder
 // const router = express.Router();
@@ -20,7 +20,7 @@ const createError = require('http-errors');
 const logger = require('morgan');
 const scheduler = require('./scheduler');
 const cors = require('cors');
-const cookieParser = require('cookie-parser');
+var cookieParser = require('cookie-parser');
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());

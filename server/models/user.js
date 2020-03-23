@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const reminder = require('./reminder');
 const MONGODB_URI = 'mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority';
 //set up a promise in mongoose
 mongoose.Promise=global.Promise=global.Promise;
