@@ -122,7 +122,7 @@ class LoginForm extends Component {
           });
         }
         //if password provided doesn't match what's in the db
-        else if(!res.isValidPassword){
+        else if(!res.data.isValidPassword){
           //update state
           this.setState({
             isValidPassword: false

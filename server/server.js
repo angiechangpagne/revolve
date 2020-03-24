@@ -1,7 +1,7 @@
 // 'use strict';
 // require('dotenv').config();
 //declare dependencies
-// const mongoose = require('mongoose')
+const mongoose = require('mongoose')
 const path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -162,30 +162,60 @@ app.get('/', (req, res) => {
 // });
 
 // catch 404 and forward to error handler
-app.use((req, res, next) =>  {
-  next(createError(404));
+app.use((req, res) =>  {
+  //next(createError(404));
+  res.sendStatus(404);
 });
 
 // error handler
 app.use((err, req, res, next) =>  {
   // set locals, only providing error in development
-  console.log('line 33 of app with res.locals:', res.locals);
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
+  console.log('line 33 of server with res.locals:', res.locals);
+  // res.locals.message = err.message;
+  // res.locals.error = req.app.get('env') === 'development' ? err : {};
+  const defaultErr = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 400,
+    message: { err: 'An error occurred' },
+  };
+  const errorObj = Object.assign({}, defaultErr, err);
+  console.log(errorObj.log);
+  return res.status(errorObj.status).json(errorObj.message);
   // render the error page
-  res.status(err.status || 500);
-  console.log('res.status:', res.status);
-  res.render('error');
+  // res.status(err.status || 500);
+  // console.log('res.status:', res.status);
+  // res.render('error');
 });
 
+const MONGODB_URI = 'mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority';
+//set up a promise in mongoose
+mongoose.Promise=global.Promise;
+//Connect to MongoDB
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost/revolve", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    //sets name of DB that collections are part of
+    dbName: 'revolve'
+    }
+    ).then(() => console.log('MongoDB Connected')).catch(err => console.log(err));
+    //show any mongoose errors
+const db = mongoose.connection;
+// //show any mongoose errors
 
+db.on("error", (err) => {
+  console.log("Mongoose Error: ", err);
+});
+//once logged in to db through mongoose, log a success message
+db.once("open", () => {
+  console.log("Mongoose connection successful.");
+});
 // mongoose.connect(url,{useNewUrlParser: true})
 // .then(()=>{
 //   app.listen(port, () => console.log(`🌎  ==> Server Listening on port ${port}`));
 // })
 // .catch(err => console.log(err));
-const server=app.listen(port, () => console.log(`🌎  ==> Server Listening on port ${port}`));
+app.listen(port, () => console.log(`🌎  ==> Server Listening on port ${port}`));
 
 // const io = socketio(server);
 // io.on('connection', (socket) => {

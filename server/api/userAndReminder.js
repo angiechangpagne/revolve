@@ -8,8 +8,15 @@ const rmdrController = require('../controllers/rmdrController');
 
 //Matches with "/api/login"
 router.route('/login')
-  .post(userController.findOne, (res)=>{
-    res.status(200).json(res.locals);
+  .post(userController.findOne, (req, res)=>{
+    console.log('res.locals on api middleware routes', res.locals);
+    console.log('res.data', res.data);
+    if(res.locals.isValidPassword) {
+      res.status(200).json(res);
+    }
+    else{
+      res.status(402).json(res);
+    }
   });
 
 //   .post(userController.create(req,res,
@@ -17,9 +24,10 @@ router.route('/login')
 //     );
   //Matches with "/api/signup"
 router.route('/signup')
-  .post(userController.create, (res) =>{
-      console.log('res.locals line 17 of api reminder', res.locals);
-      res.status(200).json(res.locals); //axios res body will be data
+  .post(userController.create, (req,res) =>{
+      console.log('res.locals line 17 of api reminder middle routes', res.locals);
+      res.status(201).send(res); //axios res body will be data
+      //next();
   });
   // ,(req,res) => {
   //   console.log('req.body', req.body);

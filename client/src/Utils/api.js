@@ -1,22 +1,45 @@
 import axios from 'axios';
-
+const client = axios.create();
+// const formData = require('form-data');
 const api = {
   //get user document from User Collection
   getUser: (loginData) => {
     //console.log("In the api call function");
-    return axios.post('/api/login', loginData);
+    return axios.post('/api/login', loginData).then(res => {
+      console.log('axios res for login received', res);
+      // axios.interceptors.response.use((res) => {
+      //   console.log('res interceptions', client.interceptors.response);
+        return res;
+      // }, err => { return Promise.reject(err);
+      // });
+    }, err => {
+          return Promise.reject(err);
+    });
   },
   //save new user into database
   saveUser : (userData) => {
     // console.log("User  line 10 of api frontend", userData);
-    const params = new URLSearchParams();
-// params.append('event_id', eventId);
-// params.append('item_id', itemId);
-// params.append('description', description);
-    return axios.post('/api/signup', userData, {
-      headers: {
-        'Content-type': 'application/json',
-      }
+    //  let data=new formData();
+
+    // const params = new URLSearchParams();
+      // data.append('firstname', userData.firstname);
+      // data.append('lastname', userData.lastname);
+      // data.append('email', userData.email);
+      // data.append('password', userData.password);
+      // data.append('phoneNumber', userData.phoneNumber);
+
+    return axios.post('/api/signup', userData,{
+      headers: { 'content-type': 'application/json' }
+    }).then(res => {
+      console.log('axios res received', res);
+    
+      // axios.interceptors.response.use((res) => {
+      //   console.log('res interceptions', client.interceptors.response);
+        return res;
+      // }, err => { return Promise.reject(err);
+      // });
+    }, err => {
+          return Promise.reject(err);
     });
     // axios({
     //   method: 'post',

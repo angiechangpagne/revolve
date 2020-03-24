@@ -1,29 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const reminder = require('./reminder');
-const MONGODB_URI = 'mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority';
-//set up a promise in mongoose
-mongoose.Promise=global.Promise=global.Promise;
-//Connect to MongoDB
-mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/revolve", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    //sets name of DB that collections are part of
-    dbName: 'revolve'
-    }
-    ).then(() => console.log('MongoDB Connected')).catch(err => console.log(err));
-    //show any mongoose errors
-const db = mongoose.connection;
-// //show any mongoose errors
-
-db.on("error", (err) => {
-  console.log("Mongoose Error: ", err);
-});
-//once logged in to db through mongoose, log a success message
-db.once("open", () => {
-  console.log("Mongoose connection successful.");
-});
+const bcrypt = require('bcryptjs');
+const SALT_WORK_FACTOR = 10;
 // //once logged in to db through mongoose, log a success message
 // db.once("open", () => {
 //   console.log("Mongoose connection successful.");
@@ -38,7 +17,7 @@ db.once("open", () => {
 // db.on('error', console.error.bind(console, 'MongoDB connection error:')); = require('mongoose')
 
 const userSchema = new Schema({
-  firstname: {
+  firstName: {
     type: String, 
     required: true
   },
@@ -50,13 +29,15 @@ const userSchema = new Schema({
     type: String,
     required: true,
     validate: (email) => {
-      return /^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)
-    }
+      //return /^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)
+    },
+    unique: true
   },
   password: {
     type: String,
     min: [6 ,'Password too short'],
-    max: 16
+    max: 16,
+    required: true
   },
   mobileNumber: {
     type: String,
@@ -76,7 +57,25 @@ const userSchema = new Schema({
   ]
 });
 
-const User = mongoose.model("User", userSchema);
+//to store hash passwords from middleware input on signup form
+//we cannot use arrow syntax because we need to keep the context of this.
+userSchema.pre('save', function(next){
+  bcrypt.hash(this.password, SALT_WORK_FACTOR, (err, hash) => {
+    console.log('this is the hash in user mongoose schema: '+ hash);
+
+    if(err) return next(err);
+    //reassign document to hashed version. 
+    this.password=hash;
+    //next call to save
+    return next();
+  })
+})
+
+
+const User = mongoose.model('User', userSchema); //EXTRACT SCHEMA MONGOOSE MODEL
+
+
+
 //create Schema
 // const UserSchema = new Schema({
 //   first_name: {
