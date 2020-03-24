@@ -36,7 +36,7 @@ class MapRender extends Component {
       });
     });
 
-    let marker = new window.google.maps.Market({
+    let marker = new window.google.maps.Marker({
       map: map,
       position: {
         lat: this.state.lat,

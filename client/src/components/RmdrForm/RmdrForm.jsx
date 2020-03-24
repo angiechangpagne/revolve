@@ -6,7 +6,7 @@ import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from 'react-select';
 //css for react select
-//import 'react-select/dist/react-select.css';
+// import 'react-select/dist/react-select.css';
 //require for auto completie address as input form 
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
@@ -15,7 +15,8 @@ class RmdrForm extends Component{
     super(props);
     this.state = {
       rmdrName : "",
-      rmdrTime : moment("MM dd hh aa").toDate(),
+      date: new Date(),
+      rmdrTime : new Date(),
       rmdrNotification : "",
       rmdrNotificationLabel : "",
       rmdrNotificationNumber : "",
@@ -32,9 +33,7 @@ class RmdrForm extends Component{
     this.handleInputChange=this.handleInputChange.bind(this);
     this.handleFormSubmit=this.handleInputChange.bind(this);
     this.handleNotificationChange=this.handleNotificationChange.bind(this);
-    this.handleNotificationChanges=this.handleNotificationChanges.bind(this);
-    this.onAddressChange=this.onAddressChange.bind(this);
-    this.onChange=this.onChange.bind(this);
+    this.setAddress=this.setAddress.bind(this);
     this.loadReminders=this.loadReminders.bind(this);
   }
   
@@ -50,7 +49,7 @@ class RmdrForm extends Component{
     //set the suer cookie state
     this.setState({
       rmdrName: rmdrName || '',
-      rmdrTime: moment(),
+      rmdrTime: new Date(),
       rmdrNotification: rmdrNotification || '',
       rmdrNotificationNumber: rmdrNotificationNumber || user.mobileNumber, 
       rmdrNotificationLabel: rmdrNotificationLabel || ''
@@ -67,11 +66,19 @@ class RmdrForm extends Component{
     }
   }
 
-  handleInputChange = (event) => {
+  handleInputChange = event => {
     //update state for ever key stroke change in input elements
     const { name, value } = event.target;
     this.setState({
       [name] : value
+    });
+  };
+
+  //this method in binding inherits from places autocomplete, must have same method definition
+  setAddress = (address) => {
+  
+    this.setState({ 
+      address : address
     });
   };
 
@@ -95,29 +102,29 @@ class RmdrForm extends Component{
       if(this.props.rmdrId){
         console.log("I am about to update reminder");
 
-        // geocodeByAddress(this.state.address)
-        //   .then(results => getLatLng(results[0]))
-        //   .then(latLng => API.updateUserReminder(this.props.user._id, this.props.rmdrId, {
-        //     reminderName: this.state.rmdrName,
-        //     time: this.state.rmdrTime,
-        //     reminderNumber: this.state.rmdrNotification,
-        //     notification: this.state.rmdrNotification,
-        //     notificationLabel: this.state.rmdrNotificationLabel,
-        //     address: this.state.address,
-        //     coordinates: latLng
-        //   }))
-        //   .then(res => {
-        //     //empty the elemeents
-        //     this.setState({
-        //       rmdrName : "",
-        //       rmdrTime : moment(),
-        //       rmdrNotification : "",
-        //       rmdrNotificationLabel : "",
-        //       address : "",
-        //     });
-        //     window.location.reload();
-        //   })
-        //   .catch(err => console.log(err))
+        geocodeByAddress(this.state.address)
+          .then(results => getLatLng(results[0]))
+          .then(latLng => API.updateUserReminder(this.props.user._id, this.props.rmdrId, {
+            reminderName: this.state.rmdrName,
+            time: this.state.rmdrTime,
+            reminderNumber: this.state.rmdrNotification,
+            notification: this.state.rmdrNotification,
+            notificationLabel: this.state.rmdrNotificationLabel,
+            address: this.state.address,
+            coordinates: latLng
+          }))
+          .then(res => {
+            //empty the elemeents
+            this.setState({
+              rmdrName : "",
+              rmdrTime : new Date(),
+              rmdrNotification : "",
+              rmdrNotificationLabel : "",
+              address : "",
+            });
+            window.location.reload();
+          })
+          .catch(err => console.log(err))
       } else {
         console.log("I am now about to create appointment");
 
@@ -136,7 +143,7 @@ class RmdrForm extends Component{
             //empty out input elements
             this.setState({
               rmdrName : "",
-              rmdrTime : moment(),
+              rmdrTime : new Date(),
               rmdrNotification : "",
               rmdrNotificationLabel : "",
               address : ""
@@ -150,7 +157,7 @@ class RmdrForm extends Component{
       }
     }
   };
-
+//moment(date).format('DD-MM-YYYY')
   handleDateChange = date => {
     this.setState({
       rmdrTime : date
@@ -163,7 +170,7 @@ class RmdrForm extends Component{
       rmdrNotificationLabel : selectedOption.label
     });
     console.log(`Selected: ${selectedOption.label}`);
-  }
+  };
 
   loadReminders = () => {
     console.log("I am trying to load my reminders");
@@ -174,17 +181,16 @@ class RmdrForm extends Component{
         this.setState({ reminders: res.locals[0].reminders });
       })
       .catch(err => console.error(err));
-  }
+  };
 
-  onAddressChange = (address) => {
-    this.setState({ address })
-  }
 
   render(){
-    
+        //console.log(this.state);
+    //console.log(this.state.apptDate.format('LLL')); 
+    //input props for address autocomplete
     const inputProps = {
       value : this.state.address,
-      onChange : this.onAddressChange,
+      onChange : this.setAddress,
       placeholder :"address"
     }
     const cssClasses = {
@@ -202,27 +208,27 @@ class RmdrForm extends Component{
           <form>
             <div className="group">
               <input 
+                id="rmdr-name"
                 className="inputMaterial"
                 type="text"
                 name="rmdrName"
+                placeholder="Reminder Name"
                 value={this.state.rmdrName}
                 onChange={this.handleInputChange}
-                id="rmdr-name"
-                required> </input>
+                required/>
               <span className="highlight"></span>
               <span className="bar"></span>
-              <label className="animated bounceInLeft"> reminder name</label>
+              <label className="animated bounceInLeft"> Reminder Name</label>
             </div>
             <div className="group">
-              {/* <PlacesAutocomplete 
+              <PlacesAutocomplete 
                 classNames={cssClasses}
                 type="text"
                 name="address"
                 inputProps={inputProps}
-                value={this.state.address}
                 id="address"
                 required
-            /> */}
+            />
             <span className="highlight"></span>
             <span className="bar"></span>
             {/*<label className="animated bounceInLeft"> address</label>*/}
@@ -231,13 +237,10 @@ class RmdrForm extends Component{
               <DatePicker 
                 className="inputMaterial"
                 id="rmdr-date"
-                selected={this.state.rmdrTime}
+                selected={this.state.date}
                 onChange={this.handleDateChange}
                 showTimeSelect
-                timeFormat="HH:mm"
-                timeIntervals={15}
-                dateFormat="MMMM d, YYYY h:mm a"
-                timeCaption="time"
+                dateFormat="Pp"
                 />
               <span className="highlight"></span>
               <span className="bar"></span>
@@ -252,14 +255,14 @@ class RmdrForm extends Component{
                   required></input>
               <span className="highlight"></span>
               <span className="bar"> </span>
-              <label className="animated bounceInLeft">mobile number</label>
+              <label className="animated bounceInLeft">Mobile Number</label>
             </div>
             <div className="group">
               <Select 
                 className="selectForm"
                 name="rmdrNotification"
                 value={this.state.rmdrNotification}
-                onChange={this.handleNotificationChanges}
+                onChange={this.handleNotificationChange}
                 options = {[
                   { value: '2880', label: '2 days' },
                   { value: '1440', label: '1 day' },
