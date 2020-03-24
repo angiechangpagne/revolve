@@ -8,7 +8,7 @@ import Select from 'react-select';
 //css for react select
 // import 'react-select/dist/react-select.css';
 //require for auto completie address as input form 
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import PlacesAutocomplete, { geocodeByAddress, geocodeByPlaceId, getLatLng } from 'react-places-autocomplete';
 
 class RmdrForm extends Component{
   constructor(props){
@@ -26,7 +26,12 @@ class RmdrForm extends Component{
       isRmdrDateEmpty : false,
       isRmdrTimeEmpty : false,
       reminders : [],
-      address : ""
+      address : "",
+      setAddress: (address) => {
+        this.setState({ 
+          address : address
+        });
+      }
     };
 
     this.handleDateChange=this.handleDateChange.bind(this);
@@ -76,7 +81,6 @@ class RmdrForm extends Component{
 
   //this method in binding inherits from places autocomplete, must have same method definition
   setAddress = (address) => {
-  
     this.setState({ 
       address : address
     });
@@ -220,19 +224,21 @@ class RmdrForm extends Component{
               <span className="bar"></span>
               <label className="animated bounceInLeft"> Reminder Name</label>
             </div>
-            <div className="group">
-              <PlacesAutocomplete 
+            {/* <div className="group"> */}
+              {/* <PlacesAutocomplete 
                 classNames={cssClasses}
                 type="text"
                 name="address"
-                inputProps={inputProps}
+                value={this.state.address}
+                onChange={this.setAddress}
+                placeholder="address"
                 id="address"
                 required
-            />
-            <span className="highlight"></span>
-            <span className="bar"></span>
+            >{inputProps}</PlacesAutocomplete> */}
+            {/* <span className="highlight"></span>
+            <span className="bar"></span> */}
             {/*<label className="animated bounceInLeft"> address</label>*/}
-            </div>
+            {/* </div> */}
             <div className="group">
               <DatePicker 
                 className="inputMaterial"

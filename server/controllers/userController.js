@@ -28,7 +28,7 @@ const userController = {
           { 
               res.locals.isValidEmail=false;
               console.log('could not find user');
-              res.json({ isValidEmail : false});
+              res.json();
               // next(); 
           }
           //check if user matches db
@@ -107,6 +107,10 @@ const userController = {
               } else {
                 res.locals.id = doc._id;
                 res.locals.isEmailUnique= true;
+                res.locals.firstName=doc.firstName;
+                res.locals.lastName=doc.lastName;
+                res.locals.email=doc.password;
+                res.locals.password=doc.password;
                 res.status(200);
                 return next();
               }
@@ -131,13 +135,14 @@ const userController = {
           //       });
           //    });
             } else {
-            // res.locals.isEmailUnique= false;
-            // next({
-            //     log: `this email is not unique error is: `,
-            //     message: {err: 'Error in UserController to create, already exists'}
-            // });
-            res.data.isEmailUnique=false;
-            return next();
+              res.locals.isEmailUnique= false;
+              console.log('not unique email');
+              return next();
+              // next({
+              //     log: `this email is not unique error is: `,
+              //     message: {err: 'Error in UserController to create, already exists'}
+              // });
+              
           }
         })
         .catch(err => {

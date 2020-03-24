@@ -24,10 +24,16 @@ router.route('/login')
 //     );
   //Matches with "/api/signup"
 router.route('/signup')
-  .post(userController.create, (req,res) =>{
+  .post(userController.create, (req,res,next) =>{
       console.log('res.locals line 17 of api reminder middle routes', res.locals);
-      res.status(201).send(res); //axios res body will be data
-      //next();
+      if(res.locals.isEmailUnique){
+        res.status(203); //axios res body will be data
+        return res.json(res.locals);
+      }
+      else{
+        res.status(403);
+        return res.json(res.locals);
+      }
   });
   // ,(req,res) => {
   //   console.log('req.body', req.body);

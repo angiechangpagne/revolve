@@ -1,5 +1,5 @@
 import axios from 'axios';
-const client = axios.create();
+// const client = axios.create();
 // const formData = require('form-data');
 const api = {
   //get user document from User Collection
