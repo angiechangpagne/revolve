@@ -105,24 +105,24 @@ class LoginForm extends Component {
       })
       .then(res => {
         console.log('res',res);
-        console.log('res.data',res.data);
-        console.log('res.userInfo',res.userInfo);
+        console.log('res.locals',res.locals);
+        console.log('res.userInfo',res.locals.userInfo);
         //if email and password are valid check res, res.data or res.userInfo
-        if(res.data.isValidEmail && res.data.isValidPassword){
+        if(res.locals.isValidEmail && res.locals.isValidPassword){
           //a GET request for "/home"
           // api.getUserReminders(res._id);
-          Cookies2.set('user', res.data);
+          Cookies2.set('user', res.locals);
           window.location.href="/user";
         }
         //else if email provided isn't in the db
-        else if (!res.data.isValidEmail) {
+        else if (!res.locals.isValidEmail) {
           //update state
           this.setState({
             isValidEmail: false
           });
         }
         //if password provided doesn't match what's in the db
-        else if(!res.data.isValidPassword){
+        else if(!res.locals.isValidPassword){
           //update state
           this.setState({
             isValidPassword: false
@@ -179,8 +179,8 @@ class LoginForm extends Component {
       })
       .then(res => {
         console.log('res on line 170 of Login Form is', res) //promise chain response from server request
-        if(res.data.isEmailUnique){
-          this.setState({ isEmailUnique: res.data.isEmailUnique });
+        if(res.locals.isEmailUnique){
+          this.setState({ isEmailUnique: res.locals.isEmailUnique });
           this.closeModal();
         } else {
           this.setState({ isEmailUnique: false });
@@ -199,7 +199,7 @@ class LoginForm extends Component {
         id="modal" 
         className="col-sm-6 col-sm-offset-3 animated pulse"
         isOpen={this.state.modalIsOpen}>
-        <form id="form" className="topBefore animated headShake">
+        <form id="form" method="POST" className="topBefore animated headShake">
           <div className="modal-header">
             <button type="button" className="close" onClick={this.closeModal}>&times;</button>
             <h4 id="SignUpForm" className="modal-title">Sign Up Form</h4>

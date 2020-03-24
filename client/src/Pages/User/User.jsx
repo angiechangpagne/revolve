@@ -8,10 +8,9 @@ import Cookies2 from "js-cookie";
 import MapRender from "../../components/Map/Map";
 import LinkGoogleMaps from "../../components/LinkGoogleMaps/LinkGoogleMaps";
 
-class User extends Component {
-  render(){
+const User = () => {
     const user = Cookies2.getJSON('user');
-    console.log("this.state on line 15 of user", this.state);
+    console.log("line 15 of user, user:", user);
     return (
       <div className="wrapper">
         <div className="row">
@@ -43,7 +42,6 @@ class User extends Component {
         <br></br>
       </div>
     );
-  }
 }
 
 export default User;

@@ -26,10 +26,10 @@ const userController = {
         //check if user exists in db, if the Monog dbUser Document is length>0
           if(!dbUser)  //if user does not exist, they cannot log in
           { 
-              // res.locals.isValidEmail=false;
+              res.locals.isValidEmail=false;
               console.log('could not find user');
               res.json({ isValidEmail : false});
-              // next(); no next
+              // next(); 
           }
           //check if user matches db
           else
@@ -41,13 +41,17 @@ const userController = {
                   res.locals.isValidEmail= true;
                   res.locals.isValidPassword= true;
                   res.locals.userInfo= dbUser;
+                  res.locals.firstName=dbUser.firstName;
+                  res.locals.lastName=dbUser.lastName;
+                  res.locals.email=dbUser.email;
+                  res.locals.password=req.body.password;
                   res.locals.id=dbUser._id; //pass send to next link of chain, then status
                   res.status(201);
-                  res.json({
-                    isValidEmail : true,
-                    isValidPassword : true,
-                    userInfo : dbUser
-                  });
+                  // res.json({
+                  //   isValidEmail : true,
+                  //   isValidPassword : true,
+                  //   userInfo : dbUser
+                  // });
                   
                   return next();
                 }
@@ -60,7 +64,8 @@ const userController = {
                 //   // });
                 // }
                 else{
-                    res.json({ isValidPassword : false});
+                    // res.json({ isValidPassword : false});
+                    res.locals.isValidPassword=false;
                     next({
                       log: 'does not match password bcrypt', message: {log: 'passwords do not match'}
                     });
@@ -101,7 +106,7 @@ const userController = {
                 return res.render('../../client/LoginForm');
               } else {
                 res.locals.id = doc._id;
-                res.data.isEmailUnique= true;
+                res.locals.isEmailUnique= true;
                 res.status(200);
                 return next();
               }
@@ -131,7 +136,7 @@ const userController = {
             //     log: `this email is not unique error is: `,
             //     message: {err: 'Error in UserController to create, already exists'}
             // });
-            res.json({ isEmailUnique : false });
+            res.data.isEmailUnique=false;
             return next();
           }
         })

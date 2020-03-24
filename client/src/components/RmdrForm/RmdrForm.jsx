@@ -11,21 +11,33 @@ import Select from 'react-select';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 class RmdrForm extends Component{
-  state = {
-    rmdrName : "",
-    rmdrTime : moment(),
-    rmdrNotification : "",
-    rmdrNotificationLabel : "",
-    rmdrNotificationNumber : "",
-    isRmdrNameEmpty: false,
-    isRmdrNotificationNumberEmpty : false,
-    isRmdrNotificationEmpty : false, 
-    isRmdrDateEmpty : false,
-    isRmdrTimeEmpty : false,
-    reminders : [],
-    address : ""
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      rmdrName : "",
+      rmdrTime : moment("MM dd hh aa").toDate(),
+      rmdrNotification : "",
+      rmdrNotificationLabel : "",
+      rmdrNotificationNumber : "",
+      isRmdrNameEmpty: false,
+      isRmdrNotificationNumberEmpty : false,
+      isRmdrNotificationEmpty : false, 
+      isRmdrDateEmpty : false,
+      isRmdrTimeEmpty : false,
+      reminders : [],
+      address : ""
+    };
 
+    this.handleDateChange=this.handleDateChange.bind(this);
+    this.handleInputChange=this.handleInputChange.bind(this);
+    this.handleFormSubmit=this.handleInputChange.bind(this);
+    this.handleNotificationChange=this.handleNotificationChange.bind(this);
+    this.handleNotificationChanges=this.handleNotificationChanges.bind(this);
+    this.onAddressChange=this.onAddressChange.bind(this);
+    this.onChange=this.onChange.bind(this);
+    this.loadReminders=this.loadReminders.bind(this);
+  }
+  
   componentWillMount(){
     const {
       user, 
@@ -70,7 +82,7 @@ class RmdrForm extends Component{
       { input : this.state.rmdrNotificationNumber, validation : "isRmdrNotificationNumberEmpty"},
       { input : this.state.rmdrTime, validation : "isRmdrTimeEmpty"},
       { input : this.state.rmdrNotification, validation : "isRmdrNotificationEmpty"},
-    ];
+      ];
 
     if(!this.state.rmdrName || !this.state.rmdrNotificationNumber || !this.state.rmdrTime || !this.state.rmdrNotification){
       //set the validation states to their appropriate values
@@ -83,29 +95,29 @@ class RmdrForm extends Component{
       if(this.props.rmdrId){
         console.log("I am about to update reminder");
 
-        geocodeByAddress(this.state.address)
-          .then(results => getLatLng(results[0]))
-          .then(latLng => API.updateUserReminder(this.props.user._id, this.props.rmdrId, {
-            reminderName: this.state.rmdrName,
-            time: this.state.rmdrTime,
-            reminderNumber: this.state.rmdrNotification,
-            notification: this.state.rmdrNotification,
-            notificationLabel: this.state.rmdrNotificationLabel,
-            address: this.state.address,
-            coordinates: latLng
-          }))
-          .then(res => {
-            //empty the elemeents
-            this.setState({
-              rmdrName : "",
-              rmdrTime : moment(),
-              rmdrNotification : "",
-              rmdrNotificationLabel : "",
-              address : "",
-            });
-            window.location.reload();
-          })
-          .catch(err => console.log(err))
+        // geocodeByAddress(this.state.address)
+        //   .then(results => getLatLng(results[0]))
+        //   .then(latLng => API.updateUserReminder(this.props.user._id, this.props.rmdrId, {
+        //     reminderName: this.state.rmdrName,
+        //     time: this.state.rmdrTime,
+        //     reminderNumber: this.state.rmdrNotification,
+        //     notification: this.state.rmdrNotification,
+        //     notificationLabel: this.state.rmdrNotificationLabel,
+        //     address: this.state.address,
+        //     coordinates: latLng
+        //   }))
+        //   .then(res => {
+        //     //empty the elemeents
+        //     this.setState({
+        //       rmdrName : "",
+        //       rmdrTime : moment(),
+        //       rmdrNotification : "",
+        //       rmdrNotificationLabel : "",
+        //       address : "",
+        //     });
+        //     window.location.reload();
+        //   })
+        //   .catch(err => console.log(err))
       } else {
         console.log("I am now about to create appointment");
 
@@ -158,8 +170,8 @@ class RmdrForm extends Component{
     API.getUserReminders(this.props.user._id)
       .then(res => {
         console.log("I got my reminders back!");
-        console.log(res.data[0].reminders);
-        this.setState({ reminders: res.data[0].reminders });
+        console.log(res.locals[0].reminders);
+        this.setState({ reminders: res.locals[0].reminders });
       })
       .catch(err => console.error(err));
   }
@@ -169,6 +181,7 @@ class RmdrForm extends Component{
   }
 
   render(){
+    
     const inputProps = {
       value : this.state.address,
       onChange : this.onAddressChange,
@@ -201,14 +214,15 @@ class RmdrForm extends Component{
               <label className="animated bounceInLeft"> reminder name</label>
             </div>
             <div className="group">
-              <PlacesAutocomplete 
+              {/* <PlacesAutocomplete 
                 classNames={cssClasses}
                 type="text"
                 name="address"
                 inputProps={inputProps}
+                value={this.state.address}
                 id="address"
                 required
-            />
+            /> */}
             <span className="highlight"></span>
             <span className="bar"></span>
             {/*<label className="animated bounceInLeft"> address</label>*/}
@@ -220,7 +234,11 @@ class RmdrForm extends Component{
                 selected={this.state.rmdrTime}
                 onChange={this.handleDateChange}
                 showTimeSelect
-                dateFormat="LLL"/>
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                dateFormat="MMMM d, YYYY h:mm a"
+                timeCaption="time"
+                />
               <span className="highlight"></span>
               <span className="bar"></span>
             </div>
