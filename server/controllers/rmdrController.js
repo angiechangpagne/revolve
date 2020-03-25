@@ -2,31 +2,41 @@ const express = require('express');
 const db = require('../models');
 
 module.exports = {
-  create: (req, res) => {
+  create: (req, res,next) => {
     console.log('server received post request');
-    console.log('req.body line 7 of appController', req.body);
+    console.log('req.body line 7 of reminderController', req.body);
+    console.log('req.params', req.params);
     const userId= req.params.userid;
     db.Reminder.create(req.body)
       .then(dbRmdr => {
         console.log(dbRmdr); //if create success reminder find user id and push it to user's reminder array
-        return dbUser.findOneAndUpdate({ _id: userId }, {$push: { reinders: dbRmdr._id }}, { new: true });
-        //res.json(dbRmdr)
+        res.locals.rmdrName=dbRmdr.reminderName;
+        res.locals.rmdrId=dbRmdr._id;
+        res.locals.rmdrTime=dbRmdr.time;
+        res.locals.rmdrNotification=dbRmdr.notification;
+        res.locals.rmdrNotificationLabel=dbRmdr.notificationLabel
+        db.User.findOneAndUpdate({ _id: userId }, {$push: { reminders: dbRmdr._id }}, { new: true });
       })
       .then(dbUser => {
         //if user updated successfully, send response back to client in json
-        return res.json(dbUser)
+        console.log(dbUser);
+        res.locals.userInfo=dbUser;
+        next();
       })
       .catch(err => res.status(422).json(err));
   },
-  get: (req, res) => {
-    console.log('Retrieve Reminders');
-    const userId = req.param('userid');
+  get: (req, res, next) => {
+    console.log('Retrieve Reminders in controller, req.body:', req.body);
+    console.log('req.params', req.params);
+    const userId = req.params.userId;
 
     db.User.find({ _id : userId })
       .populate('reminders')
-      .then(dbUserRmdrs => 
-        res.json(dbRmdrs)
-        );
+      .then(dbRmdrs => {
+        console.log('from controller dbRmdrs', dbRmdrs);
+        res.locals.reminders=(dbRmdrs);
+        next();
+      });
   },
   update: (req, res) => {
     const id = req.param('id');

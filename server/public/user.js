@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const reminder = require('./reminder');
+const reminder = require('../models/reminder');
 const bcrypt = require('bcryptjs');
 const SALT_WORK_FACTOR = 10;
 // //once logged in to db through mongoose, log a success message

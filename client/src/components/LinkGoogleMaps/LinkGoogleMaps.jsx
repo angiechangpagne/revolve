@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './LinkGoogleMaps.css';
 
-class LinkGoogleMaps extends Component{
-  render(){
+const LinkGoogleMaps = () => {
+  
     return (
       <div className="animated bounceInLeft">
         <a className="sample" href="https://www.google.com/maps/dir/Current+Location/" target="_blank">
-          <span className="text"> linke to google maps</span>
+          <span className="text"> Link to google maps</span>
           <span className="line -right"> </span>
           <span className="line -top"> </span>
           <span className="line -left"> </span>
@@ -14,7 +14,6 @@ class LinkGoogleMaps extends Component{
         </a>
       </div>
     )
-  };
-}
+};
 
 export default LinkGoogleMaps;

@@ -1,6 +1,7 @@
 import axios from 'axios';
 // const client = axios.create();
 // const formData = require('form-data');
+//client router to server route middlewares and controller
 const api = {
   //get user document from User Collection
   getUser: (loginData) => {
@@ -61,12 +62,24 @@ const api = {
   }, 
   //get all reminders for the current user
   getUserReminders : (userId) => {
-    return axios.get(`/api/user/${userId}/rmdr`);
+    return axios.get(`/api/user/${userId}/rmdr`)
+      .then(res => {
+        console.log('in axios', res);
+        return res;
+      })
+      .catch(err => {
+        console.log('err');
+      });
   }, 
   //save reminder for current user
   saveUserReminder : (userId, rmdrData) => {
-    return axios.post(`/api/user/${userId}/rmdr`, rmdrData)
-      .then(response => console.log(response))
+    return axios.post(`/api/user/${userId}/rmdr`, rmdrData, {
+      headers: { 'content-type': 'application/json' }
+    })
+    .then(res => {
+        console.log('in axios', res);
+        return res;
+      })
       .catch(error => {
         if(!error.status){
           alert('unauthorized');

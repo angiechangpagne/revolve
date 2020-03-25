@@ -105,24 +105,24 @@ class LoginForm extends Component {
       })
       .then(res => {
         console.log('res',res);
-        console.log('res.locals',res.locals);
-        console.log('res.userInfo',res.locals.userInfo);
+        console.log('res.data',res.data);
+        console.log('res.userInfo',res.data.userInfo);
         //if email and password are valid check res, res.data or res.userInfo
-        if(res.locals.isValidEmail && res.locals.isValidPassword){
+        if(res.data.isValidEmail && res.data.isValidPassword){
           //a GET request for "/home"
-          // api.getUserReminders(res._id);
-          Cookies2.set('user', res.locals);
+          // api.getUserReminders(res.data.id);
+          Cookies2.set('user', res.data);
           window.location.href="/user";
         }
         //else if email provided isn't in the db
-        else if (!res.locals.isValidEmail) {
+        else if (!res.data.isValidEmail) {
           //update state
           this.setState({
             isValidEmail: false
           });
         }
         //if password provided doesn't match what's in the db
-        else if(!res.locals.isValidPassword){
+        else if(!res.data.isValidPassword){
           //update state
           this.setState({
             isValidPassword: false
@@ -179,8 +179,8 @@ class LoginForm extends Component {
       })
       .then(res => {
         console.log('res on line 170 of Login Form is', res) //promise chain response from server request
-        if(res.locals.isEmailUnique){
-          this.setState({ isEmailUnique: res.locals.isEmailUnique });
+        if(res.data.isEmailUnique){
+          this.setState({ isEmailUnique: res.data.isEmailUnique });
           this.closeModal();
         } else {
           this.setState({ isEmailUnique: false });

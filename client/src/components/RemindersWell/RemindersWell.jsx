@@ -1,39 +1,72 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
 import api from '../../Utils/api';
-// import RmdrForm from '../RmdrForm/RmdrForm';
 import Reminder from '../Reminder/Reminder';
+//props sent from user, use for get, redirect exit
+//delete
+import Cookies2 from "js-cookie";
 
 class RemindersWell extends Component{
-  state = {
-    rmdrId: '',
-    rmdrName: '',
-    rmdrTime: '',
-    rmdrNotification: '',
-    rmdrNotificationNumber: '',
-    rmdrNotificationLabel: '',
-    reminders: [],
-    isModalOpen: false,
-    isMapModalOpen: false,
-    lat: '',
-    lng: '',
-    address: '',
+  constructor(props){
+    super(props);
+    this.state = {
+      rmdrId: '',
+      rmdrName: '',
+      rmdrTime: '',
+      rmdrNotification: '',
+      rmdrNotificationNumber: '',
+      rmdrNotificationLabel: '',
+      reminders: [],
+      isModalOpen: false,
+      isMapModalOpen: false,
+      lat: '',
+      lng: '',
+      address: '',
+    }
+    this.handleDelete=this.handleDelete.bind(this); //bindint to this class context
+    this.handleUpdate=this.handleUpdate.bind(this);
+    this.handleRenderMap=this.handleRenderMap.bind(this);
+    this.onUpdateReminder=this.onUpdateReminder.bind(this);
+    this.loadReminders=this.loadReminders.bind(this);
+    this.getPastReminders=this.getPastReminders.bind(this);
+    this.getUpcomingReminders=this.getUpcomingReminders.bind(this);
   }
-
+  
   componentWillMount() {
+    if(!this.props.user){
+      console.log('log in again');
+      Cookies2.remove('user');
+      window.location.href="/";
+    }
+    const {
+      user,
+      rmdrName,
+      rmdrNotification,
+      rmdrNotificationLabel,
+      rmdrNotificationNumber
+    } = this.props;
+     //set the userer cookie state
+     this.setState({
+      rmdrName: rmdrName || '',
+      rmdrTime: new Date(),
+      rmdrNotification: rmdrNotification || '',
+      rmdrNotificationNumber: rmdrNotificationNumber || user.mobileNumber, 
+      rmdrNotificationLabel: rmdrNotificationLabel || '',
+      user: user || {}
+    });
     this.loadReminders();
   }
 
   handleDelete = (rmdr) => {
     const { user } = this.props;
-    api.deleteUserReminder(user._id, rmdr._id)
+    api.deleteUserReminder(user.id, rmdr.id)
       .then(() => {
         this.loadReminders();
       });
   }
   handleUpdate = (rmdr) => {
     this.setState({
-      rmdrId: rmdr._id,
+      rmdrId: rmdr.id,
       rmdrName: rmdr.reminderName,
       rmdrTime: rmdr.time,
       rmdrNotification: rmdr.notification,
@@ -70,13 +103,20 @@ class RemindersWell extends Component{
   loadReminders = () => {
     console.log('I am trying to load reminders');
 
-    api.getUserReminders(this.props.user._id)
+    api.getUserReminders(this.props.user.id)
       .then(res => {
         console.log("I got my reminders back!");
-        console.log(res.data[0].reminders);
-        this.setState({ reminders: res.data[0].reminders });
+        console.log(res.data.reminders);
+        this.setState({ reminders: res.data.reminders });
       })
       .catch(err => console.error(err));
+  }
+  getUpcomingReminders(){
+    return this.state.reminders.filter(rmdr => rmdr.notification > 0);
+  }
+
+  getPastReminders(){
+    return this.state.reminders.filter(rmdr => rmdr.notification <= 0);
   }
 
   render() {
@@ -92,6 +132,7 @@ class RemindersWell extends Component{
     const upcomingRmdrs= this.getUpcomingReminders();
     const pastRmdrs = this.getPastReminders();
     console.log(this.state);
+
     return(
       <div>
         <div className="container">
@@ -128,17 +169,8 @@ class RemindersWell extends Component{
               handleSubmit={this.onUpdateReminder} />
           </Modal>
         </div>
-
       </div>
     );
-  }
-
-  getUpcomingReminders(){
-    return this.state.reminders.filter(rmdr => rmdr.notification > 0);
-  }
-
-  getPastReminders(){
-    return this.state.reminders.filter(rmdr => rmdr.notification <= 0);
   }
 }
 

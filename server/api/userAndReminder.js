@@ -10,12 +10,12 @@ const rmdrController = require('../controllers/rmdrController');
 router.route('/login')
   .post(userController.findOne, (req, res)=>{
     console.log('res.locals on api middleware routes', res.locals);
-    console.log('res.data', res.data);
+    // console.log('res.data', res.data);
     if(res.locals.isValidPassword) {
-      res.status(200).json(res);
+      return res.json(res.locals);
     }
     else{
-      res.status(402).json(res);
+      return res.json(res.locals);
     }
   });
 
@@ -24,14 +24,15 @@ router.route('/login')
 //     );
   //Matches with "/api/signup"
 router.route('/signup')
-  .post(userController.create, (req,res,next) =>{
+  .post(userController.create, (req,res) =>{
       console.log('res.locals line 17 of api reminder middle routes', res.locals);
       if(res.locals.isEmailUnique){
-        res.status(203); //axios res body will be data
+        // res.status(203); //axios res body will be data, end of backend middleware express chain,
         return res.json(res.locals);
+        //return res.json(res.locals);
       }
       else{
-        res.status(403);
+        // res.status(403);
         return res.json(res.locals);
       }
   });
@@ -42,8 +43,14 @@ router.route('/signup')
   // }
 
 router.route('/user/:userid/rmdr/:id*?')
-  .get(rmdrController.get)
-  .post(rmdrController.create)
+  .get(rmdrController.get, (req, res) => {
+    console.log('in middleware route reminder', res.locals);
+    return res.json(res.locals);
+  })
+  .post(rmdrController.create, (req, res) => {
+    console.log('post request of reminder in reminder api routes middleware', res.locals);
+    return res.json(res.locals);
+  })
   .put(rmdrController.update)
   .delete(rmdrController.remove);
 

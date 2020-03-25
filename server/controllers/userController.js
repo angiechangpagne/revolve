@@ -28,8 +28,8 @@ const userController = {
           { 
               res.locals.isValidEmail=false;
               console.log('could not find user');
-              res.json();
-              // next(); 
+              // res.json(res.locals);
+              next(); 
           }
           //check if user matches db
           else
@@ -46,14 +46,14 @@ const userController = {
                   res.locals.email=dbUser.email;
                   res.locals.password=req.body.password;
                   res.locals.id=dbUser._id; //pass send to next link of chain, then status
-                  res.status(201);
+                  // res.status(201).json(res.locals);
                   // res.json({
                   //   isValidEmail : true,
                   //   isValidPassword : true,
                   //   userInfo : dbUser
                   // });
                   
-                  return next();
+                  next();
                 }
                 // if(error){
                 //   console.log('passwords do not match');
@@ -66,6 +66,7 @@ const userController = {
                 else{
                     // res.json({ isValidPassword : false});
                     res.locals.isValidPassword=false;
+                    // res.json(res.locals);
                     next({
                       log: 'does not match password bcrypt', message: {log: 'passwords do not match'}
                     });
@@ -111,8 +112,8 @@ const userController = {
                 res.locals.lastName=doc.lastName;
                 res.locals.email=doc.password;
                 res.locals.password=doc.password;
-                res.status(200);
-                return next();
+                // res.json(res.locals);
+                next();
               }
             });
                 // .then((userDoc)=> {
@@ -137,7 +138,8 @@ const userController = {
             } else {
               res.locals.isEmailUnique= false;
               console.log('not unique email');
-              return next();
+              // res.json(res.locals);
+              next();
               // next({
               //     log: `this email is not unique error is: `,
               //     message: {err: 'Error in UserController to create, already exists'}
@@ -152,7 +154,7 @@ const userController = {
     /**
       * getAllUsers
       *
-      * @param next - Callback Function w signature (err, users)
+      * @param next - Callback Function w signature (err, users), for the segment of the middleware chain
       */
 };
 

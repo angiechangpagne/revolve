@@ -1,8 +1,8 @@
 .navbar {
-  background: #2D3A4E;
+  background: rgb(197, 211, 200);
 }
 .navbar-title {
-  color: white !important;
+  color: rgba(94, 94, 94, 0.995) !important;
   font-family: Roboto;
   font-size: 15px;
   font-weight: 300; 

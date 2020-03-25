@@ -1,4 +1,4 @@
 module.exports = {
   Reminder : require('./reminder'),
-  User : require('./user')
+  User : require('../public/user')
 };

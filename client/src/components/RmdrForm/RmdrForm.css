@@ -1,6 +1,6 @@
 .form-control:focus{
-  border-color: black;  
-  box-shadow: none; 
+  border-color: rgba(107, 119, 115, 0.865);  
+  box-shadow: rgb(220, 219, 220); 
   -webkit-box-shadow: none;
 } 
 
@@ -21,6 +21,7 @@
 
 #logintoregister {
   margin-top: 30px;
+  padding-top: 30px;
 }
 
 #PlacesAutocomplete__root{
@@ -39,52 +40,52 @@
     content: "address";
 }
 .selectForm {
-  background-color: #fff;
+  background-color: rgb(164, 191, 149);
   font-family: Roboto;
-  font-size: 15px;
-  font-weight: 300;
-  text-overflow: ellipsis;
-  width: 300px;
+  font-size: 17px;
+  font-weight: 330;
+  /* text-overflow: ellipsis; */
+  width: 550px;
 }
 
 /* BOX LOGIN */
 .box{
   position: relative;
-  /*margin: auto;*/
+  /* margin: auto; */
   font-family: Roboto;
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 300;
-  height: 590px;
+  height: 600px;
   top: 40px;
   left: 0;
   z-index: 200;
   right: 0;
-  width:400px;
-  color:#253042;
-  border-radius: 3px;
+  width:570px;
+  color:#5f5d61;
+  border-radius: 17px;
   background: #fff;
   margin-bottom: 100px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(253, 255, 129, 0.748), 0 6px 6px rgba(53, 196, 110, 0.23);
+  /* overflow: hidden; */
 }
-
 
 .box h1{
   /*margin-left: 40px;*/
   padding-bottom: 50px;
-    font-size:25px;
-  font-weight: 300;
-  color: #253042;
+  font-size:25px;
+  font-weight: 280;
+  color: #687e7d;
 }
 
-.box button{
-    background: #cfd8dc;
+.box #buttonlogintoregister{
+    background: #c9e1d6;
     border:0;
-    color: #2D3A4E;
+    color: rgb(155, 157, 115);
     padding:10px;
     font-size: 16px;
-  font-weight: 300;
-    width:100px;
+    font-weight: 300;
+    width:130px;
+    height:50px;
     margin:20px auto;
     display:block;
     cursor:pointer;
@@ -93,20 +94,20 @@
     border-radius: 2px;
 }
 
-.box button:active{
-    background: #2D3A4E;
-  color: #2D3A4E;
+.box #buttonlogintoregister :active{
+    background: rgb(138, 186, 169);
+    color: rgb(174, 177, 155);
 }
 
-.box button:hover{
-        background: #2D3A4E;
-  color: #FFF;
+.box #buttonlogintoregister:hover{
+    background: #86875e;
+    color: #FFF;
     -webkit-transition: all 0.4s;
     transition: all 0.4s;
 }
 
 .box p{
-    font-size:14px;
+    font-size:17px;
     text-align:center;
 }
 
@@ -117,30 +118,32 @@
 }
 
 .selectForm {
-  width: 300px;
+  width: 500px;
+  align-content: center;
 }
 
 .inputMaterial              {
   font-size:18px;
   padding:10px 10px 10px 5px;
   display:block;
-  width:300px;
+  width:470px;
+  height: 220px;
   border:none;
-  border-bottom:1px solid #757575;
+  border-bottom:1px solid #9cbeb7;
 }
 
 .inputMaterial:focus        { outline:none;}
 
 /* LABEL ======================================= */
 
-label                {
+label     {
   color:#999; 
-  font-size:14px;
+  font-size:17px;
   font-weight:normal;
   position:absolute;
   pointer-events:none;
-  left:5px;
-  top:10px;
+  left:10px;
+  top:5px;
   transition:0.2s ease all; 
   -moz-transition:0.2s ease all; 
   -webkit-transition:0.2s ease all;
@@ -150,18 +153,18 @@ label                {
 .inputMaterial:focus ~ label, .inputMaterial:valid ~ label      {
   top:-20px;
   font-size:14px;
-  color: #2D3A4E;
+  color: rgba(45, 78, 68, 0.671);
 }
 
 /* BOTTOM BARS ================================= */
-.bar    { position:relative; display:block; width:300px; }
+.bar    { position:relative; display:block; width:500px; }
 .bar:before, .bar:after     {
   content:'';
   height:2px; 
   width:0;
   bottom:1px; 
   position:absolute;
-  background: #2D3A4E; 
+  background: rgba(57, 87, 79, 0.563); 
   transition:0.2s ease all; 
   -moz-transition:0.2s ease all; 
   -webkit-transition:0.2s ease all;
@@ -211,21 +214,21 @@ label                {
 }
 
 .form-group {
-  margin-left : 0px;
-  padding-left : 0px;
+  margin-left : 20px;
+  padding-left : 20px;
 }
 
 
 /* ANIMATIONS ================ */
 @-webkit-keyframes inputHighlighter {
-    from { background:#5264AE; }
+    from { background:rgb(133, 223, 204); }
   to    { width:0; background:transparent; }
 }
 @-moz-keyframes inputHighlighter {
-    from { background:#5264AE; }
+    from { background:rgba(82, 174, 116, 0.658); }
   to    { width:0; background:transparent; }
 }
 @keyframes inputHighlighter {
-    from { background:#5264AE; }
+    from { background:rgb(132, 174, 161); }
   to    { width:0; background:transparent; }
   }
