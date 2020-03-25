@@ -106,7 +106,7 @@ class RemindersWell extends Component{
     api.getUserReminders(this.props.user.id)
       .then(res => {
         console.log("I got my reminders back!");
-        console.log(res.data.reminders);
+        console.log(res.data);
         this.setState({ reminders: res.data.reminders });
       })
       .catch(err => console.error(err));
@@ -139,28 +139,28 @@ class RemindersWell extends Component{
           <h4 className="animated headShake" id="UpcomingEvents"> Revolve Reminders </h4>
           <div className="well" id="upcoming-well">
             {upcomingRmdrs.map(rmdr => 
-            <div>
+            (<div>
               <Reminder 
                 rmdr={rmdr}
-                key={rmdr._id}
+                key={rmdr.id}
                 handleUpdate={this.handleUpdate}
                 handleDelete={this.handleDelete}
                 handleRenderMap={this.handleRenderMap} />
-            </div>
+            </div>)
             )}
           </div>
           <h4 className="animated headShake"> Past Reminders</h4>
           <div className="well" id="past-well">
             {pastRmdrs.map(rmdr => 
-                <Reminder 
+                (<Reminder 
                     rmdr={rmdr}
-                    key={rmdr._id}
+                    key={rmdr.id}
                     handleDelete={this.handleDelete}
-                    />
+                    />)
             )}
           </div>
           <Modal isOpen={this.state.isModalOpen}>
-            <Reminder user={user}
+            <Reminder user={this.props}
               rmdrId={rmdrId}
               rmdrName={rmdrName}
               rmdrTime={rmdrTime}

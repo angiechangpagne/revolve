@@ -64,7 +64,7 @@ const api = {
   getUserReminders : (userId) => {
     return axios.get(`/api/user/${userId}/rmdr`)
       .then(res => {
-        console.log('in axios', res);
+        console.log('in axios for get reminders', res);
         return res;
       })
       .catch(err => {
@@ -77,7 +77,7 @@ const api = {
       headers: { 'content-type': 'application/json' }
     })
     .then(res => {
-        console.log('in axios', res);
+        console.log('in axios from createReminder', res);
         return res;
       })
       .catch(error => {

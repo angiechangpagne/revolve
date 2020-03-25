@@ -11,8 +11,44 @@ import Search from './Search';
 //css for react select
 // import 'react-select/dist/react-select.css';
 //require for auto completie address as input form 
-import PlacesAutocomplete, { geocodeByAddress, geocodeByPlaceId, getLatLng } from 'react-places-autocomplete';
+// import PlacesAutocomplete, { geocodeByAddress, geocodeByPlaceId, getLatLng } from 'react-places-autocomplete';
 
+//update
+ //   if(this.props.rmdrId){
+      //     console.log("I am about to update reminder");
+  //replace with findOne by reminder ID and check if it is already there
+          // api.updateUserReminder(this.state.user.id, rmdrId,{
+          //   reminderName: this.state.rmdrName,
+          //   time: this.state.rmdrTime,
+          //   reminderNumber: this.state.rmdrNotification,
+          //   notification: this.state.rmdrNotification,
+          //   notificationLabel: this.state.rmdrNotificationLabel
+          // })
+          
+          // geocodeByAddress(this.state.address)
+          // .then(results => getLatLng(results[0]))
+            // .then(latLng => API.updateUserReminder(this.props.user._id, this.props.rmdrId, {
+            //   reminderName: this.state.rmdrName,
+            //   time: this.state.rmdrTime,
+            //   reminderNumber: this.state.rmdrNotification,
+            //   notification: this.state.rmdrNotification,
+            //   notificationLabel: this.state.rmdrNotificationLabel,
+            //   address: this.state.address,
+            //   coordinates: latLng
+            // }))
+  
+            // .then(res => {
+            //   //empty the elemeents
+            //   this.setState({
+            //     rmdrName : res.data.rmdrName,
+            //     rmdrTime : new Date(),
+            //     rmdrNotification : "",
+            //     rmdrNotificationLabel : "",
+            //   });
+            //   window.location.reload();
+            // })
+            // .catch(err => console.log(err))
+        // } else {
 
  // geocodeByAddress(this.state.address)
             //   .then(results => getLatLng(results[0]))
@@ -54,10 +90,11 @@ class RmdrForm extends Component{
       rmdrNotification : undefined,
       rmdrNotificationLabel : undefined,
       date: new Date(),
-      rmdrTime : undefined,
+      rmdrTime : new Date(),
       rmdrNotificationNumber : undefined,
       isRmdrNameEmpty: true,
       isRmdrNotificationNumberEmpty : true,
+      isRmdrNotificationLabelEmpty : true,
       isRmdrNotificationEmpty : true, 
       isRmdrDateEmpty : true,
       isRmdrTimeEmpty : true,
@@ -122,97 +159,61 @@ class RmdrForm extends Component{
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    if(this.props.user===undefined){
-      Cookies2.remove('user');
-      window.location.href="/";
-    }
-    else{
-      const validationStates = [
-        { input : this.state.rmdrName, validation : "isRmdrNameEmpty"},
-        { input : this.state.rmdrNotificationNumber, validation : "isRmdrNotificationNumberEmpty"},
-        { input : this.state.rmdrTime, validation : "isRmdrTimeEmpty"},
-        { input : this.state.rmdrNotification, validation : "isRmdrNotificationEmpty"},
-        ];
-      // if(!this.state.rmdrName || !this.state.rmdrNotificationNumber || !this.state.rmdrTime || !this.state.rmdrNotification){
-        //set the validation states to their appropriate values
-        //set validation states to their appropriate values
-        validationStates.forEach(({input, validation}) => {
-          let inputExist=!!input;
-          console.log('inputExist', inputExist);
-          validationStates[validation] = !inputExist;
-          // (!stateElement.input) ? this.setState({[stateElement.validation] : false}) : this.setState({[stateElement.validation] : true })
-          // console.log('validation state:',createNewRmdrStates);
-        });
-        this.setState(validationStates);
-      //}//å if the state is already a a reminder, it is stored in the current form state from the previous create response
-      // if (this.props.user && this.state.rmdrName && this.state.rmdrTime && this.state.rmdrNotification && this.state.rmdrNotificationNumber){
-      //   if(this.props.rmdrId){
-      //     console.log("I am about to update reminder");
-  //replace with findOne by reminder ID and check if it is already there
-          // api.updateUserReminder(this.state.user.id, rmdrId,{
-          //   reminderName: this.state.rmdrName,
-          //   time: this.state.rmdrTime,
-          //   reminderNumber: this.state.rmdrNotification,
-          //   notification: this.state.rmdrNotification,
-          //   notificationLabel: this.state.rmdrNotificationLabel
-          // })
-  
-          
-          // geocodeByAddress(this.state.address)
-          // .then(results => getLatLng(results[0]))
-            // .then(latLng => API.updateUserReminder(this.props.user._id, this.props.rmdrId, {
-            //   reminderName: this.state.rmdrName,
-            //   time: this.state.rmdrTime,
-            //   reminderNumber: this.state.rmdrNotification,
-            //   notification: this.state.rmdrNotification,
-            //   notificationLabel: this.state.rmdrNotificationLabel,
-            //   address: this.state.address,
-            //   coordinates: latLng
-            // }))
-  
-  
-            // .then(res => {
-            //   //empty the elemeents
-            //   this.setState({
-            //     rmdrName : res.data.rmdrName,
-            //     rmdrTime : new Date(),
-            //     rmdrNotification : "",
-            //     rmdrNotificationLabel : "",
-            //   });
-            //   window.location.reload();
-            // })
-            // .catch(err => console.log(err))
-        // } else {
-            if(this.props.user===undefined){
-              console.log('user expired, please log in again');
-              Cookies2.remove('user');
-              window.location.href="/";
-            }
-            else{
-              console.log("I am now about to create reminder");
+    // if(this.props.user===undefined){
+    //   Cookies2.remove('user');
+    //   window.location.href="/";
+    // }
+    console.log('to validate states');
+    const{
+      rmdrName,
+      rmdrNotification,
+      rmdrTime,
+      rmdrNotificationLabel,
+      rmdrNotificationNumber
+    } = this.state;
+    
+    const validationStates = [
+      { input : rmdrName, validation : "isRmdrNameEmpty"},
+      { input : rmdrNotificationNumber, validation : "isRmdrNotificationNumberEmpty"},
+      { input : rmdrTime, validation : "isRmdrTimeEmpty"},
+      { input : rmdrNotification, validation : "isRmdrNotificationEmpty"},
+      { input : rmdrNotificationLabel, validation : "isRmdrNotificationLabelEmpty"}
+    ];
 
-              api.saveUserReminder(this.props.user.id, {
-              reminderName : this.state.rmdrName,
-              time : this.state.rmdrTime,
-              reminderNumber : this.state.rmdrNotificationNumber,
-              notification : this.state.rmdrNotification,
-              notificationLabel : this.state.rmdrNotificationLabel
-              }).then(res => {
-                //empty out input elements
-                this.setState({
-                  rmdrName : res.data.rmdrName,
-                  rmdrTime : res.data.rmdrTime,
-                  rmdrId : res.data.id,
-                  rmdrNotification : res.data.rmdrNotification,
-                  rmdrNotificationLabel : res.data.rmdrNotificationLabel,
-                  address : ""
-                });
-                console.log('new state from add', this.state);
-                //reload page and refresh upcoming remminder well
-                
-              }).catch(err => console.log(err));
-              window.location.reload();
-            }
+      if(!rmdrName || !rmdrNotification || !rmdrTime || !rmdrNotificationNumber || !rmdrNotificationLabel){
+        validationStates.forEach((stateElement) => {
+          const inputExist=!!stateElement.input;
+          console.log('inputExist', inputExist);
+          this.setState({ [stateElement.validation] : !inputExist });
+        });
+      }
+      //if the state is already a a reminder, it is stored in the current form state from the previous create response
+      else if (rmdrName && rmdrTime && rmdrNotification && rmdrNotificationNumber && rmdrNotificationLabel)
+      {
+        console.log("I am now about to create reminder");
+       
+        api.saveUserReminder(this.props.user.id, {
+          reminderName : rmdrName,
+          time : rmdrTime,
+          reminderNumber : rmdrNotificationNumber,
+          notification : rmdrNotification,
+          notificationLabel : rmdrNotificationLabel
+        })
+        .then(res => {
+        //empty out input elements
+          console.log('res',res);
+          this.setState({
+          rmdrName : res.data.reminderName,
+          rmdrTime : res.data.time,
+          rmdrId : res.data.id,
+          rmdrNotification : res.data.notification,
+          rmdrNotificationLabel : res.data.notificationLabel,
+          address : ""
+          });
+          console.log('new reminder successfully added to associated user key', this.state);
+          //reload page and refresh upcoming remminder well
+          window.location.href="/user";
+          }).catch(err => console.log(err));
         }
   };
 //moment(date).format('DD-MM-YYYY')
@@ -241,19 +242,9 @@ class RmdrForm extends Component{
   //     .catch(err => console.error(err));
   // }
 
-  render(){
-      //console.log(this.state);
-    //console.log(this.state.apptDate.format('LLL')); 
-    //input props for address autocomplete
-    const inputProps = {
-      value : this.state.address,
-      onChange : this.setAddress
-    }
-    const cssClasses = {
-      root: 'form-group',
-      input: 'address-form-control',
-      autocompleteContainer: 'my-autocomplete-container'
-    }
+  render() {
+    console.log(this.state);
+  
 
     return (
       <div className="container animated pulse">
@@ -294,7 +285,7 @@ class RmdrForm extends Component{
               <DatePicker 
                 className="inputMaterial"
                 id="rmdr-date"
-                selected={this.state.date}
+                selected={this.state.rmdrTime}
                 onChange={this.handleDateChange}
                 showTimeSelect
                 dateFormat="Pp"

@@ -7,6 +7,12 @@ import RemindersWell from "../../components/RemindersWell/RemindersWell";
 import Cookies2 from "js-cookie";
 import MapRender from "../../components/Map/Map";
 import LinkGoogleMaps from "../../components/LinkGoogleMaps/LinkGoogleMaps";
+{/* <div className="row" id='pac-input'>
+<span id='map'><MapRender /></span>
+<span>
+  <LinkGoogleMaps />
+</span>
+</div> */}
 //pass in user Cookies to track .id
 const User = () => {
     const user = Cookies2.getJSON('user');
@@ -30,12 +36,7 @@ const User = () => {
                     <RmdrForm user={user} />
                   </div>
                 </div>
-                <div className="row" id='pac-input'>
-                    <span id='map'><MapRender /></span>
-                    <span>
-                      <LinkGoogleMaps />
-                  </span>
-                </div>
+               
               </Human>
           </div>
         </div>
