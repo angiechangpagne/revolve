@@ -13,6 +13,12 @@ import Search from './Search';
 //require for auto completie address as input form 
 // import PlacesAutocomplete, { geocodeByAddress, geocodeByPlaceId, getLatLng } from 'react-places-autocomplete';
 
+    // {/* <button 
+    //           id="buttonlogintoregister"
+    //           className="animated-bounceInLeft"
+    //           type="submit"
+    //           onClick={this.handleFormSubmit}>Submit 
+    //         </button> */}
 //update
  //   if(this.props.rmdrId){
       //     console.log("I am about to update reminder");
@@ -86,18 +92,17 @@ class RmdrForm extends Component{
   constructor(props){
     super(props);
     this.state = {
-      rmdrName : undefined,
-      rmdrNotification : undefined,
-      rmdrNotificationLabel : undefined,
+      rmdrName : "",
+      rmdrNotification : '1',
+      rmdrNotificationLabel : '1 minute',
       date: new Date(),
       rmdrTime : new Date(),
-      rmdrNotificationNumber : undefined,
-      isRmdrNameEmpty: true,
-      isRmdrNotificationNumberEmpty : true,
-      isRmdrNotificationLabelEmpty : true,
-      isRmdrNotificationEmpty : true, 
-      isRmdrDateEmpty : true,
-      isRmdrTimeEmpty : true,
+      rmdrNotificationNumber : "",
+      isRmdrNameEmpty: false,
+      isRmdrNotificationNumberEmpty : false,
+      isRmdrNotificationLabelEmpty : false,
+      isRmdrNotificationEmpty : false, 
+      isRmdrTimeEmpty : false,
       reminders : [],
       address : "",
       setAddress: (address) => {
@@ -111,6 +116,7 @@ class RmdrForm extends Component{
     this.handleFormSubmit=this.handleInputChange.bind(this);
     this.handleNotificationChange=this.handleNotificationChange.bind(this);
     this.setAddress=this.setAddress.bind(this);
+    this.validate=this.validate.bind(this);
   }
   
   componentWillMount(){
@@ -142,28 +148,21 @@ class RmdrForm extends Component{
     }
   }
 
+  // shouldComponentUpdate(){
+
+  // }
   handleInputChange = (event) => {
     //update state for ever key stroke change in input elements
+    
     const { name, value } = event.target;
     this.setState({
-      [name] : value
+      [name] : value.trim()
     });
+    this.validate();
   };
 
-  //this method in binding inherits from places autocomplete, must have same method definition
-  setAddress = (address) => {
-    this.setState({ 
-      address : address
-    });
-  };
-
-  handleFormSubmit = (event) => {
-    event.preventDefault();
-    // if(this.props.user===undefined){
-    //   Cookies2.remove('user');
-    //   window.location.href="/";
-    // }
-    console.log('to validate states');
+  validate=() => {
+  const newState = {}; //do not reset state or else post request will process without routing to axios
     const{
       rmdrName,
       rmdrNotification,
@@ -179,16 +178,57 @@ class RmdrForm extends Component{
       { input : rmdrNotification, validation : "isRmdrNotificationEmpty"},
       { input : rmdrNotificationLabel, validation : "isRmdrNotificationLabelEmpty"}
     ];
-
-      if(!rmdrName || !rmdrNotification || !rmdrTime || !rmdrNotificationNumber || !rmdrNotificationLabel){
         validationStates.forEach((stateElement) => {
-          const inputExist=!!stateElement.input;
+          const inputExist = !!stateElement.input;
           console.log('inputExist', inputExist);
-          this.setState({ [stateElement.validation] : !inputExist });
+          newState[stateElement.validation] = !inputExist;
         });
-      }
+      this.setState(newState);
+  }
+
+  //this method in binding inherits from places autocomplete, must have same method definition
+  setAddress = (address) => {
+    this.setState({ 
+      address : address
+    });
+  };
+
+  handleFormSubmit = (event) => {
+    event.preventDefault();
+    // if(this.props.user===undefined){
+    //   Cookies2.remove('user');
+    //   window.location.href="/";
+    // }
+    console.log('to validate states');
+    // const newState = {}; //do not reset state or else post request will process without routing to axios
+    const{
+      rmdrName,
+      rmdrNotification,
+      rmdrTime,
+      rmdrNotificationLabel,
+      rmdrNotificationNumber,
+      isRmdrNameEmpty,
+      isRmdrNotificationEmpty,
+      isRmdrNotificationLabelEmpty,
+      isRmdrTimeEmpty,
+      isRmdrNotificationNumberEmpty
+    } = this.state;
+    
+    // const validationStates = [
+    //   { input : rmdrName, validation : "isRmdrNameEmpty"},
+    //   { input : rmdrNotificationNumber, validation : "isRmdrNotificationNumberEmpty"},
+    //   { input : rmdrTime, validation : "isRmdrTimeEmpty"},
+    //   { input : rmdrNotification, validation : "isRmdrNotificationEmpty"},
+    //   { input : rmdrNotificationLabel, validation : "isRmdrNotificationLabelEmpty"}
+    // ];
+    //     validationStates.forEach((stateElement) => {
+    //       const inputExist = !!stateElement.input;
+    //       console.log('inputExist', inputExist);
+    //       newState[stateElement.validation] = !inputExist;
+    //     });
+    //   this.setState(newState);
       //if the state is already a a reminder, it is stored in the current form state from the previous create response
-      else if (rmdrName && rmdrTime && rmdrNotification && rmdrNotificationNumber && rmdrNotificationLabel)
+      if (!isRmdrNameEmpty && !isRmdrTimeEmpty && !isRmdrNotificationEmpty && !isRmdrNotificationNumberEmpty && !isRmdrNotificationLabelEmpty)
       {
         console.log("I am now about to create reminder");
        
@@ -221,6 +261,7 @@ class RmdrForm extends Component{
     this.setState({
       rmdrTime : date
     });
+    this.validate();
   };
 
   handleNotificationChange = (selectedOption) => {
@@ -229,6 +270,7 @@ class RmdrForm extends Component{
       rmdrNotificationLabel : selectedOption.label
     });
     console.log(`Selected: ${selectedOption.label}`);
+    this.validate();
   };
 
   // loadReminders = () => {
@@ -244,25 +286,29 @@ class RmdrForm extends Component{
 
   render() {
     console.log(this.state);
-  
-
     return (
       <div className="container animated pulse">
         <div className="box">
-          <div id="header">
+        <header className="animated headShake">
             <h1 id="logintoregister"><p></p>{`Greetings ${this.props.user.firstName}, let's set up your notifications`} </h1>
-          </div>
+        </header>
         
-          <form>
+          <form id="form" method="POST" className="topBefore animated headShake">
+          <h4 id="group" className="title">Set a New Reminder</h4><p></p>
             <div className="group">
               <input 
                 id="rmdr-name"
+                name="rmdrName"
                 className="inputMaterial"
                 type="text"
-                name="rmdrName"
                 value={this.state.rmdrName}
                 onChange={this.handleInputChange}
                 required/>
+                {this.state.isRmdrNameEmpty &&
+                <div id="error-reminder-name-left-empty" className={!this.state.isRmdrtNameEmpty ? "error-div-signup invisible" : "error-div-signup"}>
+                  <p className="error">Please provide a Reminder!</p>
+                </div>
+                }
               <span className="highlight"></span>
               <span className="bar"></span>
               <label className="animated bounceInLeft"> Reminder Name</label>
@@ -271,54 +317,74 @@ class RmdrForm extends Component{
             <div className="group">
               <input 
                   className="inputMaterial"
-                  type="text" name="rmdrNotificationNumber"
-                  value={this.state.rmdrNotificationNumber}
+                  type="text" 
+                  name="rmdrNotificationNumber"
                   onChange={this.handleInputChange}
                   id="rmdr-notif-num"
+                  value={this.state.rmdrNotificationNumber}
                   required/>
+                  {this.state.isRmdrNotificationNumberEmpty &&
+                  <div id="error-number-left-empty" className={!this.state.isReminderNotificationNumberEmpty ? "error-div-signup invisible" : "error-div-signup"}>
+                    <p className="error">Please provide the number to send reminder to</p>
+                  </div>
+                  } 
               <span className="highlight"></span>
               <span className="bar"> </span>
               <label className="animated bounceInLeft">Mobile Number</label>
           </div>
       
-            <div className="group">
+          <div className="group">
               <DatePicker 
                 className="inputMaterial"
                 id="rmdr-date"
+                name="rmdrTime"
                 selected={this.state.rmdrTime}
                 onChange={this.handleDateChange}
                 showTimeSelect
                 dateFormat="Pp"
                 />
+                {this.state.isRmdrTimeEmpty &&
+                <div id="error-time-left-empty" className="error-div-signup">
+                  <p className="error">Please provide Time of Reminder!</p>
+                </div>
+                }
               <span className="highlight"></span>
               <span className="bar"></span>
-            </div>
+          </div>
             
             <div className="group">
               <Select 
                 className="selectForm"
-                value={this.state.rmdrNotification}
+                name="rmdrNotification"
                 onChange={this.handleNotificationChange}
+                value={this.state.rmdrNotification}
+                label={this.state.rmdrNotificationLabel}
                 options = {[
                   { value: '1440', label: '1 day' },
                   { value: '120', label: '2 hours' },
                   { value: '5', label: '5 minutes' },
                   { value: '1', label: '1 minute' }
                 ]} />
+                 {this.state.isRmdrNotificationEmpty &&
+                  <div id="error-notification-left-empty" className={!this.state.isRmdrNotificationEmpty ? "error-div-signup invisible" : "error-div-signup"}>
+                    <p className="error">Please provide your notification Selection!</p>
+                  </div>
+                  } 
                 <span className="highlight"></span>
                 <span className="bar"></span>
             </div>
-
-            <button 
-              id="buttonlogintoregister"
-              className="animated-bounceInLeft"
-              type="submit"
-              onClick={this.handleFormSubmit}>Submit 
-            </button>
+            <div className="group">
+            <input 
+            id="buttonlogintoregister"
+            type="submit" value="Full Send"
+            className="loginHover"
+            onClick={this.handleFormSubmit}
+            value="Full Send"></input>
+            </div>
           </form>
         </div>
       </div>
-    )
+    );
   }
 }
 

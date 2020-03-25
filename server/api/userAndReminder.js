@@ -41,7 +41,7 @@ router.route('/signup')
   //   res.status(200).json(res.locals.user)
     // .catch(err => console.log("error", err)) 
   // }
-  router.route(`/user/:userid/rmdr:id*?`)
+  router.route('/user/:userId/rmdr:id*?')
     .post(rmdrController.create, (req, res) => {
     console.log('post request of reminder in reminder api routes middleware', res.locals);
     res.json(res.locals);
@@ -52,7 +52,7 @@ router.route('/signup')
     })
 
 
-router.route(`/user/:userid/rmdr/:id*?`)
+router.route(`/user/:userId/rmdr/:id*?`)
   .put(rmdrController.update)
   .delete(rmdrController.remove);
 

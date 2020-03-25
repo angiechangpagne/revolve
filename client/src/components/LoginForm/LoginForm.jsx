@@ -211,7 +211,7 @@ class LoginForm extends Component {
                 </div>
               }
           <input id="name" type="text" placeholder="lastname" value={this.state.signUpLastName} name="signUpLastName" onChange={this.handleInputChange}  className="loginHover"></input>
-                  {this.state.isSignUpLastNameEmpty &&
+                {this.state.isSignUpLastNameEmpty &&
                 <div id="error-last-name-left-empty" className={!this.state.isSignUpLastNameEmpty ? "error-div-signup invisible" : "error-div-signup"}>
                   <p className="error text-center">Please provide your last name!</p>
                 </div>
