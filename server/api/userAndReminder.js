@@ -47,8 +47,8 @@ router.route('/signup')
     return res.json(res.locals);
     })
     .get(rmdrController.get, (req, res) => {
-      console.log('in middleware route get reminder', res.locals);
-      return res.json(res.locals);
+      console.log('in middleware route get reminder res.locals.reminders', res.locals);
+      return res.json(res.locals.reminders);
     })
     .put(rmdrController.update)
     .delete(rmdrController.remove);

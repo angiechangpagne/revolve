@@ -8,10 +8,11 @@ const Reminder = (props) => {
   console.log('reminder component props passed ',props);
     return (
       <div className="panel-body panel-body-upcoming-rmdrs">
+      <p></p>
         <h5> Reminder Name: {props.rmdr.reminderName}</h5>
         <h5> Notification Phone Number: {`(${props.rmdr.reminderNumber.split('').slice(0,3).join('')}) ${props.rmdr.reminderNumber.split('').slice(3,6).join('')}-${props.rmdr.reminderNumber.split('').slice(6).join('')}`} </h5>
         <h5> Date/Time: {moment.tz(props.rmdr.time, props.rmdr.timezone).format('MMMM Do YYYY, h:mm A')}</h5>
-        <h5> Notification: {`${props.rmdr.noificationLabel} before` } </h5> 
+        <h5> Notification: {`${props.rmdr.notificationLabel} before` } </h5> 
         {props.handleUpdate && 
         <button className="btn btn-default" onClick={() => props.handleUpdate(props.rmdr)}> Update </button>
         } &nbsp;

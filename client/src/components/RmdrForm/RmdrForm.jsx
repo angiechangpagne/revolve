@@ -3,7 +3,7 @@ import api from '../../Utils/api';
 import './RmdrForm.css';
 import DatePicker from 'react-datepicker';
 import Cookies2 from "js-cookie";
-
+import Modal from 'react-modal';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from 'react-select';
@@ -105,6 +105,7 @@ class RmdrForm extends Component{
       isRmdrTimeEmpty : false,
       reminders : [],
       user: {},
+      isModalOpen: true,
       address : "",
       setAddress: (address) => {
         this.setState({ 
@@ -271,7 +272,7 @@ class RmdrForm extends Component{
           //reload page and refresh upcoming remminder well
           this.state.user.reminders.push(newState);
           this.props.user.userInfo.reminders.push(newState);
-          // Cookies2.set('reminders', (res.data.reminders));
+          Cookies2.set('reminders', Cookies2.getJSON().push(newState));
           console.log('reminders state', this.state.reminders);
           console.log('Cookies2', Cookies2.getJSON('reminders'));
           window.location.href="/user";
@@ -312,6 +313,11 @@ class RmdrForm extends Component{
     console.log(this.props.user.userInfo);
     return (
       <div className="container animated pulse">
+      <Modal 
+        is="modal" 
+        className="col-sm-6 col-sm-offset-3 animated pulse"
+        isOpen={this.state.isModalOpen}
+        >
         <div className="box">
         <header className="animated headShake">
             <h1 id="logintoregister"><p></p>{`Greetings ${this.props.user.firstName}, let's set up your notifications`} </h1>
@@ -399,6 +405,7 @@ class RmdrForm extends Component{
             </div>
           </form>
         </div>
+        </Modal>
       </div>
     );
   }

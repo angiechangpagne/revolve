@@ -30,10 +30,11 @@ module.exports = {
     console.log('Retrieve Reminders in controller, req.body:', req.body);
     console.log('req.params', req.params);
     const userId = req.params.userId;
-
+    //doc is the reminders result from post hook, it is an array of two objects, reminders and user doc
     db.User.find({ _id : userId }).then((doc) =>{
       console.log('from controller post populate hook', doc);
-      res.locals.reminders=doc;
+      console.log('doc[0].reminders', doc[0].reminders);
+      res.locals.reminders=doc[0].reminders;
       next();
     }).catch(err => console.log(err));
   },
