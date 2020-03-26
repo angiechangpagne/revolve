@@ -108,7 +108,7 @@ class RemindersWell extends Component{
       .then(res => {
         console.log("I got my reminders back!");
         console.log('res.data:', res.data);
-        this.setState({ reminders: (Array.isArray(res.data.reminders) ? [...res.data.reminders] : [...this.props.reminders]) });
+        this.setState({ reminders: (Array.isArray(res.data.reminders) ? [...res.data.reminders] : [...this.props.reminders] || [...this.props.user.userInfo.reminders]) });
       })
       .catch(err => console.error(err));
   }

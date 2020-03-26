@@ -104,6 +104,7 @@ class RmdrForm extends Component{
       isRmdrNotificationEmpty : false, 
       isRmdrTimeEmpty : false,
       reminders : [],
+      user: {},
       address : "",
       setAddress: (address) => {
         this.setState({ 
@@ -247,6 +248,13 @@ class RmdrForm extends Component{
           console.log('res',res);
           console.log('res.locals',res.locals);
           console.log('res.data',res.data);
+          console.log('res.data.reminders',res.data.reminders);
+          let newState= {rmdrName : res.data.rmdrName,
+            mdrTime : res.data.rmdrTime,
+            rmdrId : res.data.id,
+            rmdrNotification : res.data.rmdrNotification,
+            rmdrNotificationLabel : res.data.rmdrNotificationLabel,
+            address : "" }
           this.setState({
               reminders  : this.state.reminders.push(
               {
@@ -255,15 +263,17 @@ class RmdrForm extends Component{
                 rmdrId : res.data.id,
                 rmdrNotification : res.data.rmdrNotification,
                 rmdrNotificationLabel : res.data.rmdrNotificationLabel,
-                address : "",
-              }
-              )
+                address : ""
+              })
           })
+
           console.log('new reminder successfully added to associated user key', this.state.reminders);
           //reload page and refresh upcoming remminder well
-          this.props.user.reminders=[...res.data.reminders];
-          this.props.reminders=[...res.data.reminders];
-          Cookies2.set('reminders',[...res.data.reminders]);
+          this.state.user.reminders.push(newState);
+          this.props.user.userInfo.reminders.push(newState);
+          // Cookies2.set('reminders', (res.data.reminders));
+          console.log('reminders state', this.state.reminders);
+          console.log('Cookies2', Cookies2.getJSON('reminders'));
           window.location.href="/user";
           }).catch(err => console.log(err));
         }
@@ -299,8 +309,7 @@ class RmdrForm extends Component{
   render() {
     console.log(this.state);
 
-    console.log('reminders state', this.state.reminders);
-    console.log('this.props.reminders', this.props.reminders);
+    console.log(this.props.user.userInfo);
     return (
       <div className="container animated pulse">
         <div className="box">

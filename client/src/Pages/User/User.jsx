@@ -14,9 +14,13 @@ import LinkGoogleMaps from "../../components/LinkGoogleMaps/LinkGoogleMaps";
 </span>
 </div> */}
 //pass in user Cookies to track .id
-const User = () => {
+const User = (props) => {
     const user = Cookies2.getJSON('user');
+    Cookies2.set('reminders',[]);
+    user.reminders=[];
+    // user.reminders.push(...props.reminders);
     console.log("line 15 of user, user:", user);
+    console.log('props in user', props);
     return (
       <React.Fragment>
       <div className="wrapper">
