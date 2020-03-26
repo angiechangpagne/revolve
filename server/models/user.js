@@ -75,11 +75,13 @@ userSchema.pre('save', function(next) {
   })
 });
 //adding a post reminders hooks to find, takes callback next
-userSchema.post('find', function(doc,next){
-    this.populate('reminders').exec((doc) => {
-    console.log(doc);
-    next();
-    });
+//dbUser is the document instance that matches a particular id, to cascade to document of reminders
+userSchema.post('find', function(err,dbUser,next){
+    this.populate('reminders').execPopulate((doc) => {
+      console.log(doc);
+    }).then(() => {
+      next();
+    }).catch(err => return next(err));
 });
 
 

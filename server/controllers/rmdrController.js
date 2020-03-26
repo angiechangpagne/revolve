@@ -10,7 +10,7 @@ module.exports = {
     const userId= req.params.userId;
     db.Reminder.create(req.body)
       .then(dbRmdr => {
-        console.log(dbRmdr); //if create success reminder find user id and push it to user's reminder array
+        console.log('dbRmdr',dbRmdr); //if create success reminder find user id and push it to user's reminder array
         res.locals.rmdrName=dbRmdr.reminderName;
         res.locals.rmdrId=dbRmdr._id;
         res.locals.rmdrTime=dbRmdr.time;
@@ -19,10 +19,10 @@ module.exports = {
         db.User.findOneAndUpdate({_id:userId}, {$push: {reminders: dbRmdr}},{new: true})
         .then(query => {
           console.log('dbUser query associated', query);
+          //because of the post hook in user model, reminders is populated into doc
           //if user updated successfully, send query callback to client in json
-          res.locals.userInfo=query;
+          res.locals.reminders=query.reminders;
           next();
-          done; 
         }).catch(err => console.log('err:', err))
       });
     },

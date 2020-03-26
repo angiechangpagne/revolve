@@ -245,18 +245,25 @@ class RmdrForm extends Component{
         .then(res => {
         //empty out input elements
           console.log('res',res);
+          console.log('res.locals',res.locals);
           console.log('res.data',res.data);
           this.setState({
-            reminders: this.state.reminders.push(
-              {rmdrName : res.data.rmdrName,
-              rmdrTime : res.data.rmdrTime,
-              rmdrId : res.data.id,
-              rmdrNotification : res.data.rmdrNotification,
-              rmdrNotificationLabel : res.data.rmdrNotificationLabel,
-              address : ""})
-          });
-          console.log('new reminder successfully added to associated user key', this.state);
+              reminders  : this.state.reminders.push(
+              {
+                rmdrName : res.data.rmdrName,
+                mdrTime : res.data.rmdrTime,
+                rmdrId : res.data.id,
+                rmdrNotification : res.data.rmdrNotification,
+                rmdrNotificationLabel : res.data.rmdrNotificationLabel,
+                address : "",
+              }
+              )
+          })
+          console.log('new reminder successfully added to associated user key', this.state.reminders);
           //reload page and refresh upcoming remminder well
+          this.props.user.reminders=[...res.data.reminders];
+          this.props.reminders=[...res.data.reminders];
+          Cookies2.set('reminders',[...res.data.reminders]);
           window.location.href="/user";
           }).catch(err => console.log(err));
         }
@@ -291,6 +298,9 @@ class RmdrForm extends Component{
 
   render() {
     console.log(this.state);
+
+    console.log('reminders state', this.state.reminders);
+    console.log('this.props.reminders', this.props.reminders);
     return (
       <div className="container animated pulse">
         <div className="box">

@@ -47,13 +47,11 @@ router.route('/signup')
     return res.json(res.locals);
     })
     .get(rmdrController.get, (req, res) => {
-      console.log('in middleware route reminder', res.locals);
+      console.log('in middleware route get reminder', res.locals);
       return res.json(res.locals);
     })
+    .put(rmdrController.update)
+    .delete(rmdrController.remove);
 
-
-router.route(`/user/:userId/rmdr/:id*?`)
-  .put(rmdrController.update)
-  .delete(rmdrController.remove);
 
 module.exports = router;

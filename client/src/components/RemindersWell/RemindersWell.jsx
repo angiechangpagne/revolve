@@ -101,13 +101,14 @@ class RemindersWell extends Component{
   }
 
   loadReminders = () => {
-    console.log('I am trying to load reminders for', this.props.user);
+    console.log('I am trying to load reminders for', this.props.user.firstName);
 
+    //might need to get a for loop to iterate states of res.data.reminders
     api.getUserReminders(this.props.user.id)
       .then(res => {
         console.log("I got my reminders back!");
-        console.log(res.data);
-        this.setState({ reminders: res.data.reminders });
+        console.log('res.data:', res.data);
+        this.setState({ reminders: (Array.isArray(res.data.reminders) ? [...res.data.reminders] : [...this.props.reminders]) });
       })
       .catch(err => console.error(err));
   }
