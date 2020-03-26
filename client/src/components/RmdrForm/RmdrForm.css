@@ -235,6 +235,6 @@ label     {
   to    { width:0; background:transparent; }
   }
 
-  div.error {
+  div.error-empty {
     color : rgb(177, 122, 123);
   }

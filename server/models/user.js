@@ -1,6 +1,7 @@
+'use strict'
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const reminder = require('./reminder');
+const Reminder = require('./reminder');
 const bcrypt = require('bcryptjs');
 const SALT_WORK_FACTOR = 10;
 // //once logged in to db through mongoose, log a success message
@@ -50,16 +51,18 @@ const userSchema = new Schema({
   },
   reminders: [
     {
-      //we store Object Ids in array, which will refer to the ids in Note model
+      //we store Object Ids in array, which will refer to the ids in Reminder 
       type: Schema.Types.ObjectId,
-      ref: "Reminder"
+      ref: 'Reminder',
+      autopopulate: true
     }
   ]
 });
+userSchema.plugin(require('mongoose-autopopulate'));
 
 //to store hash passwords from middleware input on signup form
 //we cannot use arrow syntax because we need to keep the context of this.
-userSchema.pre('save', function(next){
+userSchema.pre('save', function(next) {
   bcrypt.hash(this.password, SALT_WORK_FACTOR, (err, hash) => {
     console.log('this is the hash in user mongoose schema: '+ hash);
 
@@ -69,7 +72,15 @@ userSchema.pre('save', function(next){
     //next call to save
     return next();
   })
-})
+});
+//adding a post reminders hook to find
+userSchema.post('find', function(next){
+    this.populate('reminders').exec((err,doc) => {
+    if(err) { console.error(err); }
+    console.log(doc);
+    return next(); //send it
+  })
+});
 
 
 const User = mongoose.model('User', userSchema); //EXTRACT SCHEMA MONGOOSE MODEL

@@ -1,12 +1,13 @@
-const express = require('express');
 const db = require('../models');
+const express = require('express');
 
 module.exports = {
   create: (req, res,next) => {
     console.log('server received post request');
     console.log('req.body line 7 of reminderController', req.body);
     console.log('req.params', req.params);
-    const userId= req.params.userid;
+    // console.log('req', req);
+    const userId= req.params.userId;
     db.Reminder.create(req.body)
       .then(dbRmdr => {
         console.log(dbRmdr); //if create success reminder find user id and push it to user's reminder array
@@ -15,28 +16,25 @@ module.exports = {
         res.locals.rmdrTime=dbRmdr.time;
         res.locals.rmdrNotification=dbRmdr.notification;
         res.locals.rmdrNotificationLabel=dbRmdr.notificationLabel
-        db.User.findOneAndUpdate({ _id: userId }, {$push: { reminders: dbRmdr._id }}, { new: true });
-      })
-      .then(dbUser => {
-        //if user updated successfully, send response back to client in json
-        console.log(dbUser);
-        res.locals.userInfo=dbUser;
-        next();
-      })
-      .catch(err => res.status(422).json(err));
-  },
+        db.User.findOneAndUpdate({_id:userId}, {$push: {reminders: dbRmdr}},{new: true})
+        .then(query => {
+          console.log('dbUser query associated', query);
+          //if user updated successfully, send query callback to client in json
+          res.locals.userInfo=query;
+          next();
+        }).catch(err => console.log('err:', err))
+      });
+    },
   get: (req, res, next) => {
     console.log('Retrieve Reminders in controller, req.body:', req.body);
     console.log('req.params', req.params);
     const userId = req.params.userId;
 
-    db.User.find({ _id : userId })
-      .populate('reminders')
-      .then(dbRmdrs => {
-        console.log('from controller dbRmdrs', dbRmdrs);
-        res.locals.reminders=(dbRmdrs);
-        next();
-      });
+    db.User.find({ _id : userId }).then((doc) =>{
+      console.log('from controller post populate hook', doc);
+      res.locals.reminders=doc;
+      next();
+    }).catch(err => console.log(err));
   },
   update: (req, res) => {
     const id = req.param('id');

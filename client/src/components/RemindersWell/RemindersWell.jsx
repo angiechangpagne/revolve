@@ -101,7 +101,7 @@ class RemindersWell extends Component{
   }
 
   loadReminders = () => {
-    console.log('I am trying to load reminders');
+    console.log('I am trying to load reminders for', this.props.user);
 
     api.getUserReminders(this.props.user.id)
       .then(res => {

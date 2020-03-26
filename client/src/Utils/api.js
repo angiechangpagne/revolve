@@ -79,12 +79,12 @@ const api = {
     .then(res => {
         console.log('in axios from createReminder', res);
         return res;
-      })
-      .catch(error => {
-        if(!error.status){
-          alert('unauthorized');
-        } //console.log(error.response)
-      });
+    })
+    .catch(error => {
+      if(!error.status){
+        alert('unauthorized');
+      } //console.log(error.response)
+    });
   },
   //update reminder
   updateUserReminder : (userId, rmdrId, rmdrData) => {

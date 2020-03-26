@@ -113,7 +113,7 @@ class RmdrForm extends Component{
     };
     this.handleDateChange=this.handleDateChange.bind(this);
     this.handleInputChange=this.handleInputChange.bind(this);
-    this.handleFormSubmit=this.handleInputChange.bind(this);
+    this.handleFormSubmit=this.handleFormSubmit.bind(this);
     this.handleNotificationChange=this.handleNotificationChange.bind(this);
     this.setAddress=this.setAddress.bind(this);
     this.validate=this.validate.bind(this);
@@ -156,7 +156,7 @@ class RmdrForm extends Component{
     
     const { name, value } = event.target;
     this.setState({
-      [name] : value.trim()
+      [name] : value
     });
     this.validate();
   };
@@ -199,7 +199,7 @@ class RmdrForm extends Component{
     //   Cookies2.remove('user');
     //   window.location.href="/";
     // }
-    console.log('to validate states');
+    // console.log('to validate states');
     // const newState = {}; //do not reset state or else post request will process without routing to axios
     const{
       rmdrName,
@@ -242,13 +242,15 @@ class RmdrForm extends Component{
         .then(res => {
         //empty out input elements
           console.log('res',res);
+          console.log('res.data',res.data);
           this.setState({
-          rmdrName : res.data.reminderName,
-          rmdrTime : res.data.time,
-          rmdrId : res.data.id,
-          rmdrNotification : res.data.notification,
-          rmdrNotificationLabel : res.data.notificationLabel,
-          address : ""
+            reminders: this.state.reminders.push(
+              {rmdrName : res.data.rmdrName,
+              rmdrTime : res.data.rmdrTime,
+              rmdrId : res.data.id,
+              rmdrNotification : res.data.rmdrNotification,
+              rmdrNotificationLabel : res.data.rmdrNotificationLabel,
+              address : ""})
           });
           console.log('new reminder successfully added to associated user key', this.state);
           //reload page and refresh upcoming remminder well
@@ -305,8 +307,8 @@ class RmdrForm extends Component{
                 onChange={this.handleInputChange}
                 required/>
                 {this.state.isRmdrNameEmpty &&
-                <div id="error-reminder-name-left-empty" className={!this.state.isRmdrtNameEmpty ? "error-div-signup invisible" : "error-div-signup"}>
-                  <p className="error">Please provide a Reminder!</p>
+                <div id="error-empty" className={!this.state.isRmdrNameEmpty ? "error-empty-div invisible" : "error-empty-div"}>
+                  <p className="error-empty">Please provide a Reminder!</p>
                 </div>
                 }
               <span className="highlight"></span>
@@ -324,8 +326,8 @@ class RmdrForm extends Component{
                   value={this.state.rmdrNotificationNumber}
                   required/>
                   {this.state.isRmdrNotificationNumberEmpty &&
-                  <div id="error-number-left-empty" className={!this.state.isReminderNotificationNumberEmpty ? "error-div-signup invisible" : "error-div-signup"}>
-                    <p className="error">Please provide the number to send reminder to</p>
+                  <div id="error-empty" className={!this.state.isReminderNotificationNumberEmpty ? "error-empty-div invisible" : "error-empty-div"}>
+                    <p className="error-empty">Please provide the number to send reminder to</p>
                   </div>
                   } 
               <span className="highlight"></span>
@@ -343,11 +345,6 @@ class RmdrForm extends Component{
                 showTimeSelect
                 dateFormat="Pp"
                 />
-                {this.state.isRmdrTimeEmpty &&
-                <div id="error-time-left-empty" className="error-div-signup">
-                  <p className="error">Please provide Time of Reminder!</p>
-                </div>
-                }
               <span className="highlight"></span>
               <span className="bar"></span>
           </div>
@@ -359,6 +356,7 @@ class RmdrForm extends Component{
                 onChange={this.handleNotificationChange}
                 value={this.state.rmdrNotification}
                 label={this.state.rmdrNotificationLabel}
+                defaultValue='1'
                 options = {[
                   { value: '1440', label: '1 day' },
                   { value: '120', label: '2 hours' },
@@ -366,20 +364,16 @@ class RmdrForm extends Component{
                   { value: '1', label: '1 minute' }
                 ]} />
                  {this.state.isRmdrNotificationEmpty &&
-                  <div id="error-notification-left-empty" className={!this.state.isRmdrNotificationEmpty ? "error-div-signup invisible" : "error-div-signup"}>
-                    <p className="error">Please provide your notification Selection!</p>
+                  <div id="error-empty" className={!this.state.isRmdrNotificationEmpty ? "error-empty-div invisible" : "error-empty-div"}>
+                    <p className="error-empty">Please provide your notification Selection!</p>
                   </div>
                   } 
                 <span className="highlight"></span>
                 <span className="bar"></span>
             </div>
             <div className="group">
-            <input 
-            id="buttonlogintoregister"
-            type="submit" value="Full Send"
-            className="loginHover"
-            onClick={this.handleFormSubmit}
-            value="Full Send"></input>
+            <input id="buttonlogintoregister" type="submit" value="Full Send" value="Full Send" 
+            className="loginHover" onClick={this.handleFormSubmit}></input>
             </div>
           </form>
         </div>
