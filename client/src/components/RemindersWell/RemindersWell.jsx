@@ -33,7 +33,7 @@ class RemindersWell extends Component{
   }
   
   componentWillMount() {
-    if(!this.props.user){
+    if(!this.props){
       console.log('log in again');
       Cookies2.remove('user');
       window.location.href="/";

@@ -22,6 +22,7 @@ module.exports = {
           //if user updated successfully, send query callback to client in json
           res.locals.userInfo=query;
           next();
+          done; 
         }).catch(err => console.log('err:', err))
       });
     },

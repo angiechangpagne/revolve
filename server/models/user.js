@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const Reminder = require('./reminder');
 const bcrypt = require('bcryptjs');
 const SALT_WORK_FACTOR = 10;
+const assert=require('assert');
 // //once logged in to db through mongoose, log a success message
 // db.once("open", () => {
 //   console.log("Mongoose connection successful.");
@@ -73,13 +74,12 @@ userSchema.pre('save', function(next) {
     return next();
   })
 });
-//adding a post reminders hook to find
-userSchema.post('find', function(next){
-    this.populate('reminders').exec((err,doc) => {
-    if(err) { console.error(err); }
+//adding a post reminders hooks to find, takes callback next
+userSchema.post('find', function(doc,next){
+    this.populate('reminders').exec((doc) => {
     console.log(doc);
-    return next(); //send it
-  })
+    next();
+    });
 });
 
 

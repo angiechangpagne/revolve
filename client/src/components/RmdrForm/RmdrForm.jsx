@@ -120,9 +120,10 @@ class RmdrForm extends Component{
   }
   
   componentWillMount(){
-    if(!this.props.user){
+    if(!this.props){
       console.log('log in again');
       Cookies2.remove('user');
+      console.log('cookies', Cookies2);
       window.location.href="/";
     }
     const {
@@ -137,14 +138,16 @@ class RmdrForm extends Component{
   }
   componentDidMount(){
     //if there is no user cookie, reroute to the login page
-    if(this.props.user===undefined){
+    if(this.props===undefined){
       // window.location.redirect('./LoginForm');
       Cookies2.remove('user');
+      console.log(Cookies2);
       window.location.href = "/";
     }
     else {
       console.log(this.props.user);
       console.log("I have a cookie access");
+      console.log(Cookies2);
     }
   }
 
