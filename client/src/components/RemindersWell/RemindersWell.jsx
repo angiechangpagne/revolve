@@ -35,11 +35,11 @@ class RemindersWell extends Component{
   }
   
   componentWillMount() {
-    this.setState({ userCookie : this.props.cookies.get('user') });
-    if(!this.props.cookies.get('user') || !this.props.cookies.get('user').id){
+    this.setState({ userCookie : this.props.user });
+    if(!this.props.user || !this.props.user.id){
       console.log('log in again');
-      this.props.cookies.remove('user');
-      console.log('this.props.cookies', this.props.cookies);
+      this.props.user.remove('user');
+      console.log('this.props.user cookies', this.props.user);
       window.location.href="/";
     }
     const {

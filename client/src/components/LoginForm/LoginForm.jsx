@@ -57,12 +57,14 @@ class LoginForm extends Component {
     this.setState({ userCookie : this.props.cookies.get('user') });
   }
 
-  // componentDidMount() {
-  //   if(this.state.userCookie && this.state.userCookie!==""){
-  //     window.location.href = "/user"; 
-  //     // this.props.history.push('/');
-  //     }
-  // }
+  componentDidMount() {
+    console.log('this.props in Login Form', this.props);
+    console.log('this.props.cookies for user', this.props.cookies.get('user'));
+    if(this.state.userCookie && this.state.userCookie===this.props.cookies.get('user')){
+      window.location.href = "/user"; 
+      // this.props.history.push('/');
+      }
+  }
   openModal = () => {
     this.setState({ modalIsOpen: true });
   }
@@ -114,10 +116,12 @@ class LoginForm extends Component {
         if(res.data.isValidEmail && res.data.isValidPassword){
           //a GET request for "/home"
           // api.getUserReminders(res.data.id);
-          this.props.cookies.set('user', res.data.userInfo, { path: '/user'});
-          this.setState({ userCookie: this.props.cookies.get('user')});
-          console.log('this.props.cookies in login result for user', this.props.cookies.get('user'));
-          window.location.href="/user";
+          this.props.cookies.set('user', res.data.userInfo, { path: '/'})
+          .then(() => {
+            this.setState({ userCookie: this.props.cookies.get('user')});
+            console.log('this.props.cookies cookies in login result for user', this.props.cookies);
+            window.location.href="/user";
+          }).catch(err => console.log(err, 'could not get cookies set promise'));
           //store response from database then wait for set, then redirect
         }
         //else if email provided isn't in the db

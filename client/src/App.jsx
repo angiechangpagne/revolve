@@ -6,8 +6,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // import Navbar from './components/NavBar/NavBar';
 // import { Provider } from 'react-redux';
 // import { createBrowserHistory } from 'history';
-import createBrowserHistory from 'history/createBrowserHistory'
-const history = createBrowserHistory();
+// import createBrowserHistory from 'history/createBrowserHistory'
+// const history = createBrowserHistory();
 import Landing from './Pages/Landing/Landing';
 import User from './Pages/User/User';
 // import About from './Pages/About/About';
@@ -36,22 +36,24 @@ class App extends Component {
   };
   constructor(props){
     super(props);
-    const { cookies } = this.props;
+    //in this context
+    console.log('this context', this)
+    const { cookies } = props;
     this.state={
-      user: cookies.get('user')
+      user: cookies.get('user') || 'YSL'
     }
     this.handleUserChange=this.handleUserChange.bind(this);
   }
-  componentWillMount(){
-    const { cookies }=this.props;
-    this.setState = {
-      user: cookies.get('user')
-    };
-  }
+//   componentWillMount(){
+//     const { cookies }=this.props;
+//     this.setState = {
+//       user: cookies.get('user')
+//     };
+//  }
   handleUserChange(user){
     const { cookies } = this.props;
-    cookies.set('user', user, { path: '/user'}); //go back to login upon logout
-    this.setState({ user });
+    cookies.set('user', user, { path: '/'}); //go back to login upon logout
+    this.setState({ user: cookies });
   };
 
   // callAPI(){
@@ -70,17 +72,17 @@ class App extends Component {
     // })
     // this.callAPI();
   //}
+  //render passed will automatically set the user think of it as the superclass render then the subclass render
 
   render(){
-    const { user } =this.state;
     return (
       <React.Fragment>
       <Router>
       <div className="App">
         <div className="container">
         <Switch>
-        <Route exact path="/" component={Landing}/> 
-        <Route exact path="/user" render={(user) => <User user={user} onChange={this.handleUserChange}/>} />
+        <Route exact path="/" render={()=> <Landing user={this.state.user} onChange={this.handleUserChange} /> } /> 
+        <Route exact path="/user" render={()=> <User user={this.state.user} onChange={this.handleUserChange}/>} />
         </Switch>
         </div>
       </div>

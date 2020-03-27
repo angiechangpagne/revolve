@@ -5,7 +5,8 @@ import './Landing.css';
 import { withCookies } from 'react-cookie';
 
 const Landing = (props) => {
-  console.log("props on line 7 of landin",props.cookies.get('user'));
+  console.log("props on line 7 of landin",props.cookies.get('user'), props);
+  console.log('user', props.user)
   return (
     <React.Fragment>
     {
@@ -13,7 +14,7 @@ const Landing = (props) => {
        
         <div className="container">
           <div className="col-sm-8 col-sm-offset-2">
-            <a id="foo"> <LoginForm /></a>
+            <a id="foo"> <LoginForm user={props.user} onChange={props.onChange}/></a>
           </div>
         </div>
         <br></br><br></br>

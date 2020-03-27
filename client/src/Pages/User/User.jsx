@@ -49,7 +49,7 @@ class User extends React.Component{
           </div>
   
           <div className="row">
-            <RemindersWell user={this.state.user} isModalOpen={this.state.isModalOpen}/>
+            <RemindersWell user={this.state.user} onChange={this.props.onChange} isModalOpen={this.state.isModalOpen}/>
           </div>
   
           <div className="row">
@@ -57,7 +57,7 @@ class User extends React.Component{
                 <Human className="clearfix">
                   <div className="row">
                     <div>
-                      <RmdrForm user={this.state.user} isModalOpen={this.state.isModalOpen} />
+                      <RmdrForm user={this.state.user} onChange={this.props.onChange} isModalOpen={this.state.isModalOpen} />
                     </div>
                   </div>
                  
