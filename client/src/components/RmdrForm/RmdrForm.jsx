@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import api from '../../Utils/api';
 import './RmdrForm.css';
 import DatePicker from 'react-datepicker';
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
+import { getCookie, setCookie, removeCookie } from 'react-cookie';
 import Modal from 'react-modal';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -123,37 +124,41 @@ class RmdrForm extends Component{
   }
   
   componentWillMount(){
-    console.log('this.props in will mount',this.props);
-    if(!this.props.user){
-      console.log('log in again');
-      Cookies.remove('user');
-      console.log('cookies', Cookies);
-      window.location.href="/";
-    }
     const {
       user
     } = this.props;
-
-    //set the userer cookie state
+    console.log('this.props in will mount of form',this.props);
+    if(!getCookie('user') || !getCookie('user').id){
+      console.log('log in again');
+      removeCookie('user');
+      console.log('cookies', getCookie('user'));
+      window.location.href="/";
+    }
+   
+    //set the user cookie state
     this.setState({
       rmdrNotificationNumber:  user.mobileNumber, 
       user: user
     });
   }
+
   componentDidMount(){
     //if there is no user cookie, reroute to the login page
-    if(this.props===undefined){
+    if(this.props===undefined || !getCookie('user') || !getCookie('user').id){
       // window.location.redirect('./LoginForm');
-      Cookies.remove('user');
-      console.log(Cookies);
+      removeCookie('user');
+      console.log(getCookie('user'));
       window.location.href = "/";
     }
     else {
-      console.log(this.props.user);
+      console.log(getCookie('user'));
       console.log("I have a cookie access");
-      console.log(Cookies);
     }
   }
+
+  // componentWillUnmount(){
+
+  // }
 
   // shouldComponentUpdate(){
 
@@ -274,9 +279,9 @@ class RmdrForm extends Component{
           //reload page and refresh upcoming remminder well
           this.state.user.reminders.push(newState);
           this.props.user.userInfo.reminders.push(newState);
-          Cookies.set('reminders', Cookies.getJSON().push(newState));
+          setCookie('reminders', newState);
           console.log('reminders state', this.state.reminders);
-          console.log('Cookies', Cookies.getJSON('reminders'));
+          console.log('cookies', getCookie('reminders'));
           window.location.href="/user";
           }).catch(err => console.log(err));
         }

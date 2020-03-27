@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import Modal from 'react-modal';
 import api from '../../Utils/api';
 import Reminder from '../Reminder/Reminder';
+import { getCookie, removeCookie, setCookie } from 'react-cookie';
 //props sent from user, use for get, redirect exit
 //delete
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 
 class RemindersWell extends Component{
   constructor(props){
@@ -22,6 +23,7 @@ class RemindersWell extends Component{
       lat: '',
       lng: '',
       address: '',
+      user: {}
     }
     this.handleDelete=this.handleDelete.bind(this); //bindint to this class context
     this.handleUpdate=this.handleUpdate.bind(this);
@@ -33,25 +35,27 @@ class RemindersWell extends Component{
   }
   
   componentWillMount() {
-    if(!this.props){
+    this.setState({ userCookie : getCookie('user') });
+    if(!getCookie('user') || !getCookie('user').id){
       console.log('log in again');
-      Cookies.remove('user');
+      removeCookie('user');
+      console.log('cookies', cookies);
       window.location.href="/";
     }
     const {
-      user,
-      rmdrName,
-      rmdrNotification,
-      rmdrNotificationLabel,
-      rmdrNotificationNumber
+      user
+      // rmdrName,
+      // rmdrNotification,
+      // rmdrNotificationLabel,
+      // rmdrNotificationNumber
     } = this.props;
      //set the userer cookie state
      this.setState({
-      rmdrName: rmdrName || '',
-      rmdrTime: new Date(),
-      rmdrNotification: rmdrNotification || '',
-      rmdrNotificationNumber: rmdrNotificationNumber || user.mobileNumber, 
-      rmdrNotificationLabel: rmdrNotificationLabel || '',
+      // rmdrName: rmdrName || '',
+      // rmdrTime: new Date(),
+      // rmdrNotification: rmdrNotification || '',
+      // rmdrNotificationNumber: rmdrNotificationNumber || user.mobileNumber, 
+      // rmdrNotificationLabel: rmdrNotificationLabel || '',
       user: user || {}
     });
     this.loadReminders();
@@ -61,10 +65,13 @@ class RemindersWell extends Component{
     const { user } = this.props;
     api.deleteUserReminder(user.id, rmdr.id)
       .then(() => {
+        //cookie will update on the loadReminders
         this.loadReminders();
       });
   }
   handleUpdate = (rmdr) => {
+    //must find and udpate database
+
     this.setState({
       rmdrId: rmdr.id,
       rmdrName: rmdr.reminderName,

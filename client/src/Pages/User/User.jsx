@@ -4,7 +4,9 @@ import "./User.css";
 import NavBar from "../../components/NavBar/NavBar";
 import RmdrForm from "../../components/RmdrForm/RmdrForm";
 import RemindersWell from "../../components/RemindersWell/RemindersWell";
-import {Cookies as UniversalCookies} from "universal-cookie";
+import { getCookie, setCookie, removeCookie } from 'react-cookie';
+
+// import {Cookies as UniversalCookies} from "universal-cookie";
 import MapRender from "../../components/Map/Map";
 import LinkGoogleMaps from "../../components/LinkGoogleMaps/LinkGoogleMaps";
 {/* <div className="row" id='pac-input'>
@@ -18,31 +20,25 @@ class User extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      user: Cookies.getJSON('user'),
+      user: {},
       reminders: [],
       isModalOpen: false,
     }
   }
 
   componentWillMount(){
-    if(!this.props){
+    if(!getCookie('user') || !getCookie('user').id){ //unidentified entity
       console.log('log in again');
-      Cookies.remove('user');
+      removeCookie('user');
       window.location.href="/";
     }
-    // const user = Cookies.getJSON('user');
-    // this.setState({
-    //   user: user
-    // })
-    // Cookies.set('reminders',[]);
+    this.setState({ user : getCookie('user') });
+    // setCookie('reminders',[]);
     //set user state initialized to Cookies
-    console.log('Cookies get user', Cookies.getJSON('user'));
-    // console.log('Cookies get reminders', Cookies.getJSON('reminders'))
+    console.log('line 15 user Cookies from withCookies hook', getCookie('user'));
+    // console.log('Cookies get reminders', getCookieJSON('reminders'))
     // user.reminders.push(...props.reminders);
-    console.log("line 15 of user, user:", user);
-    console.log('props in user', this.props);
   }
-    
     
     render(){
       return (
@@ -53,7 +49,7 @@ class User extends React.Component{
           </div>
   
           <div className="row">
-            <RemindersWell user={this.state.user} />
+            <RemindersWell user={this.state.user} isModalOpen={this.state.isModalOpen}/>
           </div>
   
           <div className="row">

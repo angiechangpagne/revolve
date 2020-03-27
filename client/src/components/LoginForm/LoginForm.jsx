@@ -2,11 +2,11 @@ import React, { Component} from 'react';
 import './LoginForm.css';
 import api from '../../Utils/api';
 import Modal from 'react-modal';
-import {Cookies as UniversalCookies } from 'universal-cookie';
-const Cookies=new UniversalCookies();
-
+import { setCookie, getCookie, removeCookie } from 'react-cookie';
+//global hoised hooks
+// import { Cookies} from 'universal-cookie';
+// const UniversalCookies=new Cookies();
 //'js-cookie';
-
 class LoginForm extends Component {
   constructor(props){
     super(props);
@@ -54,15 +54,15 @@ class LoginForm extends Component {
   }
 
   componentWillMount() {
-    this.setState({ userCookie : Cookies.get('user') });
+    this.setState({ userCookie : getCookie('user') });
   }
 
   componentDidMount() {
-    if(this.state.userCookie && this.state.userCookie!==""){
+    // if(this.state.userCookie && this.state.userCookie!==""){
       // window.location.href = "/user"; 
       // : window..href="/"
-      this.props.history.push('/');
-    }
+      // this.props.history.push('/');
+      //}
   }
   openModal = () => {
     this.setState({ modalIsOpen: true });
@@ -115,14 +115,11 @@ class LoginForm extends Component {
         if(res.data.isValidEmail && res.data.isValidPassword){
           //a GET request for "/home"
           // api.getUserReminders(res.data.id);
-          Cookies.set('user', res.data, { path: '/user'}).then(()=>{
-            console.log('Cookies in login result for user', Cookies.getJSON('user'));
-            this.setState({ userCookie: Cookies })
-          }).then(()=> {
-            this.props.history.push("/user");
-            // window.location.href="/user";
-          });//store response from database then wait for set, then redirect
-          
+          setCookie('user', res.data, { path: '/user'});
+          console.log('Cookies in login result for user', getCookie('user'));
+          this.setState({ userCookie: getCookie('user')});
+          window.location.href="/user";
+          //store response from database then wait for set, then redirect
         }
         //else if email provided isn't in the db
         else if (!res.data.isValidEmail) {

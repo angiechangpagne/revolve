@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { register } from './serviceWorker';
-import CookiesProvider from 'universal-cookie';
+import { CookiesProvider } from 'react-cookie';
 
 ReactDOM.render(
-    <CookiesProvider><App /></CookiesProvider>, 
+    <CookiesProvider>
+      <App />
+    </CookiesProvider>, 
   document.getElementById('root'),
 );
 

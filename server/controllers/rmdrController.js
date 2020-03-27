@@ -12,7 +12,7 @@ module.exports = {
       .then(dbRmdr => {
         console.log('dbRmdr',dbRmdr); //if create success reminder find user id and push it to user's reminder array
         res.locals.rmdrName=dbRmdr.reminderName;
-        res.locals.rmdrId=dbRmdr._id;
+        res.locals.id=dbRmdr._id;
         res.locals.rmdrTime=dbRmdr.time;
         res.locals.rmdrNotification=dbRmdr.notification;
         res.locals.rmdrNotificationLabel=dbRmdr.notificationLabel
