@@ -4,9 +4,9 @@ import "./User.css";
 import NavBar from "../../components/NavBar/NavBar";
 import RmdrForm from "../../components/RmdrForm/RmdrForm";
 import RemindersWell from "../../components/RemindersWell/RemindersWell";
-import { getCookie, setCookie, removeCookie } from 'react-cookie';
+import { withCookies } from 'react-cookie';
 
-// import {Cookies as UniversalCookies} from "universal-cookie";
+// import {this.props.cookies as Universalthis.props.cookies} from "universal-cookie";
 import MapRender from "../../components/Map/Map";
 import LinkGoogleMaps from "../../components/LinkGoogleMaps/LinkGoogleMaps";
 {/* <div className="row" id='pac-input'>
@@ -15,28 +15,28 @@ import LinkGoogleMaps from "../../components/LinkGoogleMaps/LinkGoogleMaps";
   <LinkGoogleMaps />
 </span>
 </div> */}
-//pass in user Cookies to track .id
+//pass in user this.props.cookies to track .id
 class User extends React.Component{
   constructor(props){
     super(props);
     this.state={
       user: {},
       reminders: [],
-      isModalOpen: false,
+      isModalOpen: false
     }
   }
 
   componentWillMount(){
-    if(!getCookie('user') || !getCookie('user').id){ //unidentified entity
-      console.log('log in again');
-      removeCookie('user');
-      window.location.href="/";
-    }
-    this.setState({ user : getCookie('user') });
+    // if(!this.props.cookies.get('user')) { //unidentified entity
+    //   console.log('log in again');
+    //   this.props.cookies.remove('user');
+    //   window.location.href="/";
+    // }
+    this.setState({ user : this.props.cookies.get('user') });
     // setCookie('reminders',[]);
-    //set user state initialized to Cookies
-    console.log('line 15 user Cookies from withCookies hook', getCookie('user'));
-    // console.log('Cookies get reminders', getCookieJSON('reminders'))
+    //set user state initialized to this.props.cookies
+    console.log('line 15 user this.props.cookies from withthis.props.cookies hook', this.props.cookies.get('user'));
+    // console.log('this.props.cookies get reminders', this.props.cookies.getJSON('reminders'))
     // user.reminders.push(...props.reminders);
   }
     
@@ -71,4 +71,4 @@ class User extends React.Component{
     }
 }
 
-export default User;
+export default withCookies(User);

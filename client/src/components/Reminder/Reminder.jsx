@@ -1,8 +1,8 @@
 import React from 'react';
 import './Reminder.css';
 import moment from 'moment-timezone';
-import { setCookie, getCookie, removeCookie } from 'react-cookie';
-//delete, view one, update/edit, will update and reset on Cookies from database
+// import { cookies } from 'react-cookie';
+//delete, view one, update/edit, will update and reset on cookies from database
 //{ rmdr, handleUpdate, handleDelete, handleRenderMap, }
 //no this in functional anonymous functional context
 //pass props from reminders well

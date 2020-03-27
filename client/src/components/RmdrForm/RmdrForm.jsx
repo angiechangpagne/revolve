@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import api from '../../Utils/api';
 import './RmdrForm.css';
 import DatePicker from 'react-datepicker';
-// import Cookies from "js-cookie";
-import { getCookie, setCookie, removeCookie } from 'react-cookie';
+// import this.props.cookies from "js-cookie";
+import { withCookies } from 'react-cookie';
 import Modal from 'react-modal';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -128,10 +128,10 @@ class RmdrForm extends Component{
       user
     } = this.props;
     console.log('this.props in will mount of form',this.props);
-    if(!getCookie('user') || !getCookie('user').id){
+    if(!this.props.cookies.get('user')){
       console.log('log in again');
-      removeCookie('user');
-      console.log('cookies', getCookie('user'));
+      this.props.cookies.remove('user');
+      console.log('this.props.cookies', this.props.cookies.get('user'));
       window.location.href="/";
     }
    
@@ -144,14 +144,14 @@ class RmdrForm extends Component{
 
   componentDidMount(){
     //if there is no user cookie, reroute to the login page
-    if(this.props===undefined || !getCookie('user') || !getCookie('user').id){
+    if(this.props===undefined || !this.props.cookies.get('user')){
       // window.location.redirect('./LoginForm');
-      removeCookie('user');
-      console.log(getCookie('user'));
+      this.props.cookies.remove('user');
+      console.log(this.props.cookies.get('user'));
       window.location.href = "/";
     }
     else {
-      console.log(getCookie('user'));
+      console.log(this.props.cookies.get('user'));
       console.log("I have a cookie access");
     }
   }
@@ -208,7 +208,7 @@ class RmdrForm extends Component{
   handleFormSubmit = (event) => {
     event.preventDefault();
     // if(this.props.user===undefined){
-    //   Cookies.remove('user');
+    //   this.props.cookies.remove('user');
     //   window.location.href="/";
     // }
     // console.log('to validate states');
@@ -279,9 +279,9 @@ class RmdrForm extends Component{
           //reload page and refresh upcoming remminder well
           this.state.user.reminders.push(newState);
           this.props.user.userInfo.reminders.push(newState);
-          setCookie('reminders', newState);
+          this.props.cookies.set('user', this.props.user, { path: '/user'});
           console.log('reminders state', this.state.reminders);
-          console.log('cookies', getCookie('reminders'));
+          console.log('this.props.cookies', this.props.cookies.get('reminders'));
           window.location.href="/user";
           }).catch(err => console.log(err));
         }
@@ -420,4 +420,4 @@ class RmdrForm extends Component{
 
 
 
-export default RmdrForm;
+export default withCookies(RmdrForm);

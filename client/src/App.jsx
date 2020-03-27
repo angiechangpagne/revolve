@@ -1,10 +1,13 @@
+/* eslint-disable import/first */
 import React, { Component } from 'react';
 import { instanceOf } from 'prop-types';
-import { HashRouter, Route, Switch, withRouter, useLocation } from 'react-router-dom';
-import { useHistory } from 'react-router';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+// import { useHistory } from 'react-router';
 // import Navbar from './components/NavBar/NavBar';
 // import { Provider } from 'react-redux';
 // import { createBrowserHistory } from 'history';
+import createBrowserHistory from 'history/createBrowserHistory'
+const history = createBrowserHistory();
 import Landing from './Pages/Landing/Landing';
 import User from './Pages/User/User';
 // import About from './Pages/About/About';
@@ -20,23 +23,36 @@ import { withCookies, Cookies } from 'react-cookie';
 
 //todo: redux store <Provider> 
 //cookies is globall hoisted on the wrapper
+//   {/* <Route exact path='/about' component={About} /> */}
+//   {/* <Route exact path='/login' component={LoginForm} /> */}
+//   {/* <Route exact path='/profile' component={Profile} /> */}
+//   {/* <Route exact path='/register' component={Register} /> */}
+//           {/* <Navbar /> */}
+// {/* <p className="App-intro">{this.state.apiResponse}</p> */}
+
 class App extends Component {
   static propTypes = {
     cookies: instanceOf(Cookies).isRequired
   };
   constructor(props){
     super(props);
-    this.state = {
-      user: {}
-    };
+    const { cookies } = this.props;
+    this.state={
+      user: cookies.get('user')
+    }
     this.handleUserChange=this.handleUserChange.bind(this);
+  }
+  componentWillMount(){
+    const { cookies }=this.props;
+    this.setState = {
+      user: cookies.get('user')
+    };
   }
   handleUserChange(user){
     const { cookies } = this.props;
-    cookies.set('user', user, { path: '/'}); //go back to login upon logout
+    cookies.set('user', user, { path: '/user'}); //go back to login upon logout
     this.setState({ user });
   };
-
 
   // callAPI(){
   //   fetch('http://localhost:3001/testAPI')
@@ -44,46 +60,35 @@ class App extends Component {
   //     .then(res => this.setState({ apiResponse: res }))
   //     .catch(err => err);
   // }
-
-  componentDidMount(){
-    // let history=useHistory;
-    let initialStore={
-
-    };
+  // componentDidMount(){
+  //   // let history=useHistory;
+  //   let initialStore={
+    //};
     // const store = createStore(rootReducer,initialStore);
     // this.setState({
     //   history: history
     // })
     // this.callAPI();
-  }
+  //}
 
   render(){
     const { user } =this.state;
     return (
       <React.Fragment>
-      {
-      <HashRouter>
+      <Router>
       <div className="App">
-
-        {/* <Navbar /> */}
-      {/* <p className="App-intro">{this.state.apiResponse}</p> */}
         <div className="container">
         <Switch>
         <Route exact path="/" component={Landing}/> 
-        
-        {/* <Route exact path='/register' component={Register} /> */}
-        <Route exact path="/user" component={User} />
-        {/* <Route exact path='/about' component={About} /> */}
-        {/* <Route exact path='/login' component={LoginForm} /> */}
-        {/* <Route exact path='/profile' component={Profile} /> */}
+        <Route exact path="/user" render={(user) => <User user={user} onChange={this.handleUserChange}/>} />
         </Switch>
         </div>
       </div>
-  
-      </HashRouter>  
-      }
+      {this.props.children}
+      </Router>  
+      
       </React.Fragment>
-    )
+    );
   }
 }
 //withCookies(withRouter(App)))

@@ -2,10 +2,10 @@ import React, { Component} from 'react';
 import './LoginForm.css';
 import api from '../../Utils/api';
 import Modal from 'react-modal';
-import { setCookie, getCookie, removeCookie } from 'react-cookie';
+import { withCookies } from 'react-cookie';
 //global hoised hooks
-// import { Cookies} from 'universal-cookie';
-// const UniversalCookies=new Cookies();
+// import { this.props.cookies} from 'universal-cookie';
+// const Universalthis.props.cookies=new this.props.cookies();
 //'js-cookie';
 class LoginForm extends Component {
   constructor(props){
@@ -54,16 +54,15 @@ class LoginForm extends Component {
   }
 
   componentWillMount() {
-    this.setState({ userCookie : getCookie('user') });
+    this.setState({ userCookie : this.props.cookies.get('user') });
   }
 
-  componentDidMount() {
-    // if(this.state.userCookie && this.state.userCookie!==""){
-      // window.location.href = "/user"; 
-      // : window..href="/"
-      // this.props.history.push('/');
-      //}
-  }
+  // componentDidMount() {
+  //   if(this.state.userCookie && this.state.userCookie!==""){
+  //     window.location.href = "/user"; 
+  //     // this.props.history.push('/');
+  //     }
+  // }
   openModal = () => {
     this.setState({ modalIsOpen: true });
   }
@@ -115,9 +114,9 @@ class LoginForm extends Component {
         if(res.data.isValidEmail && res.data.isValidPassword){
           //a GET request for "/home"
           // api.getUserReminders(res.data.id);
-          setCookie('user', res.data, { path: '/user'});
-          console.log('Cookies in login result for user', getCookie('user'));
-          this.setState({ userCookie: getCookie('user')});
+          this.props.cookies.set('user', res.data.userInfo, { path: '/user'});
+          this.setState({ userCookie: this.props.cookies.get('user')});
+          console.log('this.props.cookies in login result for user', this.props.cookies.get('user'));
           window.location.href="/user";
           //store response from database then wait for set, then redirect
         }
@@ -290,4 +289,4 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+export default withCookies(LoginForm);

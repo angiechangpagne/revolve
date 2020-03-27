@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import Modal from 'react-modal';
 import api from '../../Utils/api';
 import Reminder from '../Reminder/Reminder';
-import { getCookie, removeCookie, setCookie } from 'react-cookie';
+import { withCookies } from 'react-cookie';
 //props sent from user, use for get, redirect exit
 //delete
-// import Cookies from "js-cookie";
+// import this.props.cookies from "js-cookie";
 
 class RemindersWell extends Component{
   constructor(props){
@@ -35,11 +35,11 @@ class RemindersWell extends Component{
   }
   
   componentWillMount() {
-    this.setState({ userCookie : getCookie('user') });
-    if(!getCookie('user') || !getCookie('user').id){
+    this.setState({ userCookie : this.props.cookies.get('user') });
+    if(!this.props.cookies.get('user') || !this.props.cookies.get('user').id){
       console.log('log in again');
-      removeCookie('user');
-      console.log('cookies', cookies);
+      this.props.cookies.remove('user');
+      console.log('this.props.cookies', this.props.cookies);
       window.location.href="/";
     }
     const {
@@ -188,4 +188,4 @@ class RemindersWell extends Component{
   }
 }
 
-export default RemindersWell;
+export default withCookies(RemindersWell);
