@@ -16,7 +16,7 @@ const Landing = (props) => {
           </div>
         </div>
         <br></br><br></br>
-        <Human backgroundImage="">
+        <Human>
           <div className="arrow-container animated fadeInDown">
             <div className="arrow-2">
             <a href='#foo'> <i className="glyphicon glyphicon-arrow-down"></i></a>

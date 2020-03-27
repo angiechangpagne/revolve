@@ -1,8 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component} from 'react';
 import './LoginForm.css';
 import api from '../../Utils/api';
 import Modal from 'react-modal';
-import Cookies2 from 'js-cookie';
+import {Cookies as UniversalCookies } from 'universal-cookie';
+const Cookies=new UniversalCookies();
+
+//'js-cookie';
 
 class LoginForm extends Component {
   constructor(props){
@@ -51,15 +54,16 @@ class LoginForm extends Component {
   }
 
   componentWillMount() {
-    this.setState({ userCookie : Cookies2.get('user') });
+    this.setState({ userCookie : Cookies.get('user') });
   }
 
   componentDidMount() {
-    if(this.state.userCookie){
-      window.location.href = "/user"; //: window..href="/"
+    if(this.state.userCookie && this.state.userCookie!==""){
+      // window.location.href = "/user"; 
+      // : window..href="/"
+      this.props.history.push('/');
     }
   }
-
   openModal = () => {
     this.setState({ modalIsOpen: true });
   }
@@ -111,8 +115,14 @@ class LoginForm extends Component {
         if(res.data.isValidEmail && res.data.isValidPassword){
           //a GET request for "/home"
           // api.getUserReminders(res.data.id);
-          Cookies2.set('user', res.data);
-          window.location.href="/user";
+          Cookies.set('user', res.data, { path: '/user'}).then(()=>{
+            console.log('Cookies in login result for user', Cookies.getJSON('user'));
+            this.setState({ userCookie: Cookies })
+          }).then(()=> {
+            this.props.history.push("/user");
+            // window.location.href="/user";
+          });//store response from database then wait for set, then redirect
+          
         }
         //else if email provided isn't in the db
         else if (!res.data.isValidEmail) {

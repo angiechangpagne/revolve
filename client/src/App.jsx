@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch, withRouter, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router';
 // import Navbar from './components/NavBar/NavBar';
+import { createBrowserHistory } from 'history';
 import Landing from './Pages/Landing/Landing';
 import User from './Pages/User/User';
 // import About from './Pages/About/About';
@@ -12,7 +14,7 @@ import './App.css';
 class App extends Component {
   constructor(props){
     super(props);
-    // this.state = { apiResponse: ""};
+    this.state = { history: ""};
   }
 
   // callAPI(){
@@ -22,36 +24,41 @@ class App extends Component {
   //     .catch(err => err);
   // }
 
-  // componentDidMount(){
-  //   // this.callAPI();
-  // }
+  componentDidMount(){
+    let history={useHistory};
+    this.setState({
+      history: history
+    })
+    // this.callAPI();
+  }
 
   render(){
+    
     return (
       <React.Fragment>
       {
-      <Router>
+      <HashRouter>
       <div className="App">
 
         {/* <Navbar /> */}
       {/* <p className="App-intro">{this.state.apiResponse}</p> */}
         <div className="container">
         <Switch>
-        <Route exact path="/" component={Landing} />
+        <Route exact path="/" component={Landing} > history={this.state.history} </Route>
         
         {/* <Route exact path='/register' component={Register} /> */}
-        <Route exact path='/user' component={User} />
+        <Route exact path='/user' component={User} > history={this.state.history}</Route>
         {/* <Route exact path='/about' component={About} /> */}
         {/* <Route exact path='/login' component={LoginForm} /> */}
         {/* <Route exact path='/profile' component={Profile} /> */}
         </Switch>
         </div>
       </div>
-      </Router>  
+      </HashRouter>  
       }
       </React.Fragment>
     )
   }
 }
 
-export default App;
+export default withRouter(App);

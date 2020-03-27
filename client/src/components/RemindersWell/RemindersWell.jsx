@@ -4,7 +4,7 @@ import api from '../../Utils/api';
 import Reminder from '../Reminder/Reminder';
 //props sent from user, use for get, redirect exit
 //delete
-import Cookies2 from "js-cookie";
+import Cookies from "js-cookie";
 
 class RemindersWell extends Component{
   constructor(props){
@@ -35,7 +35,7 @@ class RemindersWell extends Component{
   componentWillMount() {
     if(!this.props){
       console.log('log in again');
-      Cookies2.remove('user');
+      Cookies.remove('user');
       window.location.href="/";
     }
     const {
@@ -152,6 +152,9 @@ class RemindersWell extends Component{
             </div>)
             )}
           </div>
+
+          <p id="need-acct" className="animated bounceInLeft">Need an account?<span><a id="sign-up" onClick={this.openModal}>&nbsp;&nbsp;&nbsp;SIGN UP</a></span></p>
+
           <h4 className="animated headShake"> Past Reminders</h4>
           <div className="well" id="past-well">
             {pastRmdrs.map(rmdr => 
@@ -171,6 +174,7 @@ class RemindersWell extends Component{
               rmdrNotificationNumber={rmdrNotificationLabel}
               handleSubmit={this.onUpdateReminder} />
           </Modal>
+
         </div>
       </div>
     );

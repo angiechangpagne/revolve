@@ -4,7 +4,7 @@ import "./User.css";
 import NavBar from "../../components/NavBar/NavBar";
 import RmdrForm from "../../components/RmdrForm/RmdrForm";
 import RemindersWell from "../../components/RemindersWell/RemindersWell";
-import Cookies2 from "js-cookie";
+import {Cookies as UniversalCookies} from "universal-cookie";
 import MapRender from "../../components/Map/Map";
 import LinkGoogleMaps from "../../components/LinkGoogleMaps/LinkGoogleMaps";
 {/* <div className="row" id='pac-input'>
@@ -18,17 +18,26 @@ class User extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      user: '',
+      user: Cookies.getJSON('user'),
       reminders: [],
       isModalOpen: false,
     }
   }
 
   componentWillMount(){
-    const user = Cookies2.getJSON('user');
-    Cookies2.set('reminders',[]);
-    console.log('Cookies2 get user', Cookies2.getJSON('user'));
-    console.log('Cookies2 get reminders', Cookies2.getJSON('reminders'))
+    if(!this.props){
+      console.log('log in again');
+      Cookies.remove('user');
+      window.location.href="/";
+    }
+    // const user = Cookies.getJSON('user');
+    // this.setState({
+    //   user: user
+    // })
+    // Cookies.set('reminders',[]);
+    //set user state initialized to Cookies
+    console.log('Cookies get user', Cookies.getJSON('user'));
+    // console.log('Cookies get reminders', Cookies.getJSON('reminders'))
     // user.reminders.push(...props.reminders);
     console.log("line 15 of user, user:", user);
     console.log('props in user', this.props);
@@ -49,7 +58,7 @@ class User extends React.Component{
   
           <div className="row">
             <div>
-                <Human className="clearfix" backgroundImage="">
+                <Human className="clearfix">
                   <div className="row">
                     <div>
                       <RmdrForm user={this.state.user} isModalOpen={this.state.isModalOpen} />

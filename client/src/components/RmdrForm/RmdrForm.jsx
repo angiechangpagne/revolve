@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import api from '../../Utils/api';
 import './RmdrForm.css';
 import DatePicker from 'react-datepicker';
-import Cookies2 from "js-cookie";
+import Cookies from "js-cookie";
 import Modal from 'react-modal';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -13,6 +13,7 @@ import Search from './Search';
 //require for auto completie address as input form 
 // import PlacesAutocomplete, { geocodeByAddress, geocodeByPlaceId, getLatLng } from 'react-places-autocomplete';
 
+//refactor to open modal in remindersWell, pass isModalOpen as a conditional for the handle click else invisible..
     // {/* <button 
     //           id="buttonlogintoregister"
     //           className="animated-bounceInLeft"
@@ -122,10 +123,11 @@ class RmdrForm extends Component{
   }
   
   componentWillMount(){
-    if(!this.props){
+    console.log('this.props in will mount',this.props);
+    if(!this.props.user){
       console.log('log in again');
-      Cookies2.remove('user');
-      console.log('cookies', Cookies2);
+      Cookies.remove('user');
+      console.log('cookies', Cookies);
       window.location.href="/";
     }
     const {
@@ -135,21 +137,21 @@ class RmdrForm extends Component{
     //set the userer cookie state
     this.setState({
       rmdrNotificationNumber:  user.mobileNumber, 
-      user: user || {}
+      user: user
     });
   }
   componentDidMount(){
     //if there is no user cookie, reroute to the login page
     if(this.props===undefined){
       // window.location.redirect('./LoginForm');
-      Cookies2.remove('user');
-      console.log(Cookies2);
+      Cookies.remove('user');
+      console.log(Cookies);
       window.location.href = "/";
     }
     else {
       console.log(this.props.user);
       console.log("I have a cookie access");
-      console.log(Cookies2);
+      console.log(Cookies);
     }
   }
 
@@ -201,7 +203,7 @@ class RmdrForm extends Component{
   handleFormSubmit = (event) => {
     event.preventDefault();
     // if(this.props.user===undefined){
-    //   Cookies2.remove('user');
+    //   Cookies.remove('user');
     //   window.location.href="/";
     // }
     // console.log('to validate states');
@@ -272,9 +274,9 @@ class RmdrForm extends Component{
           //reload page and refresh upcoming remminder well
           this.state.user.reminders.push(newState);
           this.props.user.userInfo.reminders.push(newState);
-          Cookies2.set('reminders', Cookies2.getJSON().push(newState));
+          Cookies.set('reminders', Cookies.getJSON().push(newState));
           console.log('reminders state', this.state.reminders);
-          console.log('Cookies2', Cookies2.getJSON('reminders'));
+          console.log('Cookies', Cookies.getJSON('reminders'));
           window.location.href="/user";
           }).catch(err => console.log(err));
         }
