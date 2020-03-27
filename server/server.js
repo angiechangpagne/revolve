@@ -1,6 +1,8 @@
 // 'use strict';
 // require('dotenv').config();
 //declare dependencies
+//production modeif(process.env.NODE_ENV === 'production') {  app.use(express.static(path.join(__dirname, 'client/build')));  //  app.get('*', (req, res) => {    res.sendfile(path.join(__dirname = 'client/build/index.html'));  })}
+
 const mongoose = require('mongoose')
 const path = require('path');
 var express = require('express');
@@ -9,7 +11,7 @@ var app = express(); //invoke express  instance
 //require routers
 const apiRouter = require('./api/userAndReminder'); //all the routes in the api routes folder
 // const router = express.Router();
-const port = 3001;
+const port = process.env.PORT || 3001;
 //notification scheduler 
 
 //configure body parser for AJAX requests, request body
@@ -42,7 +44,7 @@ app.use('/api',apiRouter);
 //serve static assets
 console.log("in line 26 of express server and dirname is", __dirname);
 // app.use('/assets', express.static(path.resolve(__dirname, '../client/public/assets')));
-app.use('/public', express.static(path.resolve(__dirname,'public')));
+app.use('/public', express.static(path.resolve(__dirname,'client/public')));
 // app.use(express.static(path.resolve(__dirname, 'client/public/assets')));
 
 // app.use(logger('dev'));

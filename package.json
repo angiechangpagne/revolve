@@ -12,11 +12,14 @@
     "build": "webpack --config ./webpack.config.js",
     "lint": "eslint \"**/*.jsx\"",
     "server": "nodemon server/server.js",
-    "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
+    "client-install": "npm install --prefix client",
+    "client": "webpack-dev-server --mode development --devtool inline-source-map --hot -prefix client",
     "webpack": "webpack --config webpack.config.js",
     "deploy": "yarn build && git add . && git commit -m \"Building for production\" && git push heroku master",
     "test": "NODE_ENV=test jest --coverage",
-    "prod": "node server.js"
+    "prod": "node server.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+
   },
   "author": "angiechangpagne",
   "license": "MIT",
@@ -105,6 +108,9 @@
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3",
     "webpack-hot-middleware": "^2.25.0"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   },
   "devDependencies": {
     "concurrently": "^4.1.2",
