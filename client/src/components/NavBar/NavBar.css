@@ -1,9 +1,11 @@
 .navbar {
   background: rgb(197, 211, 200);
+  display: -ms-inline-flexbox;
+  flood-opacity: initial;
 }
 .navbar-title {
-  color: rgba(94, 94, 94, 0.995) !important;
-  font-family: Roboto;
-  font-size: 15px;
-  font-weight: 300; 
+  color: rgba(90, 96, 84, 0.995) !important;
+  font-family: 'Etheriq','Metros',system-ui,'Nidus Sans','Courier Mono', Courier, monospace;
+  font-size: 21px;
+  font-weight: 6px; 
 }

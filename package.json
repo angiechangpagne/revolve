@@ -112,6 +112,22 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "browserslist": {
+    "development": [
+      "last 2 chrome versions",
+      "last 2 firefox versions",
+      "last 2 edge versions"
+    ],
+    "production": [
+      ">1%",
+      "last 4 versions",
+      "Firefox ESR",
+      "not ie < 11"
+    ]
+  },
+  "resolutions": {
+    "universal-cookie": "4.0.3"
+  },
   "devDependencies": {
     "concurrently": "^4.1.2",
     "nodemon": "^2.0.2"

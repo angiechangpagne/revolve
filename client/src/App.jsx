@@ -53,7 +53,7 @@ class App extends Component {
   handleUserChange(user){
     const { cookies } = this.props;
     cookies.set('user', user, { path: '/'}); //go back to login upon logout
-    this.setState({ user: cookies });
+    this.setState({ user: cookies.get('user') });
   };
 
   // callAPI(){

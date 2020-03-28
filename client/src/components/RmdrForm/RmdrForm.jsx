@@ -106,8 +106,8 @@ class RmdrForm extends Component{
       isRmdrNotificationEmpty : false, 
       isRmdrTimeEmpty : false,
       reminders : [],
-      user: {},
-      isModalOpen: true,
+      user: "",
+      isModalOpen: false,
       address : "",
       setAddress: (address) => {
         this.setState({ 
@@ -121,35 +121,39 @@ class RmdrForm extends Component{
     this.handleNotificationChange=this.handleNotificationChange.bind(this);
     this.setAddress=this.setAddress.bind(this);
     this.validate=this.validate.bind(this);
+    this.closeModal=this.closeModal.bind(this);
   }
   
-  componentWillMount(){
-   const user = this.props.cookies.get('user');
+  componentDidMount(){
     console.log('this.props in will mount of form',this.props);
-    if(!this.props.cookies.get('user')){
-      console.log('log in again');
-      // this.props.cookies.remove('user');
-      console.log('this.props.cookies.get(\'user\') is the cookies', this.props.cookies.get('user'));
-      window.location.href="/";
-    }
+    // if(!this.props.user){
+    //   console.log('log in again');
+    //   // this.props.cookies.remove('user');
+    //   console.log('this.props.user is the cookies', this.props.user);
+    //   window.location.href="/";
+    // }
    
     //set the user cookie state
     this.setState({
-      rmdrNotificationNumber:  user.mobileNumber, 
-      user: user
+      rmdrNotificationNumber:  this.props.user.mobileNumber || '', 
+      user: this.props.user,
+      reminders: this.props.reminders || []
     });
   }
 
-  componentDidMount(){
+  componentWillMount(){
     //if there is no user cookie, reroute to the login page
-    if(this.props===undefined || !this.props.cookies.get('user')){
+    if(this.props===undefined || !this.props.user){
       // window.location.redirect('./LoginForm');
       // this.props.user.remove('user');
-      console.log(this.props.cookies.get('user'));
+      console.log(this.props.user);
       window.location.href = "/";
     }
     else {
-      console.log(this.props.cookies.get('user'));
+      if(this.props.isModalOpen){
+        this.setState({ isModalOpen: true });
+      }
+      console.log(this.props.user);
       console.log("I have a cookie access");
     }
   }
@@ -242,7 +246,7 @@ class RmdrForm extends Component{
       {
         console.log("I am now about to create reminder");
        
-        api.saveUserReminder(this.props.cookies.get('user').id, {
+        api.saveUserReminder(this.props.user.id, {
           reminderName : rmdrName,
           time : rmdrTime,
           reminderNumber : rmdrNotificationNumber,
@@ -269,19 +273,20 @@ class RmdrForm extends Component{
                 rmdrId : res.data.id,
                 rmdrNotification : res.data.rmdrNotification,
                 rmdrNotificationLabel : res.data.rmdrNotificationLabel,
-                address : ""
+                address : "",
               })
-          })
+          });
+          this.closeModal();
 
           console.log('new reminder successfully added to associated user key', this.state.reminders);
           //reload page and refresh upcoming remminder well
           this.state.user.reminders.push(newState);
-          this.props.cookies.get('user').userInfo.reminders.push(newState);
+          this.props.user.userInfo.reminders.push(newState);
           //user is a cookie get in App root provider
-          this.props.cookies.get('user').handleChange();
+          this.props.user.handleChange(this.state.user);
           //set('user', this.props.user, { path: '/'});
           console.log('reminders state', this.state.reminders);
-          console.log('this.props.cookies.get(\'user\') cookies', this.props.cookies.get('user'));
+          console.log('this.props.user cookies', this.props.user);
           window.location.href="/user";
           }).catch(err => console.log(err));
         }
@@ -303,6 +308,9 @@ class RmdrForm extends Component{
     this.validate();
   };
 
+  closeModal = () => {
+    this.setState({ modalIsOpen: false });
+  }
   // loadReminders = () => {
   //   console.log("I am trying to load my reminders");
   //   api.getUserReminders(this.props.user ? this.props.user.id : 17)
@@ -317,17 +325,17 @@ class RmdrForm extends Component{
   render() {
     console.log(this.state);
 
-    console.log(this.props.cookies.get('user').userInfo);
+    console.log(this.props.user.userInfo);
     return (
       <div className="container animated pulse">
       <Modal 
-        is="modal" 
+        id="modal" 
         className="col-sm-6 col-sm-offset-3 animated pulse"
         isOpen={this.state.isModalOpen}
         >
         <div className="box">
         <header className="animated headShake">
-            <h1 id="logintoregister"><p></p>{`Greetings ${this.props.cookies.get('user').firstName }let's set up your notifications`} </h1>
+            <h1 id="logintoregister"><p></p>{`Greetings ${this.props.user.firstName }let's set up your notifications`} </h1>
         </header>
         
           <form id="form" method="POST" className="topBefore animated headShake">

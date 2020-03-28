@@ -5,27 +5,28 @@ import './Landing.css';
 import { withCookies } from 'react-cookie';
 
 const Landing = (props) => {
-  console.log("props on line 7 of landin",props.cookies.get('user'), props);
+  console.log("props on line 7 of landing",props);
   console.log('user', props.user)
   return (
     <React.Fragment>
     {
-    <div>
-       
+    <div className="landing" id="land">
         <div className="container">
+        <p></p>
+        <h3>Revolve Reminders</h3>
+        
           <div className="col-sm-8 col-sm-offset-2">
-            <a id="foo"> <LoginForm user={props.user} onChange={props.onChange}/></a>
+          <a id="arr"> <LoginForm user={props.user} onChange={props.onChange}/></a>
           </div>
-        </div>
-        <br></br><br></br>
-        <Human>
-          <div className="arrow-container animated fadeInDown">
-            <div className="arrow-2">
-            <a href='#foo'> <i className="glyphicon glyphicon-arrow-down"></i></a>
+          <Human>
+            <div className="arrow-container animated fadeInDown">
+              <div className="arrow-2">
+              <a href='#arr'> <i className="glyphicon glyphicon-arrow-right"></i></a>
+              </div>
+              <div className="arrow-1 animated hinge infinite zoomIn"></div>
             </div>
-            <div className="arrow-1 animated hinge infinite zoomIn"></div>
-          </div>
-        </Human>
+          </Human>
+        </div>
       </div>
     }
     </React.Fragment>

@@ -2,7 +2,6 @@ import React from 'react';
 import Human from "../../components/Human/Human";
 import "./User.css";
 import NavBar from "../../components/NavBar/NavBar";
-import RmdrForm from "../../components/RmdrForm/RmdrForm";
 import RemindersWell from "../../components/RemindersWell/RemindersWell";
 import { withCookies } from 'react-cookie';
 
@@ -20,7 +19,7 @@ class User extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      user: {},
+      user: "",
       reminders: [],
       isModalOpen: false
     }
@@ -32,10 +31,12 @@ class User extends React.Component{
     //   this.props.cookies.remove('user');
     //   window.location.href="/";
     // }
-    this.setState({ user : this.props.cookies.get('user') });
+    this.setState({ user : this.props.user,
+                    reminders: this.props.user.reinders || [] 
+                  });
     // setCookie('reminders',[]);
     //set user state initialized to this.props.cookies
-    console.log('line 15 user this.props.cookies from withthis.props.cookies hook', this.props.cookies.get('user'));
+    console.log('line 15 user this.props.user from with hook', this.props.user);
     // console.log('this.props.cookies get reminders', this.props.cookies.getJSON('reminders'))
     // user.reminders.push(...props.reminders);
   }
@@ -43,23 +44,18 @@ class User extends React.Component{
     render(){
       return (
         <React.Fragment>
-        <div className="wrapper">
+        <div className="user-wrapper">
           <div className="row">
             <NavBar/>
           </div>
   
           <div className="row">
-            <RemindersWell user={this.state.user} onChange={this.props.onChange} isModalOpen={this.state.isModalOpen}/>
+            <RemindersWell user={this.state.user} reminders={this.state.reminders} onChange={this.props.onChange} isModalOpen={this.state.isModalOpen}/>
           </div>
   
           <div className="row">
             <div>
                 <Human className="clearfix">
-                  <div className="row">
-                    <div>
-                      <RmdrForm user={this.state.user} onChange={this.props.onChange} isModalOpen={this.state.isModalOpen} />
-                    </div>
-                  </div>
                  
                 </Human>
             </div>

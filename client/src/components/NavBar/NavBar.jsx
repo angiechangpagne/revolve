@@ -2,14 +2,14 @@ import React , { Component } from "react";
 import { Link } from "react-router-dom";
 import Cookies2 from "js-cookie";
 import "./NavBar.css";
-
+import { withCookies } from 'react-cookie';
 //make functional component
 const NavBar= () => {
 
-  const handleSignOut = () => {
+  const handleSignOut = (user) => {
     //delete user cookie upon sign out
-    Cookies2.remove('user');
-    // window.location.href="/";
+    // this.props.cookies.remove('user');
+    window.location.href="/";
   }
 
     return (
@@ -26,4 +26,4 @@ const NavBar= () => {
     )
 }
 
-export default NavBar;
+export default withCookies(NavBar);

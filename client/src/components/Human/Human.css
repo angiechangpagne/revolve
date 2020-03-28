@@ -1,7 +1,8 @@
 .human {
-  /*position: relative;*/
-  /*padding-top: 10px;*/
-  height: 100vh;
+  position: relative;
+  padding-top: 17px;
+  height: 17px;
+  width: 666px;
   /*background: url("../../../public/backgroundImage.jpg");*/
-  background-size: cover;
+  /* background-size: cover; */
 }

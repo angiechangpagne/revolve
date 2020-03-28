@@ -3,7 +3,7 @@ import './LoginForm.css';
 import api from '../../Utils/api';
 import Modal from 'react-modal';
 import { withCookies } from 'react-cookie';
-//global hoised hooks
+//global hoisted hooks/ injected context
 // import { this.props.cookies} from 'universal-cookie';
 // const Universalthis.props.cookies=new this.props.cookies();
 //'js-cookie';
@@ -35,7 +35,7 @@ class LoginForm extends Component {
       isEmailUnique: true, 
       isEmailValid: true,
       //open/close the state for the modal
-      modalIsOpen: false,
+      isModalOpen: false,
       //state for user cookie
       userCookie: ""
     };
@@ -54,23 +54,23 @@ class LoginForm extends Component {
   }
 
   componentWillMount() {
-    this.setState({ userCookie : this.props.cookies.get('user') });
+    this.setState({ userCookie : this.props.user });
   }
 
   componentDidMount() {
     console.log('this.props in Login Form', this.props);
-    console.log('this.props.cookies for user', this.props.cookies.get('user'));
-    if(this.state.userCookie && this.state.userCookie===this.props.cookies.get('user')){
-      window.location.href = "/user"; 
-      // this.props.history.push('/');
-      }
+    console.log('this.props.user for user', this.props.user);
+    // if(this.state.userCookie && this.state.userCookie===this.props.user){
+      // window.location.href = "/user"; 
+    //   // this.props.history.push('/');
+    //   }
   }
   openModal = () => {
-    this.setState({ modalIsOpen: true });
+    this.setState({ isModalOpen: true });
   }
 
   closeModal = () => {
-    this.setState({ modalIsOpen: false });
+    this.setState({ isModalOpen: false });
   }
 
   handleInputChange = (event) => {
@@ -116,12 +116,10 @@ class LoginForm extends Component {
         if(res.data.isValidEmail && res.data.isValidPassword){
           //a GET request for "/home"
           // api.getUserReminders(res.data.id);
-          this.props.cookies.set('user', res.data.userInfo, { path: '/'})
-          .then(() => {
-            this.setState({ userCookie: this.props.cookies.get('user')});
-            console.log('this.props.cookies cookies in login result for user', this.props.cookies);
-            window.location.href="/user";
-          }).catch(err => console.log(err, 'could not get cookies set promise'));
+          this.props.onChange(res.data.userInfo);
+          this.setState({ userCookie: this.props.user});
+          console.log('this.props.user cookies in login result for user', this.props.user);
+          window.location.href="/user";
           //store response from database then wait for set, then redirect
         }
         //else if email provided isn't in the db
@@ -204,11 +202,11 @@ class LoginForm extends Component {
   render() {
     console.log('state before render', this.state);
     return (
-      <div>
+      <div className="container">
       <Modal 
         id="modal" 
         className="col-sm-6 col-sm-offset-3 animated pulse"
-        isOpen={this.state.modalIsOpen}>
+        isOpen={this.state.isModalOpen}>
         <form id="form" method="POST" className="topBefore animated headShake">
           <div className="modal-header">
             <button type="button" className="close" onClick={this.closeModal}>&times;</button>
@@ -258,7 +256,7 @@ class LoginForm extends Component {
         </form>
       </Modal>
       <section className="loginSection">
-        <header className="animated headShake">Log In</header>
+       <div id="login-title"><span> <header className="animated headShake">Log In</header></span></div>
         <form id="form" className="topBefore animated headShake"> 
           <input id="name" type="email" placeholder="email" value={this.state.loginEmail} name="loginEmail" onChange={this.handleInputChange} type="text" id="input-email" className="loginHover"></input>
             {this.state.isLoginEmailEmpty &&
@@ -284,8 +282,9 @@ class LoginForm extends Component {
             </div>
           }
         </form>
-        <div className="col-sm-offset-2 col-sm-5">
-        <p id="need-acct" className="animated bounceInLeft">Need an account?<span><a id="sign-up" onClick={this.openModal}>&nbsp;&nbsp;&nbsp;SIGN UP</a></span></p>
+        <div className="col-sm-offset-6 col-sm-6">
+        <span id="create-account"> <p id="create-acct" className="animated bounceInLeft">Need an account?</p></span>
+        <button onClick={this.openModal}>SIGN UP</button>
         </div>
       </section>
     </div>

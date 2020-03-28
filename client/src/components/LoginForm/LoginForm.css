@@ -1,7 +1,10 @@
 p.error {
-  color : red;
+  color : rgb(116, 78, 104);
 }
 
+.container {
+  font-family: 'Coda', monospace;
+}
 input:hover::-webkit-input-placeholder, textarea:hover::-webkit-input-placeholder {
   color: #e2dedb;
   font-size: 1em;
@@ -39,24 +42,33 @@ input:hover:focus::-ms-placeholder, textarea:hover::focus:-ms-placeholder {
 }
 
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Coda', sans-serif;
   background: #E3DEDB;
-  color: #253042;
+  color: #94bfa4;
+  align-content: center;
 }
 #sign-up:hover {
   text-decoration: none;
 }
 
+#login-title {
+  background-color: #575b5ae5;
+  border-radius: 66% 21% 17% 3%;
+
+}
 header {
   position: relative;
-  margin: 35px 0 25px 0;
-  font-size: 2.3em;
+  border-radius: 50% 23% 17% 22%;
+  margin: 23px 17px 21px 21px;
+  font-size: 4.3em;
   text-align: center;
+  color:  #7d9d9a;
   letter-spacing: 7px;
 }
 
 header:hover {
-  font-style: none;
+  letter-spacing: 17px;
+  border-radius: 21% 23% 17% 67%;
 }
 
 #form {
@@ -66,13 +78,13 @@ header:hover {
 }
 
 .loginHover {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Monospace', sans-serif;
   font-size: 1em;
   width: 470px;
   height: 60px;
   padding: 0px 15px 0px 15px;
   
-  background: #fff;
+  background: rgb(87, 94, 89);
   outline: none;
   color: #726659;
   
@@ -86,25 +98,22 @@ header:hover {
 }
 
 .loginHover:hover {
-  background: #2D3A4E;
+  background: rgb(153, 159, 175);
   color: #e2dedb;
 }
 
 .modal-header {
-      width: 470px;
+  width: 470px;
 }
-
 
 #submit {
   width: 470px;
-  
-  padding: 0;
   margin: -5px 0px 0px 0px;
   
-  font-family: 'Lato', sans-serif;
+  font-family: 'Coda', monospace, sans-serif;
   font-size: 1em;
-  color: #b3aca7;
-  
+  color: #4b634f;
+  background-color: aliceblue;
   outline:none;
   cursor: pointer;
   
@@ -112,7 +121,8 @@ header:hover {
 }
 
 #submit:hover {
-  color: #e2dedb;
+  color: #dae4d2;
+  background-color: #a5a785;
 }
 
 .ReactModal__Content:focus {
@@ -126,8 +136,22 @@ header:hover {
     left: -12px;
 }
 h1 {
-  margin: 0
+  margin: 0;
+  display: flex;
+  @media only screen and (max-width: 31.25em) {
+    .header {
+      flex-wrap: wrap;
+      align-content: space-around;
+      height: 11rem; 
+    } 
+  }
+
 }
 .loginSection {
   height: 90vh;
+  /* font-family: 'Monospace'; */
+  box-shadow: var(--shadow-dark);
+}
+.button {
+  align-content: stretch;
 }

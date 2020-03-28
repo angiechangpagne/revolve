@@ -1,29 +1,33 @@
 .glyphicon {
   top: 20px;
-  color: #fff;
+  font-size: inherit;
+  color: #817f85;
 }
 
 html {
   scroll-behavior: smooth;
 }
-#foo:hover {
+#arr:hover {
 text-decoration: none;
+}
+#land{
+  color:#a5a5b6;
 }
 
 .arrow-container{
-width: 100px;
-height: 100px;
+width: 10px;
+height: 0px;
 margin: 0 auto;
-position: absolute;
-bottom: 25px;
-left: 0;
+position: relative;
+bottom: 0px;
+left: 0px;
 right: 0;
 }
 
 .arrow-1{
 width: 100px;
 height: 100px;
-background: #2D3A4E;
+background: rgba(88, 114, 96, 0.837);
 opacity: 0.5;
 border-radius: 50%;
 position: absolute;
@@ -32,12 +36,12 @@ position: absolute;
 .arrow-2{
 width: 60px;
 height: 60px;
-background: #2D3A4E;
-border-radius: 50%;
+background: rgb(231, 238, 154);
+border-radius: 21% 83% 17% 69%;
 position: absolute;
 top: 20px;
 left: 20px;
-z-index: 1;
+z-index: 3;
 display: table;
 }
 
@@ -45,8 +49,7 @@ display: table;
 width: 56px;
 height: 56px;
 content: "";
-border: 2px solid #006064;
-border-radius: 50%;
+border: 2px solid #7fa297;
 position: absolute;
 top: 2px;
 left: 2px;
@@ -57,7 +60,7 @@ font-size: 30px;
 display: table-cell;
 vertical-align: middle;
 text-align: center;
-color: #006064;
+color: #bddac6;
 }
 
 /* Custom Animate.css */
@@ -70,8 +73,8 @@ color: #006064;
 @-webkit-keyframes zoomIn {
 0% {
 opacity: 0;
--webkit-transform: scale3d(.4, .4, .4);
-        transform: scale3d(.4, .4, .4);
+-webkit-transform: scale3d(.6, .6, .6);
+        transform: scale3d(.6, .6, .6);
 }
 
 50% {
