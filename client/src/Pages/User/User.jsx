@@ -3,7 +3,7 @@ import Human from "../../components/Human/Human";
 import "./User.css";
 import NavBar from "../../components/NavBar/NavBar";
 import RemindersWell from "../../components/RemindersWell/RemindersWell";
-import { withCookies } from 'react-cookie';
+import { Cookies, withCookies } from 'react-cookie';
 
 // import {this.props.cookies as Universalthis.props.cookies} from "universal-cookie";
 import MapRender from "../../components/Map/Map";
@@ -20,6 +20,7 @@ class User extends React.Component{
     super(props);
     this.state={
       user: "",
+      userCookie:"",
       reminders: [],
       isModalOpen: false
     }
@@ -31,26 +32,28 @@ class User extends React.Component{
     //   this.props.cookies.remove('user');
     //   window.location.href="/";
     // }
-    this.setState({ user : this.props.user,
-                    reminders: this.props.user.reinders || [] 
+    this.setState({ userCookie : this.props.userCookie,
+                    reminders: this.props.userCookie.reminders || [] 
                   });
     // setCookie('reminders',[]);
     //set user state initialized to this.props.cookies
     console.log('line 15 user this.props.user from with hook', this.props.user);
+    console.log('and Cookies is', Cookies);
     // console.log('this.props.cookies get reminders', this.props.cookies.getJSON('reminders'))
     // user.reminders.push(...props.reminders);
   }
     
     render(){
+      console.log('this.props.children', this.props.children)
       return (
         <React.Fragment>
         <div className="user-wrapper">
           <div className="row">
-            <NavBar/>
+            <NavBar userCookie={this.state.userCookie} onChange={this.props.onChange} handleUserDelete={this.props.handleUserDelete}/>
           </div>
   
           <div className="row">
-            <RemindersWell user={this.state.user} reminders={this.state.reminders} onChange={this.props.onChange} isModalOpen={this.state.isModalOpen}/>
+            <RemindersWell userCookie={this.state.userCookie} reminders={this.state.reminders} onChange={this.props.onChange} isModalOpen={this.state.isModalOpen}/>
           </div>
   
           <div className="row">

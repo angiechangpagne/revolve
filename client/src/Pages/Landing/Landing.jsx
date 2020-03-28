@@ -2,11 +2,12 @@ import React from 'react';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import Human from '../../components/Human/Human';
 import './Landing.css';
-import { withCookies } from 'react-cookie';
+import { Cookies, withCookies } from 'react-cookie';
 
 const Landing = (props) => {
   console.log("props on line 7 of landing",props);
-  console.log('user', props.user)
+  console.log('user', props.userCookie);
+  console.log('Cookies is', console.log(Cookies));
   return (
     <React.Fragment>
     {
@@ -16,7 +17,7 @@ const Landing = (props) => {
         <h3>Revolve Reminders</h3>
         
           <div className="col-sm-8 col-sm-offset-2">
-          <a id="arr"> <LoginForm user={props.user} onChange={props.onChange}/></a>
+          <a id="arr"> <LoginForm userCookie={props.userCookie} onChange={props.onChange}/></a>
           </div>
           <Human>
             <div className="arrow-container animated fadeInDown">

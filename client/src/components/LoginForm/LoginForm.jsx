@@ -2,7 +2,7 @@ import React, { Component} from 'react';
 import './LoginForm.css';
 import api from '../../Utils/api';
 import Modal from 'react-modal';
-import { withCookies } from 'react-cookie';
+import { withCookies, Cookies } from 'react-cookie';
 //global hoisted hooks/ injected context
 // import { this.props.cookies} from 'universal-cookie';
 // const Universalthis.props.cookies=new this.props.cookies();
@@ -37,7 +37,8 @@ class LoginForm extends Component {
       //open/close the state for the modal
       isModalOpen: false,
       //state for user cookie
-      userCookie: ""
+      userCookie: "",
+      user:""
     };
 
     this.handleInputChange=this.handleInputChange.bind(this);
@@ -54,12 +55,13 @@ class LoginForm extends Component {
   }
 
   componentWillMount() {
-    this.setState({ userCookie : this.props.user });
+    this.setState({ userCookie : this.props.userCookie });
   }
 
   componentDidMount() {
     console.log('this.props in Login Form', this.props);
-    console.log('this.props.user for user', this.props.user);
+    console.log('this.props.userCookie for user', this.props.userCookie);
+    console.log('Cookies', Cookies);
     // if(this.state.userCookie && this.state.userCookie===this.props.user){
       // window.location.href = "/user"; 
     //   // this.props.history.push('/');

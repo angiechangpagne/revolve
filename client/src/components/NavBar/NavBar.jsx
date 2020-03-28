@@ -1,16 +1,19 @@
 import React , { Component } from "react";
 import { Link } from "react-router-dom";
-import Cookies2 from "js-cookie";
+// import Cookies2 from "js-cookie";
 import "./NavBar.css";
-import { withCookies } from 'react-cookie';
+import { withCookies, Cookies } from 'react-cookie';
 //make functional component
 const NavBar= () => {
 
-  const handleSignOut = (user) => {
+  const handleSignOut = (props) => {
     //delete user cookie upon sign out
-    // this.props.cookies.remove('user');
+    console.log('Cookies', Cookies);
+    // Cookies.remove('user');
+    props.userCookie.handleUserDelete();
     window.location.href="/";
   }
+
 
     return (
       <nav className="navbar navbar-default">

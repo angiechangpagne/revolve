@@ -40,9 +40,10 @@ class App extends Component {
     console.log('this context', this)
     const { cookies } = props;
     this.state={
-      user: cookies.get('user') || 'YSL'
+      userCookie: cookies.get('user') || 'YSL'
     }
     this.handleUserChange=this.handleUserChange.bind(this);
+    this.handleUserDelete=this.handleUserDelete.bint(this);
   }
 //   componentWillMount(){
 //     const { cookies }=this.props;
@@ -53,8 +54,12 @@ class App extends Component {
   handleUserChange(user){
     const { cookies } = this.props;
     cookies.set('user', user, { path: '/'}); //go back to login upon logout
-    this.setState({ user: cookies.get('user') });
+    this.setState({ userCookie: cookies.get('user') });
   };
+
+  handleUserDelete(){
+    cookies.remove('user');
+  }
 
   // callAPI(){
   //   fetch('http://localhost:3001/testAPI')
@@ -81,8 +86,8 @@ class App extends Component {
       <div className="App">
         <div className="container">
         <Switch>
-        <Route exact path="/" render={()=> <Landing user={this.state.user} onChange={this.handleUserChange} /> } /> 
-        <Route exact path="/user" render={()=> <User user={this.state.user} onChange={this.handleUserChange}/>} />
+        <Route exact path="/" render={()=> <Landing user={this.state.userCookie} onChange={this.handleUserChange} /> } /> 
+        <Route exact path="/user" render={()=> <User user={this.state.userCookie} onChange={this.handleUserChange} handleUserDelete={this.handleUserDelete}/>} />
         </Switch>
         </div>
       </div>
