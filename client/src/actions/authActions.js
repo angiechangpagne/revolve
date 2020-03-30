@@ -18,7 +18,7 @@ axios.defaults.baseURL='http://localhost:3000';
 //production url
 export const isAuth = () => (dispatch) => {
   axios
-    .get('/api/users/authchecker', { withCredentials:true })
+    .get('/api/users/authchecker', { withCredentials: true })
     .then((res) => {
       dispatch({
         type: AUTH_SUCCESS,
@@ -33,13 +33,10 @@ export const isAuth = () => (dispatch) => {
 
 
 //new user
-export const register = ({ firstname, lastname,  email, password , mobileNumber }) => (dispatch) =>{
-
-//Req body
-// const body = JSON.stringify({ firstname, lastname, email, password, mobileNumber });
+export const register = (userData) => (dispatch) =>{
 
 axios
-      .post("/api/users/register", userData)
+      .post("/api/signup", userData)
       .then((res) => {
         dispatch(returnStatus(res.data, res.status,'REGISTER_SUCCESS'));
         dispatch({ type: IS_LOADING })
@@ -55,15 +52,15 @@ axios
 };
 
 //LOGIN User
-export const login = ({ email, password }) => (dispatch) => {
+export const login = (loginData) => (dispatch) => {
   // const body = JSON.stringify({ email, password });
 
   axios
-    .post('/api/users/login', userData)
+    .post('/api/login', loginData)
     .then((res) => {
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: res.data
+        payload: res
       });
       dispatch({ type: IS_LOADING });
     }).catch((err) => {

@@ -2,6 +2,9 @@ import React, { Component} from 'react';
 import './LoginForm.css';
 import api from '../../Utils/api';
 import Modal from 'react-modal';
+import { connect } from 'react-redux';
+import { buttonClicked, isLoading } from '../actions/authActions';
+import PropTypes from 'prop-types';
 import Cookies from 'js-cookie';
 
 //global hoisted hooks/ injected context
@@ -9,6 +12,13 @@ import Cookies from 'js-cookie';
 // const Universalthis.props.cookies=new this.props.cookies();
 //'js-cookie';
 class LoginForm extends Component {
+  static propTypes = {
+    isAuthenticated: Proptyles.bool,
+    status: PropTypes.object.isRequired,
+    buttonClicked: PropTypes.func.isRequired,
+    loading: PropTypes.bool
+
+  }
   constructor(props){
     super(props);
     this.state = {
@@ -27,6 +37,7 @@ class LoginForm extends Component {
       signUpPassword: "",
       signUpPhone: "",
       emailValidation: "",
+      message: "",
       //states to aid validating new user input values
       isSignUpFirstNameEmpty: false,
       isSignUpLastNameEmpty: false,
@@ -66,6 +77,13 @@ class LoginForm extends Component {
       window.location.href = "/user"; 
       // this.props.history.push('/');
       }
+  }
+
+  componentDidUpdate(prevProps) {
+    const status= this.props.status;
+    if(status !==prevProps.status && status.id === 'LOGIN_FAIL'){
+      this.setState({ messsage: status.statusMsg });
+    }
   }
 
   openModal = () => {
@@ -115,6 +133,7 @@ class LoginForm extends Component {
         console.log('res',res);
         console.log('res.data',res.data);
         console.log('res.data.userInfo',res.data.userInfo);
+        thisprops.isLoading(); //we want to load before we check redux map dispatch actions to authenticate to reduce lag
         //if email and password are valid check res, res.data or res.userInfo
         if(res.data.isValidEmail && res.data.isValidPassword){
           //a GET request for "/home"
@@ -297,4 +316,14 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+//map to props after the render
+const mapStateToProps = (state) => ({ 
+  //we map the state element in redux store to props
+  //element location is right, key is left
+  input: state.ui.button,
+  isAuthenticated: state.auth.isAuthenticated,
+  status: state.status,
+  loading: state.ui.loading
+});
+
+export default connect(mapStateToProps, { login, isLoading, buttonClicked })(LoginForm);
