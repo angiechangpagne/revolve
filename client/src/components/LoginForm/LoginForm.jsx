@@ -2,7 +2,7 @@ import React, { Component} from 'react';
 import './LoginForm.css';
 import api from '../../Utils/api';
 import Modal from 'react-modal';
-import { Cookies } from 'react-cookie';
+import Cookies from 'js-cookie';
 
 //global hoisted hooks/ injected context
 // import { this.props.cookies} from 'universal-cookie';

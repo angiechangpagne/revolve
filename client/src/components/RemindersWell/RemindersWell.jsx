@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import api from '../../Utils/api';
 import Reminder from '../Reminder/Reminder';
 import RmdrForm from "../../components/RmdrForm/RmdrForm";
-import { Cookies } from 'react-cookie';
+import Cookies from 'js-cookie';
 //props sent from user, use for get, redirect exit
 //delete
 // import this.props.cookies from "js-cookie";

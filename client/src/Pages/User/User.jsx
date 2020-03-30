@@ -3,7 +3,7 @@ import Human from "../../components/Human/Human";
 import "./User.css";
 import NavBar from "../../components/NavBar/NavBar";
 import RemindersWell from "../../components/RemindersWell/RemindersWell";
-import { Cookies } from 'react-cookie';
+import Cookies from 'js-cookie';
 
 // import {this.props.cookies as Universalthis.props.cookies} from "universal-cookie";
 import MapRender from "../../components/Map/Map";
