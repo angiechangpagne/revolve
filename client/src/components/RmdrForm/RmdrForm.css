@@ -26,7 +26,7 @@
 
 #PlacesAutocomplete__root{
   background-color: #fff;
-  font-family: Roboto;
+  font-family: 'Nidus Sans',Roboto;
   font-size: 15px;
   font-weight: 300;
   text-overflow: ellipsis;
@@ -41,7 +41,7 @@
 }
 .selectForm {
   background-color: rgb(164, 191, 149);
-  font-family: Roboto;
+  font-family: 'Nidus Sans',Roboto;
   font-size: 17px;
   font-weight: 330;
   /* text-overflow: ellipsis; */
@@ -52,7 +52,7 @@
 .box{
   position: relative;
   margin: auto;
-  font-family: Roboto;
+  font-family: 'Nidus Sans', Roboto;
   font-size: 17px;
   font-weight: 300;
   height: 760px;

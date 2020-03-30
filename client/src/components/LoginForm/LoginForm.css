@@ -2,9 +2,20 @@ p.error {
   color : rgb(116, 78, 104);
 }
 
+
 .container {
-  font-family: 'Coda', monospace;
+  font-family: 'Nidus Sans','Coda', monospace;
+  align-items: center;
+  align-content: center;
+  align-self: center;
+  position:relative;
+
 }
+.input{
+  border-radius:25px;
+
+}
+
 input:hover::-webkit-input-placeholder, textarea:hover::-webkit-input-placeholder {
   color: #e2dedb;
   font-size: 1em;
@@ -42,7 +53,7 @@ input:hover:focus::-ms-placeholder, textarea:hover::focus:-ms-placeholder {
 }
 
 body {
-  font-family: 'Coda', sans-serif;
+  font-family: 'Nidus Sans','Coda', sans-serif;
   background: #E3DEDB;
   color: #94bfa4;
   align-content: center;
@@ -53,14 +64,14 @@ body {
 
 #login-title {
   background-color: #575b5ae5;
+  margin: 17px;
   border-radius: 66% 21% 17% 3%;
-
 }
 header {
   position: relative;
   border-radius: 50% 23% 17% 22%;
-  margin: 23px 17px 21px 21px;
-  font-size: 4.3em;
+  margin: auto;
+  font-size: 3.3em;
   text-align: center;
   color:  #7d9d9a;
   letter-spacing: 7px;
@@ -73,12 +84,13 @@ header:hover {
 
 #form {
   position: relative;
+  display: inline-flexbox;
   width: 500px;
   margin: 50px auto 50px auto;
 }
 
 .loginHover {
-  font-family: 'Monospace', sans-serif;
+  font-family: 'Nidus Sans','Monospace', sans-serif;
   font-size: 1em;
   width: 470px;
   height: 60px;
@@ -102,6 +114,9 @@ header:hover {
   color: #e2dedb;
 }
 
+.modal{
+  align-self: inherit;
+}
 .modal-header {
   width: 470px;
 }
@@ -110,10 +125,10 @@ header:hover {
   width: 470px;
   margin: -5px 0px 0px 0px;
   
-  font-family: 'Coda', monospace, sans-serif;
+  font-family: 'Nidus Sans', 'Coda', monospace, sans-serif;
   font-size: 1em;
   color: #4b634f;
-  background-color: aliceblue;
+  background-color: rgb(245, 245, 245);
   outline:none;
   cursor: pointer;
   
@@ -148,10 +163,24 @@ h1 {
 
 }
 .loginSection {
-  height: 90vh;
-  /* font-family: 'Monospace'; */
+  position: center;
+  margin: auto;
+  padding: 10px;
+  /* height: 100vh; */
+  font-family: 'Nidus Sans';
+  align-self: center;
+  align-content: center;
+  /* perspective:1000px; */
+  /* width: 65vh; */
+  align-items: center;
+	transform-style: preserve-3d;
   box-shadow: var(--shadow-dark);
 }
 .button {
-  align-content: stretch;
+  position: -webkit-sticky;
+}
+
+.createAccount{
+  align-content: space-around;
+  position: relative;
 }

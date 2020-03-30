@@ -1,6 +1,9 @@
 .human {
-  position: relative;
+  position: inherit;
+  font-family: 'Nidus Sans';
+  display: -ms-inline-flexbox;
   padding-top: 17px;
+  padding-left: 100px;
   height: 17px;
   width: 666px;
   /*background: url("../../../public/backgroundImage.jpg");*/

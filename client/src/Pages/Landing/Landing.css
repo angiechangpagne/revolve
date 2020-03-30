@@ -10,8 +10,11 @@ html {
 #arr:hover {
 text-decoration: none;
 }
-#land{
+.landing{
   color:#a5a5b6;
+  align-content: center;
+  align-items: center;
+  position: relative;
 }
 
 .arrow-container{

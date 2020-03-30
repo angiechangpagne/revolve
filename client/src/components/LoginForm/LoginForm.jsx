@@ -2,7 +2,8 @@ import React, { Component} from 'react';
 import './LoginForm.css';
 import api from '../../Utils/api';
 import Modal from 'react-modal';
-import { withCookies, Cookies } from 'react-cookie';
+import { Cookies } from 'react-cookie';
+
 //global hoisted hooks/ injected context
 // import { this.props.cookies} from 'universal-cookie';
 // const Universalthis.props.cookies=new this.props.cookies();
@@ -55,18 +56,18 @@ class LoginForm extends Component {
   }
 
   componentWillMount() {
-    this.setState({ userCookie : this.props.userCookie });
+    this.setState({ userCookie : Cookies.get('user') });
   }
 
   componentDidMount() {
     console.log('this.props in Login Form', this.props);
-    console.log('this.props.userCookie for user', this.props.userCookie);
-    console.log('Cookies', Cookies);
-    // if(this.state.userCookie && this.state.userCookie===this.props.user){
-      // window.location.href = "/user"; 
-    //   // this.props.history.push('/');
-    //   }
+    // console.log('Cookies', Cookies);
+    if(this.state.userCookie){
+      window.location.href = "/user"; 
+      // this.props.history.push('/');
+      }
   }
+
   openModal = () => {
     this.setState({ isModalOpen: true });
   }
@@ -113,14 +114,15 @@ class LoginForm extends Component {
       .then(res => {
         console.log('res',res);
         console.log('res.data',res.data);
-        console.log('res.userInfo',res.data.userInfo);
+        console.log('res.data.userInfo',res.data.userInfo);
         //if email and password are valid check res, res.data or res.userInfo
         if(res.data.isValidEmail && res.data.isValidPassword){
           //a GET request for "/home"
           // api.getUserReminders(res.data.id);
-          this.props.onChange(res.data.userInfo);
-          this.setState({ userCookie: this.props.user});
-          console.log('this.props.user cookies in login result for user', this.props.user);
+          Cookies.set('user', res.data.userInfo);
+          // Cookies.set('reminders', res.data.userInfo.reminders, { path: '/user'});
+          // this.setState({ reminders: res.data.userInfo.reminders });
+          // this.setState({ user: res.data.userInfo }); //takes time for state to update
           window.location.href="/user";
           //store response from database then wait for set, then redirect
         }
@@ -207,7 +209,7 @@ class LoginForm extends Component {
       <div className="container">
       <Modal 
         id="modal" 
-        className="col-sm-6 col-sm-offset-3 animated pulse"
+        className="animated pulse"
         isOpen={this.state.isModalOpen}>
         <form id="form" method="POST" className="topBefore animated headShake">
           <div className="modal-header">
@@ -258,8 +260,9 @@ class LoginForm extends Component {
         </form>
       </Modal>
       <section className="loginSection">
-       <div id="login-title"><span> <header className="animated headShake">Log In</header></span></div>
+      <div>
         <form id="form" className="topBefore animated headShake"> 
+        <div id="login-title"><span> <header className="animated headShake">Log In</header></span></div>
           <input id="name" type="email" placeholder="email" value={this.state.loginEmail} name="loginEmail" onChange={this.handleInputChange} type="text" id="input-email" className="loginHover"></input>
             {this.state.isLoginEmailEmpty &&
               <div id="error-email-left-empty">
@@ -283,9 +286,9 @@ class LoginForm extends Component {
               <p className="error text-center">Sorry! Your email or password is incorrect</p>
             </div>
           }
-        </form>
-        <div className="col-sm-offset-6 col-sm-6">
+        <hr></hr>
         <span id="create-account"> <p id="create-acct" className="animated bounceInLeft">Need an account?</p></span>
+        </form>
         <button onClick={this.openModal}>SIGN UP</button>
         </div>
       </section>
@@ -294,4 +297,4 @@ class LoginForm extends Component {
   }
 }
 
-export default withCookies(LoginForm);
+export default LoginForm;

@@ -3,7 +3,7 @@ import api from '../../Utils/api';
 import './RmdrForm.css';
 import DatePicker from 'react-datepicker';
 // import this.props.cookies from "js-cookie";
-import { withCookies } from 'react-cookie';
+import { Cookies } from 'universal-cookie';
 import Modal from 'react-modal';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -134,29 +134,23 @@ class RmdrForm extends Component{
     // }
    
     //set the user cookie state
-    this.setState({
-      rmdrNotificationNumber:  this.props.user.mobileNumber || '', 
-      user: this.props.user,
-      reminders: this.props.reminders || []
-    });
+   
   }
 
   componentWillMount(){
-    //if there is no user cookie, reroute to the login page
-    if(this.props===undefined || !this.props.user){
-      // window.location.redirect('./LoginForm');
-      // this.props.user.remove('user');
-      console.log(this.props.user);
-      window.location.href = "/";
-    }
-    else {
+    const { user, reminders, isModalOpen } = this.props;
+    this.setState({
+      user: user,
+      reminders: reminders || [],
+      isModalOpen: isModalOpen
+    });
       if(this.props.isModalOpen){
         this.setState({ isModalOpen: true });
       }
       console.log(this.props.user);
       console.log("I have a cookie access");
     }
-  }
+  // }
 
   // componentWillUnmount(){
 
@@ -325,7 +319,7 @@ class RmdrForm extends Component{
   render() {
     console.log(this.state);
 
-    console.log(this.props.user.userInfo);
+    console.log(this.state.user);
     return (
       <div className="container animated pulse">
       <Modal 
@@ -428,4 +422,4 @@ class RmdrForm extends Component{
 
 
 
-export default withCookies(RmdrForm);
+export default RmdrForm;

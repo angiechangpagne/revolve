@@ -1,12 +1,20 @@
 .App {
   text-align: center;
-  background-color: aliceblue;
+  align-content: center;
+  align-items: center;
+  background-color: rgb(249, 249, 249);
   box-shadow: var(--shadow-dark);
   height: 100vh;
 }
+.container{
+  align-content: center;
+}
 
 .body{
-  background-color: aliceblue;
+  background-color:whitesmoke;
+  align-items: center;
+  align-content: center;
+   /* aliceblue; */
 }
 
 .App-logo {

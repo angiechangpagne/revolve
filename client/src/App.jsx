@@ -1,6 +1,6 @@
 /* eslint-disable import/first */
 import React, { Component } from 'react';
-import { instanceOf } from 'prop-types';
+// import { instanceOf } from 'prop-types';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // import { useHistory } from 'react-router';
 // import Navbar from './components/NavBar/NavBar';
@@ -16,7 +16,7 @@ import User from './Pages/User/User';
 // import Profile from './components/Profile/Profile'; 
 import './App.css';
 // import store from './store';
-import { withCookies, Cookies } from 'react-cookie';
+// import Cookies2 from 'js-cookie';
 
 //props is inherited from universal cookie provider, 
 //to do: add express universal cookies for server side render
@@ -29,37 +29,42 @@ import { withCookies, Cookies } from 'react-cookie';
 //   {/* <Route exact path='/register' component={Register} /> */}
 //           {/* <Navbar /> */}
 // {/* <p className="App-intro">{this.state.apiResponse}</p> */}
+// var Cookies2 = Cookies.noConflict()
 
 class App extends Component {
-  static propTypes = {
-    cookies: instanceOf(Cookies).isRequired
-  };
-  constructor(props){
-    super(props);
-    //in this context
-    console.log('this context', this)
-    const { cookies } = props;
-    this.state={
-      userCookie: cookies.get('user') || 'YSL'
-    }
-    this.handleUserChange=this.handleUserChange.bind(this);
-    this.handleUserDelete=this.handleUserDelete.bint(this);
-  }
-//   componentWillMount(){
-//     const { cookies }=this.props;
-//     this.setState = {
-//       user: cookies.get('user')
-//     };
-//  }
-  handleUserChange(user){
-    const { cookies } = this.props;
-    cookies.set('user', user, { path: '/'}); //go back to login upon logout
-    this.setState({ userCookie: cookies.get('user') });
-  };
+  // static propTypes = {
+  //   userCookie: instanceOf(Object).isRequired
+  // };
+  // constructor(props){
+  //   super(props);
+  //   //in this context
+  //   // console.log('this context', this);
+  //   // this.state={
+  //   //   cookies: "",
+  //   //   userCookie: ""
+  //   // }
 
-  handleUserDelete(){
-    cookies.remove('user');
-  }
+  // }
+  // componentWillMount(){
+  //   // const Cookies2=new Cookies();
+  //   // this.setState({
+  //   //   cookies: Cookies2
+  //   // })
+  // }
+//  componentDidMount(){
+//   Cookies2.set('user', this.state.userCookie, { path: '/'}); //go back to login upon logout
+//  }
+  // onChange(userState){
+  //   // const { cookies } = this.props;
+  //   // this.handleUserDelete();
+  //   console.log('onChange in Root app', userState);
+  //   Cookies2.set('user',  userState ); //go back to login upon logout
+  //   this.setState({ userCookie: Cookies2.get('user') });
+  // };
+
+  // handleUserDelete(){
+  //   Cookies2.remove('user');
+  // }
 
   // callAPI(){
   //   fetch('http://localhost:3001/testAPI')
@@ -81,22 +86,18 @@ class App extends Component {
 
   render(){
     return (
-      <React.Fragment>
       <Router>
       <div className="App">
         <div className="container">
         <Switch>
-        <Route exact path="/" render={()=> <Landing user={this.state.userCookie} onChange={this.handleUserChange} /> } /> 
-        <Route exact path="/user" render={()=> <User user={this.state.userCookie} onChange={this.handleUserChange} handleUserDelete={this.handleUserDelete}/>} />
+        <Route exact path="/" render={()=> <Landing /> } /> 
+        <Route exact path="/user" render={()=> <User />} />
         </Switch>
         </div>
       </div>
-      {this.props.children}
-      </Router>  
-      
-      </React.Fragment>
+      </Router> 
     );
   }
 }
 //withCookies(withRouter(App)))
-export default withCookies(App);
+export default App;

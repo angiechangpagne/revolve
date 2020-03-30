@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import api from '../../Utils/api';
 import Reminder from '../Reminder/Reminder';
 import RmdrForm from "../../components/RmdrForm/RmdrForm";
-import { withCookies } from 'react-cookie';
+import { Cookies } from 'react-cookie';
 //props sent from user, use for get, redirect exit
 //delete
 // import this.props.cookies from "js-cookie";
@@ -24,7 +24,8 @@ class RemindersWell extends Component{
       lat: '',
       lng: '',
       address: '',
-      user: ''
+      user: '',
+      userCookie:''
     }
     this.handleDelete=this.handleDelete.bind(this); //bindint to this class context
     this.handleUpdate=this.handleUpdate.bind(this);
@@ -38,9 +39,8 @@ class RemindersWell extends Component{
   }
   
   componentWillMount() {
-    this.setState({ user : this.props.user,
-                    reminders: this.props.reminders || []
-                  });
+    const { user } = this.props;
+    this.setState({ user : Cookies.getJSON('user') });
     // if(!this.props.user || !this.props.user.id){
     //   console.log('log in again');
     //   // this.props.user.remove('user');
@@ -67,7 +67,7 @@ class RemindersWell extends Component{
   }
 
   handleDelete = (rmdr) => {
-    const { user } = this.props;
+    const { user } = this.state;
     api.deleteUserReminder(user._id, rmdr._id)
       .then(() => {
         //cookie will update on the loadReminders
@@ -113,15 +113,16 @@ class RemindersWell extends Component{
   }
 
   loadReminders = () => {
-    console.log('I am trying to load reminders for', this.props.user.firstName);
-
+    console.log('I am trying to load reminders for', this.state.user.firstName);
+    const { user } = this.state.user;
     //might need to get a for loop to iterate states of res.data.reminders
-    api.getUserReminders(this.props.user._id)
+    api.getUserReminders(this.state.user._id)
       .then(res => {
         console.log("I got my reminders back!");
         console.log('res.data:', res.data);
-        this.setState({ reminders: (Array.isArray(res.data) ? [...res.data] :  [...this.props.user.reminders]) });
-        console.log('this.props.user.userInfo',this.props.user.userInfo)
+        this.setState({ reminders: (Array.isArray(res.data) ? [...res.data] :  [...user.reminders]) });
+        // Cookies.set('reminders',res.data, { path: '/user'} );
+        console.log('this.props',this.props);
         console.log(this.state.reminders);
       })
       .catch(err => console.error(err));
@@ -143,11 +144,11 @@ class RemindersWell extends Component{
   }
 
   render() {
-    const { user } = this.props;
     const {
       rmdrId,
       rmdrName,
       rmdrTime,
+      user,
       rmdrNotification,
       rmdrNotificationNumber,
       rmdrNotificationLabel
@@ -175,7 +176,7 @@ class RemindersWell extends Component{
 
           <div className="row">
               <div>
-                  <RmdrForm user={this.state.user} onChange={this.props.onChange} reminders={this.state.reminders} isModalOpen={this.state.isFormModalOpen} />
+                  <RmdrForm user={this.state.user} reminders={this.props.reminders} isModalOpen={this.state.isFormModalOpen} />
               </div>
           </div>
           <p id="need-acct" className="animated bounceInLeft"><span><button type="submit" onClick={this.openModal}>Set A Revolve Reminder</button></span></p>
@@ -192,7 +193,7 @@ class RemindersWell extends Component{
             )}
           </div>
           <Modal isOpen={this.state.isUpdateModalOpen}>
-            <Reminder user={this.props.user}
+            <Reminder user={this.state.user}
               rmdrId={rmdrId}
               rmdrName={rmdrName}
               rmdrTime={rmdrTime}
@@ -207,4 +208,4 @@ class RemindersWell extends Component{
   }
 }
 
-export default withCookies(RemindersWell);
+export default RemindersWell;

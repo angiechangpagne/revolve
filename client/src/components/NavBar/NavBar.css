@@ -5,7 +5,7 @@
 }
 .navbar-title {
   color: rgba(90, 96, 84, 0.995) !important;
-  font-family: Roboto, 'Etheriq','Metros',system-ui,'Nidus Sans','Courier Mono', Courier, monospace;
+  font-family: 'Nidus Sans',Roboto, 'Etheriq','Metros',system-ui,'Nidus Sans','Courier Mono', Courier, monospace;
   font-size: 21px;
   font-weight: 6px; 
 }
