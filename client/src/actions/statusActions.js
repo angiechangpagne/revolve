@@ -1,7 +1,7 @@
 import { GET_STATUS, CLEAR_STATUS } from './types';
 
 //return status
-export const returnState = (msg, status, id=null) => {
+export const returnStatus = (msg, status, id=null) => {
   return {
     type: GET_STATUS,
     payload: { msg, status, id}

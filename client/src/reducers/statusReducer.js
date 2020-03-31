@@ -1,4 +1,4 @@
-import { GET_STATUS, CLEAR_STATUS } from '../acitons/types';
+import { GET_STATUS, CLEAR_STATUS } from '../actions/types';
 
 const initialState = {
   statusMsg: {},

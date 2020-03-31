@@ -1,8 +1,12 @@
-{ "extends": "eslint-config-airbnb",
+{ "extends": ["airbnb", "prettier", "prettier/react"],
+  "parser": "babel-eslint",
   "env": {
     "browser": true,
     "node": true,
-    "mocha": true
+    "mocha": true,
+    "jest": true,
+    "es6": true
+
   },
   "rules": {
     "new-cap": [2, { "capIsNewExceptions": ["List", "Map", "Set"] }],

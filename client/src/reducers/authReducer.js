@@ -1,9 +1,10 @@
 import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
+  LOGIN_FAIL,
   LOGOUT_SUCCESS,
-  REGISTER_SUCCESS,
-  REGISTER_FAILE,
+  SIGNUP_SUCCESS,
+  SIGNUP_FAIL,
   AUTH_SUCCESS,
   AUTH_FAIL
 } from "../actions/types";
@@ -15,7 +16,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch(action.type){
-    case REGISTER_SUCCESS:
+    case SIGNUP_SUCCESS:
       return {
         ...state,
         user: action.payload
@@ -26,12 +27,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isAuthentication: true,
-        user: aciton.payload
+        user: action.payload
       };
+      //returns the updated state of the union, and the responsee
 
     case AUTH_ERROR:
     case LOGIN_FAIL:
-    case REGISTER_FAIL:
+    case SIGNUP_FAIL:
     case AUTH_FAIL:
       return {
         ...state, 

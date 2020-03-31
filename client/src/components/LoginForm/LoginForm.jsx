@@ -3,9 +3,14 @@ import './LoginForm.css';
 import api from '../../Utils/api';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
-import { buttonClicked, isLoading } from '../actions/authActions';
+import { bindActionCreators } from 'redux';
+import { buttonClicked, isLoading } from '../../actions/uiActions';
+import { isAuth, signup, login  } from '../../actions/authActions';
+import store from '../../store';
+import { Spinner } from 'reactstrap';
 import PropTypes from 'prop-types';
 import Cookies from 'js-cookie';
+import { Redirect } from 'react-router-dom';
 
 //global hoisted hooks/ injected context
 // import { this.props.cookies} from 'universal-cookie';
@@ -13,10 +18,14 @@ import Cookies from 'js-cookie';
 //'js-cookie';
 class LoginForm extends Component {
   static propTypes = {
-    isAuthenticated: Proptyles.bool,
+    isAuthenticated: PropTypes.bool,
     status: PropTypes.object.isRequired,
+    handleLoginFormSubmit: PropTypes.func.isRequired,
+    handleSignupFormSubmit: PropTypes.func.isRequired,
     buttonClicked: PropTypes.func.isRequired,
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
+    isLoading: PropTypes.func.isRequired,
+    button: PropTypes.bool,
 
   }
   constructor(props){
@@ -58,17 +67,17 @@ class LoginForm extends Component {
     this.closeModal=this.closeModal.bind(this);
     this.handleLoginFormSubmit=this.handleLoginFormSubmit.bind(this);
     this.handleSignupFormSubmit=this.handleSignupFormSubmit.bind(this);
-  }
+  };
         
   emailValidate(email) {
     //if email doesn't exist, let it pass through
     //else, check if email is valid
     return (/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email));
-  }
+  };
 
   componentWillMount() {
     this.setState({ userCookie : Cookies.get('user') });
-  }
+  };
 
   componentDidMount() {
     console.log('this.props in Login Form', this.props);
@@ -77,14 +86,25 @@ class LoginForm extends Component {
       window.location.href = "/user"; 
       // this.props.history.push('/');
       }
-  }
+
+      store.dispatch(isAuth()); //dispatch Auth action to meet root reducer
+  };
 
   componentDidUpdate(prevProps) {
     const status= this.props.status;
-    if(status !==prevProps.status && status.id === 'LOGIN_FAIL'){
-      this.setState({ messsage: status.statusMsg });
+    if(status !== prevProps.status){
+
+      if(status.id ==='SIGNUP_FAIL'){
+        this.setState({ messsage: status.statusMsg });
+      }
+      else{
+        this.setState({ message: this.props.status.statusMsg });
+      }
+      if(status.id === 'LOGIN_FAIL'){
+        this.setState({ messsage: status.statusMsg });
+      }
     }
-  }
+  };
 
   openModal = () => {
     this.setState({ isModalOpen: true });
@@ -105,68 +125,77 @@ class LoginForm extends Component {
   handleLoginFormSubmit = (event) => {
     //prevent page from auto refreshing on default
     event.preventDefault();
+    this.props.buttonClicked();
     const newState = {};
-
     //assign input value and validation states in array of obj
     const loginUserStates = [
       { input : this.state.loginEmail, validation : "isLoginEmailEmpty" },
       { input : this.state.loginPassword, validation : "isLoginPasswordEmpty" }
     ];
-
     loginUserStates.forEach(({input, validation}) => {
       const inputExist = !!input;
       //truthy of value
       console.log('inputExist', inputExist);
       newState[validation] = !inputExist;
     });
-
     this.setState(newState);
 
     //if all client-side input validation pass
     if(this.state.loginEmail && this.state.loginPassword){
+      this.props.isLoading();
+      this.props.login({email : this.state.loginEmail, password : this.state.loginPassword})
+        .then((reducerResponse) => {
+          const { res }= reducerResponse.user;
+          console.log('res from original is action payload from reducer',reducerResponse.user);
+          console.log('res.data',res.data);
+          console.log('res.data.userInfo',res.data.userInfo);  
+          Cookies.set('user', res);
+      
+          })
       //send request to server for provided user login creds
-      api.getUser({ 
-        email : this.state.loginEmail,
-        password : this.state.loginPassword
-      })
-      .then(res => {
-        console.log('res',res);
-        console.log('res.data',res.data);
-        console.log('res.data.userInfo',res.data.userInfo);
-        thisprops.isLoading(); //we want to load before we check redux map dispatch actions to authenticate to reduce lag
+      // api.getUser({ 
+      //   email : this.state.loginEmail,
+      //   password : this.state.loginPassword
+      // })
+      // .then(res => {
+      //   console.log('res',res);
+      //   console.log('res.data',res.data);
+      //   console.log('res.data.userInfo',res.data.userInfo);
+        // this.props.isLoading(); //we want to load before we check redux map dispatch actions to authenticate to reduce lag
         //if email and password are valid check res, res.data or res.userInfo
-        if(res.data.isValidEmail && res.data.isValidPassword){
+        // if(res.data.isValidEmail && res.data.isValidPassword){
           //a GET request for "/home"
           // api.getUserReminders(res.data.id);
-          Cookies.set('user', res.data.userInfo);
           // Cookies.set('reminders', res.data.userInfo.reminders, { path: '/user'});
           // this.setState({ reminders: res.data.userInfo.reminders });
           // this.setState({ user: res.data.userInfo }); //takes time for state to update
-          window.location.href="/user";
+          
+          window.location.href='/user';
           //store response from database then wait for set, then redirect
-        }
-        //else if email provided isn't in the db
-        else if (!res.data.isValidEmail) {
-          //update state
-          this.setState({
-            isValidEmail: false
-          });
-        }
-        //if password provided doesn't match what's in the db
-        else if(!res.data.isValidPassword){
-          //update state
-          this.setState({
-            isValidPassword: false
-          });
-        }
-      })
-      .catch(err => console.log(err));
+      //   }
+      //   //else if email provided isn't in the db
+      //   else if (!res.data.isValidEmail) {
+      //     //update state
+      //     this.setState({
+      //       isValidEmail: false
+      //     });
+      //   }
+      //   //if password provided doesn't match what's in the db
+      //   else if(!res.data.isValidPassword){
+      //     //update state
+      //     this.setState({
+      //       isValidPassword: false
+      //     });
+      //   }
+      // })
+      // .catch(err => console.log(err));
     }
   };
 
   handleSignupFormSubmit = (event) => {
     //prevent page form refreshing by default
     event.preventDefault();
+    this.props.buttonClicked();
     console.log("I clicked the save new user butten");
     const {
       signUpFirstName,
@@ -201,35 +230,51 @@ class LoginForm extends Component {
     //else if all input values are not empty
     else if (signUpFirstName && signUpLastName && signUpEmail && signUpPassword && signUpPhone && isEmailUnique)
     {
-      api.saveUser({
-        firstName : signUpFirstName,
-        lastName : signUpLastName, 
-        email : signUpEmail, 
-        password : signUpPassword, 
-        mobileNumber : signUpPhone
-      })
-      .then(res => {
-        console.log('res on line 170 of Login Form is', res) //promise chain response from server request
-        if(res.data.isEmailUnique){
-          this.setState({ isEmailUnique: res.data.isEmailUnique });
-          this.closeModal();
-        } else {
-          this.setState({ isEmailUnique: false });
-          console.log('email already in use');
+     const user ={firstName : signUpFirstName,
+                  lastName : signUpLastName, 
+                  email : signUpEmail, 
+                  password : signUpPassword, 
+                  mobileNumber : signUpPhone};
+      this.props.isLoading();
+      this.props.signup(user);
+      // api.saveUser({
+      //   firstName : signUpFirstName,
+      //   lastName : signUpLastName, 
+      //   email : signUpEmail, 
+      //   password : signUpPassword, 
+      //   mobileNumber : signUpPhone
+      // })
+      // .then(res => {
+        // console.log('res on line 170 of Login Form is', res) //promise chain response from server request
+        // if(res.data.isEmailUnique){
+        //   this.setState({ isEmailUnique: res.data.isEmailUnique });
+        if(this.state.message && this.props.status.respCode >=400){
+          console.log('err', this.state.message);
         }
-      })
-      .catch(err => console.log(err));
-    }
+        else if(this.state.message && this.props.status.respCode==200){
+          this.closeModal();
+        }
+       
+        // } else {
+        //   this.setState({ isEmailUnique: false });
+        //   console.log('email already in use');
+        // }
+    //   })
+    //   .catch(err => console.log(err));
+     }
   };
 
   render() {
     console.log('state before render', this.state);
+    if(this.props.isAuthenticated){ return <Redirect to="/user" />}
+    const { loading } = this.props;
     return (
       <div className="container">
       <Modal 
         id="modal" 
         className="animated pulse"
         isOpen={this.state.isModalOpen}>
+        { !loading && 
         <form id="form" method="POST" className="topBefore animated headShake">
           <div className="modal-header">
             <button type="button" className="close" onClick={this.closeModal}>&times;</button>
@@ -269,7 +314,7 @@ class LoginForm extends Component {
                   <p className="error text-center">Please provide your password!</p>
                 </div>
               }
-          <input id="name" type="phonenumber" placeholder="123-456-7899" value={this.state.signUpPhone} name="signUpPhone" onChange={this.handleInputChange}  className="loginHover"></input>
+          <input id="name" type="phonenumber" placeholder="000-000-0101" value={this.state.signUpPhone} name="signUpPhone" onChange={this.handleInputChange}  className="loginHover"></input>
               {this.state.isSignUpPhoneEmpty &&
                 <div id="error-phone-left-empty" className={!this.state.isSignUpPhoneEmpty ? "error-div-signup invisible" : "error-div-signup"}>
                   <p className="error text-center">Please provide your mobile number!</p>
@@ -277,8 +322,10 @@ class LoginForm extends Component {
               } 
           <input id="submit" type="submit" value="Submit!" className="loginHover" onClick={this.handleSignupFormSubmit}></input>
         </form>
+        }
       </Modal>
       <section className="loginSection">
+      { !loading &&
       <div>
         <form id="form" className="topBefore animated headShake"> 
         <div id="login-title"><span> <header className="animated headShake">Log In</header></span></div>
@@ -310,20 +357,34 @@ class LoginForm extends Component {
         </form>
         <button onClick={this.openModal}>SIGN UP</button>
         </div>
+      }
       </section>
+      
+      <div id='loading'>
+      {
+        loading && <span><Spinner size="sm" color="light"/><p>Pure Revolve...</p> </span> 
+      }
+      </div>
     </div>
     );
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  bindActionCreators({
+    login, isLoading, buttonClicked, signup
+  }, dispatch)
+}
 //map to props after the render
+//state is redux state
 const mapStateToProps = (state) => ({ 
-  //we map the state element in redux store to props
+  //we map the state element in redux store as props
   //element location is right, key is left
   input: state.ui.button,
+  button: state.ui.buton,
   isAuthenticated: state.auth.isAuthenticated,
   status: state.status,
   loading: state.ui.loading
 });
 
-export default connect(mapStateToProps, { login, isLoading, buttonClicked })(LoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

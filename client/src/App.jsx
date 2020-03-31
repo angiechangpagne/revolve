@@ -1,15 +1,12 @@
 /* eslint-disable import/first */
 import React, { Component } from 'react';
 // import { instanceOf } from 'prop-types';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-// import { useHistory } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
 // import Navbar from './components/NavBar/NavBar';
-// import { Provider } from 'react-redux';
-// import { createBrowserHistory } from 'history';
-// import createBrowserHistory from 'history/createBrowserHistory'
-// const history = createBrowserHistory();
 import Landing from './Pages/Landing/Landing';
 import User from './Pages/User/User';
+import { isAuth } from './actions/authActions';
+import { buttonClicked } from './actions/uiActions';
 // import About from './Pages/About/About';
 // import LoginForm from './components/LoginForm/LoginForm';
 // import Register from './components/Register';
@@ -21,7 +18,6 @@ import './App.css';
 //props is inherited from universal cookie provider, 
 //to do: add express universal cookies for server side render
 
-//todo: redux store <Provider> 
 //cookies is globall hoisted on the wrapper
 //   {/* <Route exact path='/about' component={About} /> */}
 //   {/* <Route exact path='/login' component={LoginForm} /> */}
@@ -86,18 +82,17 @@ class App extends Component {
 
   render(){
     return (
-      <Router>
+     <React.Fragment>
       <div className="App">
         <div className="container">
         <Switch>
-        <Route exact path="/" render={()=> <Landing /> } /> 
-        <Route exact path="/user" render={()=> <User />} />
+        <Route exact path="/" component={<Landing/> } /> 
+        <Route exact path="/user" component={<User/>} />
         </Switch>
         </div>
       </div>
-      </Router> 
+    </React.Fragment>
     );
   }
 }
-//withCookies(withRouter(App)))
 export default App;

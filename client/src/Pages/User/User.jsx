@@ -3,8 +3,9 @@ import Human from "../../components/Human/Human";
 import "./User.css";
 import NavBar from "../../components/NavBar/NavBar";
 import RemindersWell from "../../components/RemindersWell/RemindersWell";
+import { connect } from 'react-redux';
 import Cookies from 'js-cookie';
-
+import PropTypes from 'prop-types';
 // import {this.props.cookies as Universalthis.props.cookies} from "universal-cookie";
 import MapRender from "../../components/Map/Map";
 import LinkGoogleMaps from "../../components/LinkGoogleMaps/LinkGoogleMaps";
@@ -16,6 +17,9 @@ import LinkGoogleMaps from "../../components/LinkGoogleMaps/LinkGoogleMaps";
 </div> */}
 //pass in user this.props.cookies to track .id
 class User extends React.Component{
+  static propTypes = {
+
+  }
   // constructor(props){
   //   super(props);
   //   this.state={
