@@ -17,8 +17,8 @@ services:
       - ${PORT}:${PORT}
     volumes:
       # Map client src to server src to hot reload
-      - ./server/src:/revolve/server/src
-    command: node src/server.js
+      - ./server:/revolve/server
+    command: node server.js
     links:
       - db
     restart: always

@@ -18,8 +18,8 @@ services:
       - ${PORT}:${PORT}
     volumes:
       # Map client src to server src to hot reload
-      - ./server/src:/revolve/server/src
-    command: nodemon -L src/server.js
+      - ./client/src:/../server
+    command: nodemon -L server.js
     links:
       - db
     restart: always
@@ -39,7 +39,7 @@ services:
       - ./client/public:/revolve/client/public
     links:
       - server
-    command: npm run start
+    command: npm run dev
     restart: always
   ##########################
   ### SETUP DB CONTAINER

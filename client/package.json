@@ -5,7 +5,7 @@
   "author": "angiechangpgne",
   "license": "MIT",
   "private": true,
-  "proxy": "http://backend:3001/",
+  "proxy": "http://localhost:3001/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -39,12 +39,18 @@
     "react-dom": "^16.13.1",
     "react-modal": "^3.11.2",
     "react-places-autocomplete": "^7.2. 1",
+    "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.1",
     "react-select": "^3.0.8",
+    "react-strap": "0.0.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "style-loader": "^1.1.3"
+    "style-loader": "^1.1.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3",
+    "webpack-hot-middleware": "^2.25.0"
   },
   "eslintConfig": {
     "extends": "react-app"

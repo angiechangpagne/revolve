@@ -1,7 +1,6 @@
 // 'use strict'
 const path = require('path');
 const webpack = require('webpack');
-
 // const Dotenv = require('dotenv-webpack');
 // const lodash = require('lodash');
 // const ProgressBarPlugin = require('progress-bar-webpack-plugin');
@@ -10,12 +9,10 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const CleanWebpackPlugin = require('clean-webpack-plugin');
 // var DashboardPlugin = require('webpack-dashboard-plugin');
-// s
-
 module.exports = {
   context: __dirname,
       //entry point to app
-  entry:  './client/src/index.jsx',
+  entry:  './client/index.jsx',
   
   // 'webpack/hot/dev-server',
     // 'webpack-dev-server/client?http://localhost:3001',
@@ -26,7 +23,7 @@ module.exports = {
     publicPath: '/',
     filename: 'bundle.js',
   },
-  devtool: 'eval-source-map',
+  devtool: 'inline-source-map',
   mode: 'development',
   devServer: {
     //Docker host required
@@ -102,7 +99,7 @@ module.exports = {
     // new DashboardPlugin(),
     // new CleanWebpackPlugin('dist'),
     new HtmlWebpackPlugin({
-      template: './client/public/index.html'
+      template: './public/index.html'
       // manifest: path.resolve(__dirname,'./client/public/manifest.json')
     }),
     new webpack.HotModuleReplacementPlugin(),

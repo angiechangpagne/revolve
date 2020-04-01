@@ -6,6 +6,6 @@ WORKDIR /revolve/server
 COPY package*.json /revolve/server/
 RUN npm install
 COPY . /revolve/server/
-EXPOSE 30001
+EXPOSE 3001
 
 CMD ["node", "server.js"]

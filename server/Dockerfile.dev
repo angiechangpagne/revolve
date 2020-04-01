@@ -2,11 +2,10 @@
 # FROM node:alpine
 FROM node
 RUN npm install -g nodemon
-RUN mkdir -p /app/server
+RUN mkdir -p /revolve/server
 WORKDIR /revolve/server
 COPY package*.json /revolve/server/
 RUN npm install
-
 COPY . /revolve/server/
-
+EXPOSE 3001
 CMD ["nodemon", "server.js"]
