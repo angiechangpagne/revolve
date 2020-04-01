@@ -90,7 +90,7 @@ import Search from './Search';
               // <span className="bar"></span>
               // <label className="animated bounceInLeft"> address</label>
               // </div>
-class RmdrForm extends Component{
+export class RmdrForm extends Component{
   constructor(props){
     super(props);
     this.state = {

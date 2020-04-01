@@ -6,8 +6,12 @@ import RemindersWell from "../../components/RemindersWell/RemindersWell";
 import { connect } from 'react-redux';
 import Cookies from 'js-cookie';
 import PropTypes from 'prop-types';
+import {Redirect} from 'react-router-dom';
+import { buttonClicked, button } from "../../actions/uiActions";
+import { isAuth } from '../../actions/authActions';
 // import {this.props.cookies as Universalthis.props.cookies} from "universal-cookie";
 import MapRender from "../../components/Map/Map";
+import store from '../../store';
 import LinkGoogleMaps from "../../components/LinkGoogleMaps/LinkGoogleMaps";
 {/* <div className="row" id='pac-input'>
 <span id='map'><MapRender /></span>
@@ -16,9 +20,10 @@ import LinkGoogleMaps from "../../components/LinkGoogleMaps/LinkGoogleMaps";
 </span>
 </div> */}
 //pass in user this.props.cookies to track .id
-class User extends React.Component{
+export class User extends React.Component{
   static propTypes = {
-
+    button: PropTypes.bool,
+    isAuthenticated: PropTypes.bool,
   }
   // constructor(props){
   //   super(props);
@@ -29,6 +34,10 @@ class User extends React.Component{
   //     isModalOpen: false
   //   }
   // }
+  componentDidMount(){
+    //check is session cookie is present
+    store.dispatch(isAuth());
+  }
   // componentWillMount(){
   //   // if(!Cookies2.get('user') && !this.props.userCookie) { //unidentified entity
   //   //   console.log('log in again');
@@ -48,6 +57,9 @@ class User extends React.Component{
   // }
     
     render(){
+      if(!this.props.isAuthenticated){
+        return <Redirect to="/" /> 
+      }
       const user = Cookies.getJSON('user');
       // console.log('this.props.children', this.props.children)
       return (
@@ -70,9 +82,11 @@ class User extends React.Component{
           </div>
         </div>
         </React.Fragment>
-        
       );
     }
 }
-
-export default User;
+const mapStateToProps = (state) => ({
+  button: state.ui.button,
+  isAuthenticated: state.auth.isAuthenticated
+});
+export default connect(mapStateToProps)(User);

@@ -1,8 +1,11 @@
 /* eslint-disable import/first */
 import React, { Component } from 'react';
-// import { instanceOf } from 'prop-types';
-import { Route, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Router, Route, Switch, Link } from 'react-router-redux';
 // import Navbar from './components/NavBar/NavBar';
+import { connect } from 'react-redux';
+import { Provider } from 'react-redux';
+import store from './store';
 import Landing from './Pages/Landing/Landing';
 import User from './Pages/User/User';
 import { isAuth } from './actions/authActions';
@@ -12,7 +15,7 @@ import { buttonClicked } from './actions/uiActions';
 // import Register from './components/Register';
 // import Profile from './components/Profile/Profile'; 
 import './App.css';
-// import store from './store';
+import { render } from 'enzyme';
 // import Cookies2 from 'js-cookie';
 
 //props is inherited from universal cookie provider, 
@@ -27,7 +30,13 @@ import './App.css';
 // {/* <p className="App-intro">{this.state.apiResponse}</p> */}
 // var Cookies2 = Cookies.noConflict()
 
-class App extends Component {
+// const history = syncHistoryWithStore(history, store);
+
+export class App extends Component{
+  static propTypes = {
+    button: PropTypes.bool,
+    isAuthenticated: PropTypes.bool,
+  };
   // static propTypes = {
   //   userCookie: instanceOf(Object).isRequired
   // };
@@ -39,7 +48,6 @@ class App extends Component {
   //   //   cookies: "",
   //   //   userCookie: ""
   //   // }
-
   // }
   // componentWillMount(){
   //   // const Cookies2=new Cookies();
@@ -47,9 +55,10 @@ class App extends Component {
   //   //   cookies: Cookies2
   //   // })
   // }
-//  componentDidMount(){
-//   Cookies2.set('user', this.state.userCookie, { path: '/'}); //go back to login upon logout
-//  }
+ componentDidMount(){
+   store.dispatch(isAuth());
+  // Cookies2.set('user', this.state.userCookie, { path: '/'}); //go back to login upon logout
+ }
   // onChange(userState){
   //   // const { cookies } = this.props;
   //   // this.handleUserDelete();
@@ -79,20 +88,25 @@ class App extends Component {
     // this.callAPI();
   //}
   //render passed will automatically set the user think of it as the superclass render then the subclass render
-
-  render(){
+  render() {
     return (
      <React.Fragment>
-      <div className="App">
+     <div className="App">
+      <Router>
         <div className="container">
         <Switch>
         <Route exact path="/" component={<Landing/> } /> 
         <Route exact path="/user" component={<User/>} />
         </Switch>
         </div>
+      </Router>
       </div>
-    </React.Fragment>
-    );
-  }
+      </React.Fragment>
+      );
+  }  
 }
-export default App;
+const mapStateToProps = (state) => ({
+  button: state.ui.button,
+  isAuthenticated: state.auth.isAuthenticated
+});
+export default connect(mapStateToProps)(App);

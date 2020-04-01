@@ -12,7 +12,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   context: __dirname,
       //entry point to app
-  entry:  './client/index.jsx',
+  entry:  './client/src/index.jsx',
   
   // 'webpack/hot/dev-server',
     // 'webpack-dev-server/client?http://localhost:3001',
@@ -99,7 +99,7 @@ module.exports = {
     // new DashboardPlugin(),
     // new CleanWebpackPlugin('dist'),
     new HtmlWebpackPlugin({
-      template: './public/index.html'
+      template: './client/public/index.html'
       // manifest: path.resolve(__dirname,'./client/public/manifest.json')
     }),
     new webpack.HotModuleReplacementPlugin(),

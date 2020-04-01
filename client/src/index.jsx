@@ -3,19 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { register } from './serviceWorker';
 import store from './store';
+import { BrowserRouter as Router, browserHistory } from 'react-router';
+import { register } from './serviceWorker';
 
 ReactDOM.render(
-  <Router> 
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </Router>, 
+  <Provider store={store}>
+    <App />
+  </Provider>, 
   document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-register();
+// register();

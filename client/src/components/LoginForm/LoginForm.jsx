@@ -16,7 +16,7 @@ import { Redirect } from 'react-router-dom';
 // import { this.props.cookies} from 'universal-cookie';
 // const Universalthis.props.cookies=new this.props.cookies();
 //'js-cookie';
-class LoginForm extends Component {
+export class LoginForm extends Component {
   static propTypes = {
     isAuthenticated: PropTypes.bool,
     status: PropTypes.object.isRequired,
