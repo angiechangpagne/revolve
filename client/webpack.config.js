@@ -1,6 +1,6 @@
 // 'use strict'
-const webpack = require('webpack');
 const path = require('path');
+const webpack = require('webpack');
 
 // const Dotenv = require('dotenv-webpack');
 // const lodash = require('lodash');
@@ -16,11 +16,13 @@ module.exports = {
   context: __dirname,
       //entry point to app
   entry:  './client/src/index.jsx',
+  
   // 'webpack/hot/dev-server',
     // 'webpack-dev-server/client?http://localhost:3001',
     // path.resolve(__dirname, 
+ 
   output: {
-    path: path.resolve(__dirname, 'dist/js'),
+    path: path.resolve(__dirname, 'dist/public'),
     publicPath: '/',
     filename: 'bundle.js',
   },

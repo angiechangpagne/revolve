@@ -1,11 +1,11 @@
 {
   "name": "client",
   "version": "1.0.0",
-  "description": "reminderApp",
+  "description": "pure-revolve",
   "author": "angiechangpgne",
   "license": "MIT",
   "private": true,
-  "proxy": "http://localhost:3001/",
+  "proxy": "http://backend:3001/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -30,8 +30,6 @@
     "css-loader": "^3.4.2",
     "google-maps-react": "^2.0.2",
     "js-cookie": "^2.2.1",
-    "material-ui": "^0.20.2",
-    "material-ui-search-bar": "^0.4.2",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
     "prop-types": "^15.7.2",

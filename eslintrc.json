@@ -24,7 +24,7 @@
     "no-alert": 0
   },
   "plugins": [
-    "react", "import"
+    "react", "import", "prettier"
   ],
   "settings": {
     "import/parser": "babel-eslint",

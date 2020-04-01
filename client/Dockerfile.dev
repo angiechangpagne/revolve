@@ -1,0 +1,15 @@
+# No bash, can still use once confident
+# FROM node:alpine
+
+FROM node
+
+RUN mkdir -p /revolve/client
+WORKDIR /revolve/client
+
+COPY package*.json /revolve/client/
+
+RUN npm install
+
+COPY . /revolve/client/
+
+CMD ["npm", "start"]

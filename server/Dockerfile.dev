@@ -1,0 +1,12 @@
+# No bash, can still use once confident
+# FROM node:alpine
+FROM node
+RUN npm install -g nodemon
+RUN mkdir -p /app/server
+WORKDIR /revolve/server
+COPY package*.json /revolve/server/
+RUN npm install
+
+COPY . /revolve/server/
+
+CMD ["nodemon", "server.js"]

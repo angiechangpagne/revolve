@@ -11,7 +11,7 @@ var app = express(); //invoke express  instance
 //require routers
 const apiRouter = require('./api/userAndReminder'); //all the routes in the api routes folder
 // const router = express.Router();
-const port = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001;
 //notification scheduler 
 
 //configure body parser for AJAX requests, request body
@@ -214,10 +214,10 @@ db.once("open", () => {
 });
 // mongoose.connect(url,{useNewUrlParser: true})
 // .then(()=>{
-//   app.listen(port, () => console.log(`🌎  ==> Server Listening on port ${port}`));
+//   app.listen(PORT, () => console.log(`🌎  ==> Server Listening on PORT ${PORT}`));
 // })
 // .catch(err => console.log(err));
-app.listen(port, () => console.log(`🌎  ==> Server Listening on port ${port}`));
+app.listen(PORT, () => console.log(`🌎  ==> Server Listening on PORT ${PORT}`));
 
 // const io = socketio(server);
 // io.on('connection', (socket) => {
@@ -228,4 +228,4 @@ app.listen(port, () => console.log(`🌎  ==> Server Listening on port ${port}`)
 // });
 
 
-module.exports = app;
+module.exPORTs = app;
