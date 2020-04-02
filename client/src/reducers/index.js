@@ -2,10 +2,15 @@ import { combineReducers } from 'redux';
 import authReducer from './authReducer';
 import uiReducer from './uiReducer';
 import statusReducer from './statusReducer';
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
-export default combineReducers({
+// import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
+import { connectRouter } from 'connected-react-router';
+
+const rootReducer = (history) => combineReducers({
+  router: connectRouter(history),
   auth: authReducer,
   ui: uiReducer,
   status: statusReducer,
-  routing: routerReducer
 });
+
+export default rootReducer;
+

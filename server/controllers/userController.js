@@ -45,7 +45,7 @@ const userController = {
                   res.locals.lastName=dbUser.lastName;
                   res.locals.email=dbUser.email;
                   res.locals.password=req.body.password;
-                  res.locals.id=dbUser._id; //pass send to next link of chain, then status
+                  res.locals._id=dbUser._id; //pass send to next link of chain, then status
                   // res.status(201).json(res.locals);
                   // res.json({
                   //   isValidEmail : true,

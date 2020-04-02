@@ -1,6 +1,6 @@
 # revolve
 Node.js Application For Reminders with React, MongoDB REST Archetype
-Messaging Text Notifications using Twilio, Nextmo with Verification
+Messaging Text Notifications using Nextmo with Verification
 
 Features:
 1. Users sign up/sign in with username or email
@@ -31,6 +31,14 @@ Server:
 -Express
 -MongoDB-with pre and post mongoose hooks
 
+
+Keywords: 
+MERN,
+node-js
+axios
+reactjs
+react
+redux
 
 Deployment Forms:
 Heroku

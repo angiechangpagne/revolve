@@ -2,16 +2,16 @@ import React from 'react';
 import Human from "../../components/Human/Human";
 import "./User.css";
 import NavBar from "../../components/NavBar/NavBar";
-import RemindersWell from "../../components/RemindersWell/RemindersWell";
+import RemindersWell from '../../components/RemindersWell/RemindersWell';
 import { connect } from 'react-redux';
 import Cookies from 'js-cookie';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
-import { buttonClicked, button } from "../../actions/uiActions";
+import { buttonClicked, button } from '../../actions/uiActions';
 import { isAuth } from '../../actions/authActions';
 // import {this.props.cookies as Universalthis.props.cookies} from "universal-cookie";
 import MapRender from "../../components/Map/Map";
-import store from '../../store';
+import store from '../../configureStore';
 import LinkGoogleMaps from "../../components/LinkGoogleMaps/LinkGoogleMaps";
 {/* <div className="row" id='pac-input'>
 <span id='map'><MapRender /></span>

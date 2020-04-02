@@ -12,6 +12,7 @@ import {
 const initialState = {
   isAuthenticated: null,
   user: null,
+  isLoading: false
 };
 
 export default (state = initialState, action) => {
@@ -26,7 +27,7 @@ export default (state = initialState, action) => {
     case AUTH_SUCCESS:
       return {
         ...state,
-        isAuthentication: true,
+        isAuthenticated: true,
         user: action.payload
       };
       //returns the updated state of the union, and the responsee

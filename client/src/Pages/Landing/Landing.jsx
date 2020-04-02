@@ -4,22 +4,23 @@ import Human from '../../components/Human/Human';
 import './Landing.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import store from '../../store';
+import { push } from 'connected-react-router';
+// import store from '../../configureStore';
 import { buttonClicked } from '../../actions/uiActions';
-import { isAuth } from '../../actions/authActions';
+import { isAuth, login } from '../../actions/authActions';
 
-export class Landing extends React.Component{
+class Landing extends React.Component{
   static propTypes = {
-    buttonClicked: PropTypes.bool,
+    buttonClicked: PropTypes.func.isRequired,
+    button: PropTypes.bool,
+    status: PropTypes.object.isRequired,
     isAuthenticated: PropTypes.bool,
+    login: PropTypes.func.isRequired,
+    loading: PropTypes.bool,
   }
-  componentDidMount(){
-    store.dispatch(isAuth());
-  }
+
   render(){
     return (
-      <React.Fragment>
-      {
       <div className="landing" id="land">
           <p></p>
             <h3>Revolve Reminders</h3>
@@ -33,8 +34,6 @@ export class Landing extends React.Component{
               </div>
             </Human>
           </div>
-      }
-      </React.Fragment>
     );
   }
 }
@@ -43,4 +42,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps)(Landing);
+export default connect(mapStateToProps, { buttonClicked })(Landing);

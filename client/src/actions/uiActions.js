@@ -4,7 +4,6 @@ import {
   IS_LOADING
 } from './types';
 
-
 export const buttonClicked = () => (dispatch, getState) => {
   dispatch({ type: BUTTON_CLICKED });
 };

@@ -1,21 +1,20 @@
 /* eslint-disable import/first */
+import { hot } from 'react-hot-loader';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Router, Route, Switch, Link } from 'react-router-redux';
+import { Route, Switch } from 'react-router-dom';
 // import Navbar from './components/NavBar/NavBar';
 import { connect } from 'react-redux';
-import { Provider } from 'react-redux';
-import store from './store';
 import Landing from './Pages/Landing/Landing';
 import User from './Pages/User/User';
 import { isAuth } from './actions/authActions';
-import { buttonClicked } from './actions/uiActions';
+import { buttonClicked, button } from './actions/uiActions';
+import configureStore, { history } from './configureStore';
 // import About from './Pages/About/About';
 // import LoginForm from './components/LoginForm/LoginForm';
 // import Register from './components/Register';
 // import Profile from './components/Profile/Profile'; 
 import './App.css';
-import { render } from 'enzyme';
 // import Cookies2 from 'js-cookie';
 
 //props is inherited from universal cookie provider, 
@@ -32,10 +31,11 @@ import { render } from 'enzyme';
 
 // const history = syncHistoryWithStore(history, store);
 
-export class App extends Component{
+class App extends Component{
   static propTypes = {
     button: PropTypes.bool,
     isAuthenticated: PropTypes.bool,
+    history: PropTypes.object,
   };
   // static propTypes = {
   //   userCookie: instanceOf(Object).isRequired
@@ -55,10 +55,10 @@ export class App extends Component{
   //   //   cookies: Cookies2
   //   // })
   // }
- componentDidMount(){
-   store.dispatch(isAuth());
-  // Cookies2.set('user', this.state.userCookie, { path: '/'}); //go back to login upon logout
- }
+//  componentDidMount(){
+//   //  store.dispatch(isAuth());
+//   // Cookies2.set('user', this.state.userCookie, { path: '/'}); //go back to login upon logout
+//  }
   // onChange(userState){
   //   // const { cookies } = this.props;
   //   // this.handleUserDelete();
@@ -90,23 +90,18 @@ export class App extends Component{
   //render passed will automatically set the user think of it as the superclass render then the subclass render
   render() {
     return (
-     <React.Fragment>
-     <div className="App">
-      <Router>
+    <div className="AppContainer">
         <div className="container">
         <Switch>
-        <Route exact path="/" component={<Landing/> } /> 
-        <Route exact path="/user" component={<User/>} />
+        <Route exact path="/" component={Landing} /> 
+        <Route exact path="/user" component={User} />
         </Switch>
         </div>
-      </Router>
-      </div>
-      </React.Fragment>
+    </div>
       );
   }  
 }
-const mapStateToProps = (state) => ({
-  button: state.ui.button,
-  isAuthenticated: state.auth.isAuthenticated
-});
-export default connect(mapStateToProps)(App);
+// const mapStateToProps = (state) => ({
+//   isAuthenticated: state.auth.isAuthenticated
+// });
+export default hot(module)(App);

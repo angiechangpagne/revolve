@@ -12,15 +12,17 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   context: __dirname,
       //entry point to app
-  entry:  './client/src/index.jsx',
+  entry: ['react-hot-loader/patch', 
+          'webpack-hot-middleware/client', 
+          path.resolve('./client/src/index.jsx')],
   
   // 'webpack/hot/dev-server',
     // 'webpack-dev-server/client?http://localhost:3001',
     // path.resolve(__dirname, 
  
   output: {
-    path: path.resolve(__dirname, 'dist/public'),
-    publicPath: '/',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/dist/',
     filename: 'bundle.js',
   },
   devtool: 'inline-source-map',
@@ -31,7 +33,7 @@ module.exports = {
     //host: localhost, port for the webpack dev server
     port: process.env.PORT || '8080',
     //match output path
-    contentBase: path.resolve(__dirname,'dist/js'),
+    contentBase: path.resolve(__dirname,'./revolve/client'),
     //enable of hot module reload
     hot: true,
     // progress: true, 

@@ -1,12 +1,11 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import './LoginForm.css';
 import api from '../../Utils/api';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { buttonClicked, isLoading } from '../../actions/uiActions';
-import { isAuth, signup, login  } from '../../actions/authActions';
-import store from '../../store';
+import { isAuth, login, signup } from '../../actions/authActions';
 import { Spinner } from 'reactstrap';
 import PropTypes from 'prop-types';
 import Cookies from 'js-cookie';
@@ -16,17 +15,15 @@ import { Redirect } from 'react-router-dom';
 // import { this.props.cookies} from 'universal-cookie';
 // const Universalthis.props.cookies=new this.props.cookies();
 //'js-cookie';
-export class LoginForm extends Component {
+class LoginForm extends Component {
   static propTypes = {
     isAuthenticated: PropTypes.bool,
     status: PropTypes.object.isRequired,
-    handleLoginFormSubmit: PropTypes.func.isRequired,
-    handleSignupFormSubmit: PropTypes.func.isRequired,
     buttonClicked: PropTypes.func.isRequired,
     loading: PropTypes.bool,
+    login: PropTypes.bool,
     isLoading: PropTypes.func.isRequired,
     button: PropTypes.bool,
-
   }
   constructor(props){
     super(props);
@@ -82,13 +79,20 @@ export class LoginForm extends Component {
   componentDidMount() {
     console.log('this.props in Login Form', this.props);
     // console.log('Cookies', Cookies);
-    if(this.state.userCookie){
-      window.location.href = "/user"; 
-      // this.props.history.push('/');
-      }
-
-      store.dispatch(isAuth()); //dispatch Auth action to meet root reducer
+    // if(this.state.userCookie){
+    //   window.location.href = "/user"; 
+    //   // this.props.history.push('/');
+    //   }
+    if(this.props.isAuth){
+      this.props.history.push('/user');
+    }
   };
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.isAuth){
+      this.props.history.push('/user');
+    }
+  }
 
   componentDidUpdate(prevProps) {
     const status= this.props.status;
@@ -142,16 +146,16 @@ export class LoginForm extends Component {
 
     //if all client-side input validation pass
     if(this.state.loginEmail && this.state.loginPassword){
-      this.props.isLoading();
       this.props.login({email : this.state.loginEmail, password : this.state.loginPassword})
-        .then((reducerResponse) => {
-          const { res }= reducerResponse.user;
-          console.log('res from original is action payload from reducer',reducerResponse.user);
-          console.log('res.data',res.data);
-          console.log('res.data.userInfo',res.data.userInfo);  
-          Cookies.set('user', res);
+
+        // .then((reducerResponse) => {
+        //   const { res }= reducerResponse.user;
+        //   console.log('res from original is action payload from reducer',reducerResponse.user);
+        //   console.log('res.data',res.data);
+        //   console.log('res.data.userInfo',res.data.userInfo);  
+        //   Cookies.set('user', res);
       
-          })
+        //   })
       //send request to server for provided user login creds
       // api.getUser({ 
       //   email : this.state.loginEmail,
@@ -170,7 +174,7 @@ export class LoginForm extends Component {
           // this.setState({ reminders: res.data.userInfo.reminders });
           // this.setState({ user: res.data.userInfo }); //takes time for state to update
           
-          window.location.href='/user';
+          // window.location.href='/user';
           //store response from database then wait for set, then redirect
       //   }
       //   //else if email provided isn't in the db
@@ -266,15 +270,15 @@ export class LoginForm extends Component {
 
   render() {
     console.log('state before render', this.state);
-    if(this.props.isAuthenticated){ return <Redirect to="/user" />}
-    const { loading } = this.props;
+    if(this.props.isAuth){ return <Redirect to="/user" />}
+    const { isLoading } = this.props;
     return (
       <div className="container">
       <Modal 
         id="modal" 
         className="animated pulse"
         isOpen={this.state.isModalOpen}>
-        { !loading && 
+        { !isLoading && 
         <form id="form" method="POST" className="topBefore animated headShake">
           <div className="modal-header">
             <button type="button" className="close" onClick={this.closeModal}>&times;</button>
@@ -325,7 +329,7 @@ export class LoginForm extends Component {
         }
       </Modal>
       <section className="loginSection">
-      { !loading &&
+      { isLoading &&
       <div>
         <form id="form" className="topBefore animated headShake"> 
         <div id="login-title"><span> <header className="animated headShake">Log In</header></span></div>
@@ -362,14 +366,13 @@ export class LoginForm extends Component {
       
       <div id='loading'>
       {
-        loading && <span><Spinner size="sm" color="light"/><p>Pure Revolve...</p> </span> 
+        isLoading && <span><Spinner size="sm" color="light"/><p>Pure Revolve...</p> </span> 
       }
       </div>
     </div>
     );
   }
 }
-
 const mapDispatchToProps = (dispatch) => {
   bindActionCreators({
     login, isLoading, buttonClicked, signup
@@ -380,11 +383,9 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => ({ 
   //we map the state element in redux store as props
   //element location is right, key is left
-  input: state.ui.button,
   button: state.ui.buton,
-  isAuthenticated: state.auth.isAuthenticated,
   status: state.status,
   loading: state.ui.loading
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default connect(mapStateToProps, { buttonClicked, signup, login, isLoading })(LoginForm);

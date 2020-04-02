@@ -191,14 +191,15 @@ app.use((err, req, res, next) =>  {
 
 const MONGODB_URI = 'mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority';
 //set up a promise in mongoose
+// const MongoClient = require('mongodb').MongoClient;
+
 mongoose.Promise=global.Promise;
 //Connect to MongoDB
 mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost/revolve", {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
     //sets name of DB that collections are part of
-    dbName: 'revolve'
+    // dbName: 'revolve'
     }
     ).then(() => console.log('MongoDB Connected')).catch(err => console.log(err));
     //show any mongoose errors
@@ -228,4 +229,4 @@ app.listen(PORT, () => console.log(`🌎  ==> Server Listening on PORT ${PORT}`)
 // });
 
 
-module.exPORTs = app;
+module.exports = app;

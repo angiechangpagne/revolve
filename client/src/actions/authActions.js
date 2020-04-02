@@ -74,7 +74,6 @@ export const login = (loginData) => (dispatch) => {
       dispatch({
         type: LOGIN_FAIL
       });
-      dispatch({ type: IS_LOADING })
     });
 };
 
