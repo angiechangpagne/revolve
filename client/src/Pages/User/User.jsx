@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import Cookies from 'js-cookie';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
-import { buttonClicked, button } from '../../actions/uiActions';
+import { buttonClicked } from '../../actions/uiActions';
 import { isAuth } from '../../actions/authActions';
 // import {this.props.cookies as Universalthis.props.cookies} from "universal-cookie";
 import MapRender from "../../components/Map/Map";
@@ -60,8 +60,8 @@ export class User extends React.Component{
       // if(!this.props.isAuthenticated){
       //   return <Redirect to="/" /> 
       // }
-      const user = Cookies.getJSON('user');
-      // console.log('this.props.children', this.props.children)
+      const user = this.props.authState.user;
+      console.log('authState', this.props.authState.user)
       return (
         <React.Fragment>
         <div className="user-wrapper">
@@ -76,7 +76,6 @@ export class User extends React.Component{
           <div className="row">
             <div>
                 <Human className="clearfix">
-                 
                 </Human>
             </div>
           </div>
@@ -87,6 +86,6 @@ export class User extends React.Component{
 }
 const mapStateToProps = (state) => ({
   button: state.ui.button,
-  isAuthenticated: state.auth.isAuthenticated
+  authState: state.auth
 });
-export default connect(mapStateToProps)(User);
+export default connect(mapStateToProps, { isAuth, buttonClicked })(User);

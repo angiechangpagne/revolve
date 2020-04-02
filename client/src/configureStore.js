@@ -16,10 +16,10 @@ const enhancers = [];
 //     enhancers.push(devToolsExtension());
 //   }
 // }
-
+// export const store;
 
 //TO DO: IN ORDER TO HAVE TIME TRAVEL WE MUST HAVE ENHANCERS, THEREFORE WE MUST HAVE REDUX
-const configureStore = (preloadedState) => {
+export const configureStore = (preloadedState) => {
   const middleware = [thunkMiddleware, routerMiddleware(history)];
   const middlewareEnhancer =  applyMiddleware(...middleware);
   enhancers.push(middlewareEnhancer);

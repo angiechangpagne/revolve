@@ -134,9 +134,7 @@ export class RmdrForm extends Component{
     // }
    
     //set the user cookie state
-   
   }
-
   componentWillMount(){
     const { user, reminders, isModalOpen } = this.props;
     this.setState({

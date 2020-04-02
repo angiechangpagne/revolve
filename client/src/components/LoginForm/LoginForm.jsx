@@ -4,9 +4,10 @@ import api from '../../Utils/api';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { buttonClicked, isLoading } from '../../actions/uiActions';
+import { buttonClicked, isLoading } from '../../actions/uiActions'; //use to dispatch actionns, send to axios backend, then update global state
 import { isAuth, login, signup } from '../../actions/authActions';
 import { Spinner } from 'reactstrap';
+import { configureStore as store } from '../../configureStore';
 import PropTypes from 'prop-types';
 import Cookies from 'js-cookie';
 import { Redirect } from 'react-router-dom';
@@ -15,13 +16,14 @@ import { Redirect } from 'react-router-dom';
 // import { this.props.cookies} from 'universal-cookie';
 // const Universalthis.props.cookies=new this.props.cookies();
 //'js-cookie';
-class LoginForm extends Component {
+export class LoginForm extends Component {
   static propTypes = {
     isAuthenticated: PropTypes.bool,
     status: PropTypes.object.isRequired,
     buttonClicked: PropTypes.func.isRequired,
     loading: PropTypes.bool,
-    login: PropTypes.bool,
+    signup: PropTypes.func.isRequired,
+    login: PropTypes.func.isRequired,
     isLoading: PropTypes.func.isRequired,
     button: PropTypes.bool,
   }
@@ -129,7 +131,8 @@ class LoginForm extends Component {
   handleLoginFormSubmit = (event) => {
     //prevent page from auto refreshing on default
     event.preventDefault();
-    this.props.buttonClicked();
+    this.props.buttonClicked(); //dispatch loading
+
     const newState = {};
     //assign input value and validation states in array of obj
     const loginUserStates = [
@@ -147,6 +150,7 @@ class LoginForm extends Component {
     //if all client-side input validation pass
     if(this.state.loginEmail && this.state.loginPassword){
       this.props.login({email : this.state.loginEmail, password : this.state.loginPassword})
+      //dispatch the action login to send to axios, get server db response with thunk middleware, send to action reducers
 
         // .then((reducerResponse) => {
         //   const { res }= reducerResponse.user;
@@ -165,16 +169,18 @@ class LoginForm extends Component {
       //   console.log('res',res);
       //   console.log('res.data',res.data);
       //   console.log('res.data.userInfo',res.data.userInfo);
-        // this.props.isLoading(); //we want to load before we check redux map dispatch actions to authenticate to reduce lag
+        this.props.isLoading(); 
+        //we want to load before we check redux map dispatch actions to authenticate to reduce lag
         //if email and password are valid check res, res.data or res.userInfo
-        // if(res.data.isValidEmail && res.data.isValidPassword){
-          //a GET request for "/home"
+          
+        
+        //a GET request for "/home"
           // api.getUserReminders(res.data.id);
           // Cookies.set('reminders', res.data.userInfo.reminders, { path: '/user'});
           // this.setState({ reminders: res.data.userInfo.reminders });
           // this.setState({ user: res.data.userInfo }); //takes time for state to update
           
-          window.location.href='/user';
+          // window.location.href='/user';
           //store response from database then wait for set, then redirect
       //   }
       //   //else if email provided isn't in the db
@@ -239,8 +245,10 @@ class LoginForm extends Component {
                   email : signUpEmail, 
                   password : signUpPassword, 
                   mobileNumber : signUpPhone};
-      // this.props.isLoading();
       this.props.signup(user);
+
+      this.props.isLoading();
+
       // api.saveUser({
       //   firstName : signUpFirstName,
       //   lastName : signUpLastName, 
@@ -249,13 +257,11 @@ class LoginForm extends Component {
       //   mobileNumber : signUpPhone
       // })
       // .then(res => {
-        // console.log('res on line 170 of Login Form is', res) //promise chain response from server request
-        // if(res.data.isEmailUnique){
-        //   this.setState({ isEmailUnique: res.data.isEmailUnique });
-        if(this.state.message && this.props.status.respCode >=400){
+
+        if(this.props.status.statusMsg && this.props.status.respCode >=400){
           console.log('err', this.state.message);
         }
-        else if(this.state.message && this.props.status.respCode==200){
+        else if(this.props.status.statusMsg && this.props.status.respCode==200){
           this.closeModal();
         }
        
@@ -270,8 +276,9 @@ class LoginForm extends Component {
 
   render() {
     console.log('state before render', this.state);
+    console.log('props store state', store);
     if(this.props.isAuth){ return <Redirect to="/user" />}
-    const { isLoading } = this.props;
+    const { loading } = this.props;
     return (
       <div className="container">
       <Modal 
@@ -329,7 +336,7 @@ class LoginForm extends Component {
         }
       </Modal>
       <section className="loginSection">
-      { 
+      { !loading &&
       <div>
         <form id="form" className="topBefore animated headShake"> 
         <div id="login-title"><span> <header className="animated headShake">Log In</header></span></div>
@@ -366,7 +373,7 @@ class LoginForm extends Component {
       
       <div id='loading'>
       {
-        isLoading && <span><Spinner size="sm" color="light"/><p>Pure Revolve...</p> </span> 
+        loading && <span><Spinner size="sm" color="light"/><p>Pure Revolve...</p> </span> 
       }
       </div>
     </div>
@@ -383,7 +390,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => ({ 
   //we map the state element in redux store as props
   //element location is right, key is left
-  isAthenticated: state.auth.isAuthenticated,
+  isAuthenticated: state.auth.isAuthenticated,
   button: state.ui.buton,
   status: state.status,
   loading: state.ui.loading

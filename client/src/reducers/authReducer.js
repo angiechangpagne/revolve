@@ -10,12 +10,12 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  isAuthenticated: null,
-  user: null,
+  isAuthenticated: false,
+  user: "",
   isLoading: false
 };
 
-export default (state = initialState, action) => {
+export default function (state = initialState, action) {
   switch(action.type){
     case SIGNUP_SUCCESS:
       return {

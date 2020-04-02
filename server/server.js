@@ -198,6 +198,7 @@ mongoose.Promise=global.Promise;
 mongoose.connect(
   MONGODB_URI || "mongodb://localhost/revolve", {
     useNewUrlParser: true,
+    useUnifiedTopology: true, 
     //sets name of DB that collections are part of
     // dbName: 'revolve'
     }

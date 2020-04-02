@@ -4,11 +4,12 @@ import api from '../../Utils/api';
 import Reminder from '../Reminder/Reminder';
 import RmdrForm from "../../components/RmdrForm/RmdrForm";
 import Cookies from 'js-cookie';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 //props sent from user, use for get, redirect exit
 //delete
 // import this.props.cookies from "js-cookie";
-
-class RemindersWell extends Component{
+export class RemindersWell extends Component{
   constructor(props){
     super(props);
     this.state = {
@@ -39,8 +40,9 @@ class RemindersWell extends Component{
   }
   
   componentWillMount() {
-    const { user } = this.props;
-    this.setState({ user : Cookies.getJSON('user') });
+    const user = this.props.user;
+    console.log('reminders well', this.props.user);
+    this.setState({ user: user });
     // if(!this.props.user || !this.props.user.id){
     //   console.log('log in again');
     //   // this.props.user.remove('user');
@@ -114,7 +116,7 @@ class RemindersWell extends Component{
 
   loadReminders = () => {
     console.log('I am trying to load reminders for', this.state.user.firstName);
-    const { user } = this.state.user;
+    const { user } = this.state;
     //might need to get a for loop to iterate states of res.data.reminders
     api.getUserReminders(this.state.user._id)
       .then(res => {

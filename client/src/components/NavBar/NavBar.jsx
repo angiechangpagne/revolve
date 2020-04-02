@@ -9,18 +9,14 @@ import { signout}  from '../../actions/authActions';
 import { buttonReset } from '../../actions/uiActions';
 //make functional component
 const NavBar= (props) => {
-  // static propTypes = {
-  //   button: PropTypes.bool,
-  //   authState: PropTypes.object.isRequired,
-  //   handleSignOut: PropTypes.func.isRequired,
-  // };
+
   const handleSignOut = (event) => {
     //delete user cookie upon sign out
     event.preventDefault();
     props.buttonReset();
     props.signout();
-    console.log('Cookies', Cookies);
-    Cookies.remove('user');
+    // console.log('Cookies', Cookies);
+    // Cookies.remove('user');
     // props.userCookie.handleUserDelete();
     // window.location.href="/"; //better to use history push within the Redirect component
   };
@@ -29,7 +25,7 @@ const NavBar= (props) => {
   }
     return (
       <nav className="navbar navbar-default">
-      <h1> { props.authState ? `Welcome, ${props.authState.firstname}` : '' }</h1>
+      <h1> { props.authState ? `Welcome, ${props.authState.user.firstname}` : '' }</h1>
         <ul className="nav navbar-nav">
           <li className={window.location.pathname==="/user" ? "active" : "" }>
             <Link className="navbar-title animated headShade" to="/user"> Home</Link>
@@ -41,6 +37,11 @@ const NavBar= (props) => {
       </nav>
     )
 }
+NavBar.propTypes = {
+  button: PropTypes.bool,
+  authState: PropTypes.object.isRequired,
+  handleSignOut: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   //map state to redux store as props

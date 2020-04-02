@@ -14,7 +14,7 @@ import {
 } from './types';
 
 //local testing
-axios.defaults.baseURL='http://localhost:3000';
+// axios.defaults.baseURL='http://localhost:3000';
 
 //production url
 export const isAuth = (loginData) => (dispatch) => {
@@ -35,25 +35,29 @@ export const isAuth = (loginData) => (dispatch) => {
     });
 }
 
-
 //new user
 export const signup = (userData) => (dispatch) =>{
 axios
       .post('/api/signup', userData, {
         headers: { 'content-type': 'application/json' }})
       .then((res) => {
-        
-        dispatch(returnStatus(res, res.status,'SIGNUP_SUCCESS'));
-        dispatch({ type: IS_LOADING })
+        console.log('res on line 45 of authActions is', res) //promise chain response from server request
+        if(res.data.isEmailUnique){
+          dispatch(returnStatus(res, res.status,'SIGNUP_SUCCESS'));
+          dispatch({ type: IS_LOADING })
+        }
+        else{
+          console.log('email not unique');
+          dispatch(returnStatus(res,res.status, 'SIGNUP_FAIL'));
+        }
       })
       .catch((err) => {
-        dispatch(returnStatus(err.response.data, err.response.status, 'SIGNUP_FAIL'))
+        dispatch(returnStatus(err, err.status, 'SIGNUP_FAIL'))
         dispatch({
           type: SIGNUP_FAIL
         });
         dispatch({ type: IS_LOADING })
       });
-
 };
 
 //LOGIN User
@@ -64,13 +68,15 @@ export const login = (loginData) => (dispatch) => {
         console.log('res in authActions',res);
         console.log('res.data',res.data);
         console.log('res.data.userInfo',res.data.userInfo);
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data.userInfo
-      });
-      dispatch({ type: IS_LOADING });
+       if(res.data.isValidEmail && res.data.isValidPassword){
+        dispatch({
+          type: LOGIN_SUCCESS,
+          payload: res.data
+        });
+        dispatch({ type: IS_LOADING });
+       }
     }).catch((err) => {
-      dispatch(returnStatus(err.response.data, err.response.status, 'LOGIN_FAIL'))
+      dispatch(returnStatus(err, err.status, 'LOGIN_FAIL'))
       dispatch({
         type: LOGIN_FAIL
       });

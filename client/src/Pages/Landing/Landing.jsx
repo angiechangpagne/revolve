@@ -5,41 +5,37 @@ import './Landing.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-// import store from '../../configureStore';
+import { Redirect } from 'react-router-dom';
 import { buttonClicked } from '../../actions/uiActions';
-import { isAuth, login } from '../../actions/authActions';
+import { isAuth } from '../../actions/authActions';
 
-class Landing extends React.Component{
+export class Landing extends React.Component{
   static propTypes = {
-    buttonClicked: PropTypes.func.isRequired,
     button: PropTypes.bool,
     status: PropTypes.object.isRequired,
     isAuthenticated: PropTypes.bool,
-    login: PropTypes.func.isRequired,
     loading: PropTypes.bool,
   }
 
-  render(){
+  render() {
+
+    if(this.props.isAuthenticated) {
+      return <Redirect to= '/user' />
+    }
+
     return (
       <div className="landing" id="land">
           <p></p>
             <h3>Revolve Reminders</h3>
             <LoginForm/>
-            <Human>
-              <div className="arrow-container animated fadeInDown">
-                <div className="arrow-2">
-                <a href='#arr'> <i className="glyphicon glyphicon-arrow-right"></i></a>
-                </div>
-                <div className="arrow-1 animated hinge infinite zoomIn"></div>
-              </div>
-            </Human>
           </div>
     );
   }
 }
+//connecting the single universal state
 const mapStateToProps = (state) => ({
   button: state.ui.button,
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { buttonClicked })(Landing);
+export default connect(mapStateToProps)(Landing);
