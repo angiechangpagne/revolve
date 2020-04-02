@@ -26,7 +26,7 @@ export const isAuth = (loginData) => (dispatch) => {
       }
       dispatch({
         type: AUTH_SUCCESS,
-        payload: res
+        payload: res.data
       })
     }).catch((err) => {
       dispatch({
@@ -66,7 +66,7 @@ export const login = (loginData) => (dispatch) => {
         console.log('res.data.userInfo',res.data.userInfo);
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: res
+        payload: res.data.userInfo
       });
       dispatch({ type: IS_LOADING });
     }).catch((err) => {

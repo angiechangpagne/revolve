@@ -174,7 +174,7 @@ class LoginForm extends Component {
           // this.setState({ reminders: res.data.userInfo.reminders });
           // this.setState({ user: res.data.userInfo }); //takes time for state to update
           
-          // window.location.href='/user';
+          window.location.href='/user';
           //store response from database then wait for set, then redirect
       //   }
       //   //else if email provided isn't in the db
@@ -239,7 +239,7 @@ class LoginForm extends Component {
                   email : signUpEmail, 
                   password : signUpPassword, 
                   mobileNumber : signUpPhone};
-      this.props.isLoading();
+      // this.props.isLoading();
       this.props.signup(user);
       // api.saveUser({
       //   firstName : signUpFirstName,
@@ -278,7 +278,7 @@ class LoginForm extends Component {
         id="modal" 
         className="animated pulse"
         isOpen={this.state.isModalOpen}>
-        { !isLoading && 
+        { 
         <form id="form" method="POST" className="topBefore animated headShake">
           <div className="modal-header">
             <button type="button" className="close" onClick={this.closeModal}>&times;</button>
@@ -329,7 +329,7 @@ class LoginForm extends Component {
         }
       </Modal>
       <section className="loginSection">
-      { isLoading &&
+      { 
       <div>
         <form id="form" className="topBefore animated headShake"> 
         <div id="login-title"><span> <header className="animated headShake">Log In</header></span></div>
@@ -383,6 +383,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => ({ 
   //we map the state element in redux store as props
   //element location is right, key is left
+  isAthenticated: state.auth.isAuthenticated,
   button: state.ui.buton,
   status: state.status,
   loading: state.ui.loading

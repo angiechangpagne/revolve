@@ -36,7 +36,7 @@ export class User extends React.Component{
   // }
   componentDidMount(){
     //check is session cookie is present
-    store.dispatch(isAuth());
+    // store.dispatch(isAuth());
   }
   // componentWillMount(){
   //   // if(!Cookies2.get('user') && !this.props.userCookie) { //unidentified entity
@@ -57,9 +57,9 @@ export class User extends React.Component{
   // }
     
     render(){
-      if(!this.props.isAuthenticated){
-        return <Redirect to="/" /> 
-      }
+      // if(!this.props.isAuthenticated){
+      //   return <Redirect to="/" /> 
+      // }
       const user = Cookies.getJSON('user');
       // console.log('this.props.children', this.props.children)
       return (

@@ -189,14 +189,14 @@ app.use((err, req, res, next) =>  {
   // res.render('error');
 });
 
-const MONGODB_URI = 'mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority';
+const MONGODB_URI = 'mongodb+srv://ultraviolet:ultraviolet@revolve-p8i8j.mongodb.net/test?retryWrites=true&w=majority';
 //set up a promise in mongoose
 // const MongoClient = require('mongodb').MongoClient;
 
 mongoose.Promise=global.Promise;
 //Connect to MongoDB
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/revolve", {
+  MONGODB_URI || "mongodb://localhost/revolve", {
     useNewUrlParser: true,
     //sets name of DB that collections are part of
     // dbName: 'revolve'

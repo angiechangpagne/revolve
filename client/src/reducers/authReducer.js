@@ -24,13 +24,13 @@ export default (state = initialState, action) => {
       };
 
     case LOGIN_SUCCESS:
-    case AUTH_SUCCESS:
       return {
         ...state,
         isAuthenticated: true,
         user: action.payload
       };
       //returns the updated state of the union, and the responsee
+    // case AUTH_SUCCESS:
 
     case AUTH_ERROR:
     case LOGIN_FAIL:
