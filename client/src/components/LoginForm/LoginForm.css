@@ -8,7 +8,7 @@ p.error {
   align-items: center;
   align-content: center;
   align-self: center;
-  position:relative;
+  position:center;
 
 }
 .input{
@@ -137,7 +137,7 @@ header:hover {
 
 #submit:hover {
   color: #dae4d2;
-  background-color: #a5a785;
+  background-color: #a78591;
 }
 
 .ReactModal__Content:focus {
@@ -165,7 +165,7 @@ h1 {
 .loginSection {
   position: center;
   margin: auto;
-  padding: 10px;
+  /* padding: 10px; */
   /* height: 100vh; */
   font-family: 'Nidus Sans';
   align-self: center;
@@ -177,10 +177,23 @@ h1 {
   box-shadow: var(--shadow-dark);
 }
 .button {
-  position: -webkit-sticky;
+  align-self: center;
+  align-content: center;
+  align-items: center;
+  position: center;
+}
+
+.notLoading{
+  margin: 0px;
+  position: center;
+  align-self: center;
+  align-content: center;
+  align-items: center;
+  padding: 0px,
 }
 
 .createAccount{
   align-content: space-around;
-  position: relative;
+  align-self: center;
+  position: center;
 }

@@ -90,14 +90,12 @@ class App extends Component{
   //render passed will automatically set the user think of it as the superclass render then the subclass render
   render() {
     return (
-    <div className="AppContainer">
         <div className="container">
         <Switch>
         <Route exact path="/" component={Landing} /> 
         <Route exact path="/user" component={User} />
         </Switch>
         </div>
-    </div>
       );
   }  
 }

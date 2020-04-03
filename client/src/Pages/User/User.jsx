@@ -7,8 +7,8 @@ import { connect } from 'react-redux';
 import Cookies from 'js-cookie';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
-import { buttonClicked } from '../../actions/uiActions';
-import { isAuth } from '../../actions/authActions';
+import { buttonClicked, buttonReset } from '../../actions/uiActions';
+import { isAuth, signout } from '../../actions/authActions';
 // import {this.props.cookies as Universalthis.props.cookies} from "universal-cookie";
 import MapRender from "../../components/Map/Map";
 import store from '../../configureStore';
@@ -59,18 +59,21 @@ export class User extends React.Component{
     render(){
       // if(!this.props.isAuthenticated){
       //   return <Redirect to="/" /> 
-      // }
-      const user = this.props.authState.user;
-      console.log('authState', this.props.authState.user)
+      // } //end redux chain here until navbar logout, clone user state and manipulate api with database directly, 
+      //from here on, rest of app is not in need of redux during the session, state is updated without dispatching actions to redux store
+      const user = this.props.authState.user.userInfo; //the original dbUser profiler
+      const cloneUser=JSON.parse(JSON.stringify(user)); //tree recursively convert back
+
+      console.log('authState', this.props.authState.user.userInfo)
       return (
         <React.Fragment>
         <div className="user-wrapper">
           <div className="row">
-            <NavBar user={user} />
+            <NavBar user={cloneUser} />
           </div>
   
           <div className="row">
-            <RemindersWell user={user} />
+            <RemindersWell user={cloneUser} />
           </div>
   
           <div className="row">
@@ -88,4 +91,4 @@ const mapStateToProps = (state) => ({
   button: state.ui.button,
   authState: state.auth
 });
-export default connect(mapStateToProps, { isAuth, buttonClicked })(User);
+export default connect(mapStateToProps, { isAuth, signout, buttonClicked, buttonReset })(User);

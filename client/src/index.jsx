@@ -8,17 +8,20 @@ import App from './App';
 import { Provider } from 'react-redux';
 import  configureStore, { history } from './configureStore';
 import { ConnectedRouter } from 'connected-react-router';
+import './App.css';
 
 // import { register } from './serviceWorker';
 const store = configureStore();
 
 const renderApp = () =>
     ReactDOM.render( 
+    <div className="AppContainer">
     <Provider store={store}>
         <ConnectedRouter history={history}>
             <App />
         </ConnectedRouter>
-    </Provider>, 
+    </Provider>
+    </div>, 
     document.getElementById('root')
     )
 

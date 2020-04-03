@@ -40,7 +40,7 @@ export class RemindersWell extends Component{
   }
   
   componentWillMount() {
-    const user = this.props.user;
+    const { user }= this.props; //actually a clone of the user JSON from prior redux store during current session
     console.log('reminders well', this.props.user);
     this.setState({ user: user });
     // if(!this.props.user || !this.props.user.id){
@@ -115,10 +115,10 @@ export class RemindersWell extends Component{
   }
 
   loadReminders = () => {
-    console.log('I am trying to load reminders for', this.state.user.firstName);
-    const { user } = this.state;
+    console.log('I am trying to load reminders for', this.props.user.firstName);
+    const user = this.props.user;
     //might need to get a for loop to iterate states of res.data.reminders
-    api.getUserReminders(this.state.user._id)
+    api.getUserReminders(user._id)
       .then(res => {
         console.log("I got my reminders back!");
         console.log('res.data:', res.data);
@@ -178,7 +178,7 @@ export class RemindersWell extends Component{
 
           <div className="row">
               <div>
-                  <RmdrForm user={this.state.user} reminders={this.props.reminders} isModalOpen={this.state.isFormModalOpen} />
+                  <RmdrForm user={this.props.user} reminders={this.state.reminders} isModalOpen={this.state.isFormModalOpen} />
               </div>
           </div>
           <p id="need-acct" className="animated bounceInLeft"><span><button type="submit" onClick={this.openModal}>Set A Revolve Reminder</button></span></p>

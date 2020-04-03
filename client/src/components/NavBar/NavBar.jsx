@@ -5,7 +5,7 @@ import "./NavBar.css";
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { signout}  from '../../actions/authActions';
+import { signout, isAuth }  from '../../actions/authActions';
 import { buttonReset } from '../../actions/uiActions';
 //make functional component
 const NavBar= (props) => {
@@ -23,12 +23,14 @@ const NavBar= (props) => {
   if(!props.authState.isAuthenticated){
     return <Redirect to ="/"/> 
   }
+
+  console.log('navbar user authState.user', props.authState.user);
     return (
       <nav className="navbar navbar-default">
-      <h1> { props.authState ? `Welcome, ${props.authState.user.firstname}` : '' }</h1>
+      <h1> { props.authState.isAuthenticated ? (`Welcome ${props.authState.user.userInfo.firstname} `) : '' }</h1>
         <ul className="nav navbar-nav">
           <li className={window.location.pathname==="/user" ? "active" : "" }>
-            <Link className="navbar-title animated headShade" to="/user"> Home</Link>
+            <Link className="navbar-title animated headShake" to="/user"> Home</Link>
           </li>
           <li className={window.location.pathname === "/" ? "active" : ""}>
             <Link className="navbar-title animated headShake" to="/" onClick={handleSignOut}> Sign Out</Link>
@@ -48,5 +50,5 @@ const mapStateToProps = (state) => ({
   authState: state.auth,
   button: state.ui.button
 });
-
+//map dispatch only for actions done in current component
 export default connect(mapStateToProps, { signout, buttonReset })(NavBar);

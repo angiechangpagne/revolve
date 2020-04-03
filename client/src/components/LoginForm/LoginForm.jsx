@@ -335,9 +335,9 @@ export class LoginForm extends Component {
         </form>
         }
       </Modal>
+      { !loading && 
+      <div className='not-loading'>
       <section className="loginSection">
-      { !loading &&
-      <div>
         <form id="form" className="topBefore animated headShake"> 
         <div id="login-title"><span> <header className="animated headShake">Log In</header></span></div>
           <input id="name" type="email" placeholder="email" value={this.state.loginEmail} name="loginEmail" onChange={this.handleInputChange} type="text" id="input-email" className="loginHover"></input>
@@ -367,10 +367,9 @@ export class LoginForm extends Component {
         <span id="create-account"> <p id="create-acct" className="animated bounceInLeft">Need an account?</p></span>
         </form>
         <button onClick={this.openModal}>SIGN UP</button>
-        </div>
-      }
       </section>
-      
+      </div> 
+      }
       <div id='loading'>
       {
         loading && <span><Spinner size="sm" color="light"/><p>Pure Revolve...</p> </span> 
