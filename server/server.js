@@ -3,8 +3,8 @@
 //declare dependencies
 //production modeif(process.env.NODE_ENV === 'production') {  app.use(express.static(path.join(__dirname, 'client/build')));  //  app.get('*', (req, res) => {    res.sendfile(path.join(__dirname = 'client/build/index.html'));  })}
 
-const mongoose = require('mongoose')
-const path = require('path');
+var mongoose = require('mongoose')
+var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express(); //invoke express  instance
@@ -206,11 +206,11 @@ mongoose.connect(
     useNewUrlParser: true,
     useUnifiedTopology: true, 
     //sets name of DB that collections are part of
-    // dbName: 'revolve'
+    dbName: 'revolve'
     }
     ).then(() => console.log('MongoDB Connected')).catch(err => console.log(err));
     //show any mongoose errors
-const db = mongoose.connection;
+var db = mongoose.connection;
 // //show any mongoose errors
 
 db.on("error", (err) => {
@@ -219,6 +219,7 @@ db.on("error", (err) => {
 //once logged in to db through mongoose, log a success message
 db.once("open", () => {
   console.log("Mongoose connection successful.");
+
 });
 // mongoose.connect(url,{useNewUrlParser: true})
 // .then(()=>{

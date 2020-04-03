@@ -38,8 +38,8 @@ module.exports = {
       next();
     }).catch(err => console.log(err));
   },
-  update: (req, res) => {
-    const id = req.param('_id');
+  update: (req, res, next) => {
+    const id = req.param('id');
     db.Reminder.findOne({ '_id': id})
       .then(dbRmdr => {
         if(dbRmdr){
@@ -53,15 +53,17 @@ module.exports = {
           dbRmdr.save((err, dbRmdr) => {
             if(err) console.log(err);
             res.json(dbRmdr);
+            next();
           });
         }
       });
     },
-    delete: (req, res) => {
+    delete: (req, res, next) => {
       const reminderId=req.param('id');
-      db.Reminder.remove({ _id: reminderId })
-        .then(dbRmdr => 
-          res.json(dbRmdr)
-          );
+      db.Reminder.findOneAndDelete({ _id: reminderId }, (dbresponse) => {
+        console.log(dbresponse);
+        res.locals=dbresponse;
+        next();
+      }).catch(err => console.log(err));
     }
 };
