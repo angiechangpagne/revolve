@@ -1,15 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Oxanium&display=swap');
+
 .AppContainer {
   align-content: center;
   align-items: center;
+  font-family: 'Oxanium';
   background-color: rgb(249, 249, 249);
   box-shadow: var(--shadow-dark);
   height: 100vh;
 }
 .container{
+  font-family: 'Oxanium';
   align-content: center;
 }
 
 .body{
+  font-family: 'Oxanium', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   background-color:whitesmoke;
   align-items: center;
   align-content: center;
@@ -41,6 +46,7 @@
 
 .App-title {
   font-size: 1.5em;
+  
 }
 
 .App-intro {

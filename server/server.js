@@ -32,6 +32,10 @@ app.use(cookieParser());
 //add routes to be used in our app
 app.use('/api',apiRouter);
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 // app.post(`/api/signup`,(req, res, next) => {
 //   // apiRouter.route(`/signup`);
 //   console.log('about to go to api routes middleware from express server');

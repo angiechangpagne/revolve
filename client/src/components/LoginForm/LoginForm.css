@@ -4,7 +4,7 @@ p.error {
 
 
 .container {
-  font-family: 'Nidus Sans','Coda', monospace;
+  font-family: 'Oxanium', monospace;
   align-items: center;
   align-content: center;
   align-self: center;
@@ -13,7 +13,7 @@ p.error {
 }
 .input{
   border-radius:25px;
-
+  font-family: 'Oxanium', monospace;
 }
 
 input:hover::-webkit-input-placeholder, textarea:hover::-webkit-input-placeholder {
@@ -53,7 +53,7 @@ input:hover:focus::-ms-placeholder, textarea:hover::focus:-ms-placeholder {
 }
 
 body {
-  font-family: 'Nidus Sans','Coda', sans-serif;
+  font-family: 'Oxanium', monospace;
   background: #E3DEDB;
   color: #94bfa4;
   align-content: center;
@@ -65,11 +65,12 @@ body {
 #login-title {
   background-color: #575b5ae5;
   margin: 17px;
+  font-family: 'Oxanium', monospace;
   border-radius: 66% 21% 17% 3%;
 }
 header {
   position: relative;
-  border-radius: 50% 23% 17% 22%;
+  font-family: 'Oxanium', monospace;  border-radius: 50% 23% 17% 22%;
   margin: auto;
   font-size: 3.3em;
   text-align: center;
@@ -84,14 +85,14 @@ header:hover {
 
 #form {
   position: relative;
+  font-family: 'Oxanium', monospace;
   display: inline-flexbox;
   width: 500px;
   margin: 50px auto 50px auto;
 }
 
 .loginHover {
-  font-family: 'Nidus Sans','Monospace', sans-serif;
-  font-size: 1em;
+  font-family: 'Oxanium', monospace;  font-size: 1em;
   width: 470px;
   height: 60px;
   padding: 0px 15px 0px 15px;
@@ -123,10 +124,8 @@ header:hover {
 
 #submit {
   width: 470px;
-  margin: -5px 0px 0px 0px;
-  
-  font-family: 'Nidus Sans', 'Coda', monospace, sans-serif;
-  font-size: 1em;
+  margin: 0x 0px 0px 0px;
+  font-family: 'Oxanium', monospace;  font-size: 1em;
   color: #4b634f;
   background-color: rgb(245, 245, 245);
   outline:none;
@@ -146,12 +145,14 @@ header:hover {
 
 #SignUpForm {
     margin: 0px;
+    font-family: 'Oxanium', monospace;
     line-height: 1.42857143;
     position: relative;
     left: -12px;
 }
 h1 {
   margin: 0;
+  font-family: 'Oxanium';
   display: flex;
   @media only screen and (max-width: 31.25em) {
     .header {
@@ -167,7 +168,7 @@ h1 {
   margin: auto;
   /* padding: 10px; */
   /* height: 100vh; */
-  font-family: 'Nidus Sans';
+  font-family: 'Oxanium', monospace, 'Nidus Sans';
   align-self: center;
   align-content: center;
   /* perspective:1000px; */
@@ -176,11 +177,20 @@ h1 {
 	transform-style: preserve-3d;
   box-shadow: var(--shadow-dark);
 }
-.button {
+button {
   align-self: center;
   align-content: center;
   align-items: center;
   position: center;
+  font-family: 'Oxanium';
+  color: #dae4d2;
+  background-color: #6dcb85;
+}
+
+button:hover{
+  background-color: #90899a;
+  color: #38686c;
+
 }
 
 .notLoading{
@@ -195,5 +205,8 @@ h1 {
 .createAccount{
   align-content: space-around;
   align-self: center;
+  font-family: 'Oxanium', monospace;
   position: center;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Oxanium&display=swap');

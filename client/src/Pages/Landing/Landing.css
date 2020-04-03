@@ -12,6 +12,7 @@ text-decoration: none;
 }
 .landing{
   color:#a5a5b6;
+  font-family: 'Major Mono Display', monospace;
   align-content: center;
   align-items: center;
   position: relative;

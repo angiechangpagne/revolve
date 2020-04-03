@@ -100,14 +100,14 @@ export class RmdrForm extends Component{
       date: new Date(),
       rmdrTime : new Date(),
       rmdrNotificationNumber : "",
-      isRmdrNameEmpty: false,
-      isRmdrNotificationNumberEmpty : false,
+      isRmdrNameEmpty: "",
+      isRmdrNotificationNumberEmpty : "",
       isRmdrNotificationLabelEmpty : false,
       isRmdrNotificationEmpty : false, 
       isRmdrTimeEmpty : false,
       reminders : [],
       user: "",
-      isModalOpen: false,
+      modalIsOpen: "",
       address : "",
       setAddress: (address) => {
         this.setState({ 
@@ -122,6 +122,7 @@ export class RmdrForm extends Component{
     this.setAddress=this.setAddress.bind(this);
     this.validate=this.validate.bind(this);
     this.closeModal=this.closeModal.bind(this);
+    this.openModal=this.openModal.bind(this);
   }
   
   componentDidMount(){
@@ -136,15 +137,11 @@ export class RmdrForm extends Component{
     //set the user cookie state
   }
   componentWillMount(){
-    const { user, reminders, isModalOpen } = this.props;
+    const { user, reminders } = this.props;
     this.setState({
       user: user,
       reminders: reminders || [],
-      isModalOpen: isModalOpen
     });
-      if(this.props.isModalOpen){
-        this.setState({ isModalOpen: true });
-      }
       console.log(this.props.user);
       console.log("I have a cookie access");
     }
@@ -164,12 +161,11 @@ export class RmdrForm extends Component{
     this.setState({
       [name] : value
     });
-    this.validate();
   };
 
-  validate=() => {
+  validate= () => {
   const newState = {}; //do not reset state or else post request will process without routing to axios
-    const{
+    const {
       rmdrName,
       rmdrNotification,
       rmdrTime,
@@ -201,10 +197,8 @@ export class RmdrForm extends Component{
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    // if(this.props.user===undefined){
-    //   this.props.cookies.remove('user');
-    //   window.location.href="/";
-    // }
+    this.validate();
+
     // console.log('to validate states');
     // const newState = {}; //do not reset state or else post request will process without routing to axios
     const{
@@ -238,7 +232,7 @@ export class RmdrForm extends Component{
       {
         console.log("I am now about to create reminder");
        
-        api.saveUserReminder(this.props.user.id, {
+        api.saveUserReminder(this.props.user._id, {
           reminderName : rmdrName,
           time : rmdrTime,
           reminderNumber : rmdrNotificationNumber,
@@ -273,12 +267,11 @@ export class RmdrForm extends Component{
           console.log('new reminder successfully added to associated user key', this.state.reminders);
           //reload page and refresh upcoming remminder well
           this.state.user.reminders.push(newState);
-          this.props.user.userInfo.reminders.push(newState);
           //user is a cookie get in App root provider
-          this.props.user.handleChange(this.state.user);
+          // this.props.user.handleChange(this.state.user);
           //set('user', this.props.user, { path: '/'});
           console.log('reminders state', this.state.reminders);
-          console.log('this.props.user cookies', this.props.user);
+          // console.log('this.props.user cookies', this.props.user);
           window.location.href="/user";
           }).catch(err => console.log(err));
         }
@@ -313,21 +306,23 @@ export class RmdrForm extends Component{
   //     })
   //     .catch(err => console.error(err));
   // }
+  openModal = () => {
+    this.setState({ modalIsOpen: true });
+  }
 
   render() {
     console.log(this.state);
 
-    console.log(this.state.user);
     return (
       <div className="container animated pulse">
       <Modal 
         id="modal" 
         className="col-sm-6 col-sm-offset-3 animated pulse"
-        isOpen={this.state.isModalOpen}
+        isOpen={this.state.modalIsOpen}
         >
         <div className="box">
         <header className="animated headShake">
-            <h1 id="logintoregister"><p></p>{`Greetings ${this.props.user.firstName }let's set up your notifications`} </h1>
+            <h1 id="logintoregister"><p></p>{`Greetings ${this.props.user.firstName} let's set up your notifications`} </h1>
         </header>
         
           <form id="form" method="POST" className="topBefore animated headShake">
@@ -413,11 +408,10 @@ export class RmdrForm extends Component{
           </form>
         </div>
         </Modal>
+        <p id="need-acct" className="animated bounceInLeft"><span><button type="submit" onClick={this.openModal}>Set A Revolve Reminder</button></span></p>
       </div>
     );
   }
 }
-
-
 
 export default RmdrForm;

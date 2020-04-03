@@ -20,8 +20,7 @@ export class RemindersWell extends Component{
       rmdrNotificationNumber: '',
       rmdrNotificationLabel: '',
       reminders: [],
-      isFormModalOpen: false,
-      isMapModalOpen: false,
+      isMapModalOpen: "",
       lat: '',
       lng: '',
       address: '',
@@ -35,7 +34,6 @@ export class RemindersWell extends Component{
     this.loadReminders=this.loadReminders.bind(this);
     this.getPastReminders=this.getPastReminders.bind(this);
     this.getUpcomingReminders=this.getUpcomingReminders.bind(this);
-    this.openFormModal=this.openFormModal.bind(this);
     this.openUpdateModal=this.openUpdateModal.bind(this);
   }
   
@@ -137,10 +135,6 @@ export class RemindersWell extends Component{
     return this.state.reminders.filter(rmdr => rmdr.notification <= 0);
   }
 
-  openFormModal = () => {
-    this.setState({ isFormModalOpen: true });
-  }
-
   openUpdateModal = () => {
     this.setState({ isUpdateModalOpen: true});
   }
@@ -177,11 +171,8 @@ export class RemindersWell extends Component{
           </div>
 
           <div className="row">
-              <div>
-                  <RmdrForm user={this.props.user} reminders={this.state.reminders} isModalOpen={this.state.isFormModalOpen} />
-              </div>
+            <RmdrForm user={this.props.user} reminders={this.state.reminders} />
           </div>
-          <p id="need-acct" className="animated bounceInLeft"><span><button type="submit" onClick={this.openModal}>Set A Revolve Reminder</button></span></p>
           
 
           <h4 className="animated headShake"> Past Reminders</h4>

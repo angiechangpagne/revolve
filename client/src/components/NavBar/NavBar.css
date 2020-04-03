@@ -1,11 +1,12 @@
 .navbar {
-  background: rgb(197, 211, 200);
+  background: rgb(197, 211, 206);
   display: -ms-inline-flexbox;
-  flood-opacity: initial;
+  flood-opacity: inherit;
 }
 .navbar-title {
-  color: rgba(90, 96, 84, 0.995) !important;
-  font-family: 'Nidus Sans',Roboto, 'Etheriq','Metros',system-ui,'Nidus Sans','Courier Mono', Courier, monospace;
+  align-content: flex-end;
+  color: rgba(68, 87, 76, 0.995) !important;
+  font-family: 'Etheriq','Metros',system-ui,'Nidus Sans','Courier Mono', Courier, monospace;
   font-size: 21px;
   font-weight: 6px; 
 }

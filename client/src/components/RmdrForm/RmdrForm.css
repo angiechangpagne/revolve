@@ -12,7 +12,7 @@
   width : 100%;
 }
 
-@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500);
+@import url(https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap);
 
 /*html{
   background-color: #f1f1f1;
@@ -36,6 +36,7 @@
     width: 100% !important;
     margin-left: 0px;
     padding-left: 0px;
+    font-family: 'Major Mono Display', monospace;
     margin-right: 50px;
     content: "address";
 }

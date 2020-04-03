@@ -12,7 +12,8 @@ import {
 const initialState = {
   isAuthenticated: false,
   user: "",
-  isLoading: false
+  isLoading: false,
+  isEmailUnique:true,
 };
 
 export default function (state = initialState, action) {
@@ -34,12 +35,17 @@ export default function (state = initialState, action) {
 
     case AUTH_ERROR:
     case LOGIN_FAIL:
-    case SIGNUP_FAIL:
     case AUTH_FAIL:
       return {
         ...state, 
         user: null, 
         isAuthenticated: false,
+      }
+
+    case SIGNUP_FAIL:
+      return {
+        ...state,
+        isEmailUnique: false,
       }
 
       default: 

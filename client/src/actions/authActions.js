@@ -42,13 +42,16 @@ axios
         headers: { 'content-type': 'application/json' }})
       .then((res) => {
         console.log('res on line 45 of authActions is', res) //promise chain response from server request
+        dispatch({ type: IS_LOADING })
         if(res.data.isEmailUnique){
           dispatch(returnStatus(res, res.status,'SIGNUP_SUCCESS'));
           dispatch({ type: IS_LOADING })
         }
-        else{
+        else {
           console.log('email not unique');
-          dispatch(returnStatus(res,res.status, 'SIGNUP_FAIL'));
+          dispatch({
+            type: SIGNUP_FAIL
+          });        
         }
       })
       .catch((err) => {
@@ -56,7 +59,6 @@ axios
         dispatch({
           type: SIGNUP_FAIL
         });
-        dispatch({ type: IS_LOADING })
       });
 };
 
@@ -73,8 +75,13 @@ export const login = (loginData) => (dispatch) => {
           type: LOGIN_SUCCESS,
           payload: res.data
         });
-        dispatch({ type: IS_LOADING });
        }
+       else{
+        dispatch({
+          type: LOGIN_FAIL
+        });
+      }
+      dispatch({ type: IS_LOADING });
     }).catch((err) => {
       dispatch(returnStatus(err, err.status, 'LOGIN_FAIL'))
       dispatch({

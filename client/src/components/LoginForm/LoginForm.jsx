@@ -75,7 +75,7 @@ export class LoginForm extends Component {
   };
 
   componentWillMount() {
-    this.setState({ userCookie : Cookies.get('user') });
+    // this.setState({ userCookie : Cookies.get('user') });
   };
 
   componentDidMount() {
@@ -172,7 +172,7 @@ export class LoginForm extends Component {
         this.props.isLoading(); 
         //we want to load before we check redux map dispatch actions to authenticate to reduce lag
         //if email and password are valid check res, res.data or res.userInfo
-          
+        
         
         //a GET request for "/home"
           // api.getUserReminders(res.data.id);
@@ -240,14 +240,13 @@ export class LoginForm extends Component {
     //else if all input values are not empty
     else if (signUpFirstName && signUpLastName && signUpEmail && signUpPassword && signUpPhone && isEmailUnique)
     {
-     const user ={firstName : signUpFirstName,
+     const user = {firstName : signUpFirstName,
                   lastName : signUpLastName, 
                   email : signUpEmail, 
                   password : signUpPassword, 
                   mobileNumber : signUpPhone};
       this.props.signup(user);
-
-      this.props.isLoading();
+      // this.props.isLoading();
 
       // api.saveUser({
       //   firstName : signUpFirstName,
@@ -264,13 +263,12 @@ export class LoginForm extends Component {
         else if(this.props.status.statusMsg && this.props.status.respCode==200){
           this.closeModal();
         }
-       
-        // } else {
-        //   this.setState({ isEmailUnique: false });
-        //   console.log('email already in use');
-        // }
-    //   })
-    //   .catch(err => console.log(err));
+        else if(!this.props.authState.isEmailUnique){
+          this.setState({ isEmailUnique: false });
+        }
+        else{
+          this.closeModal();
+        }
      }
   };
 
@@ -336,7 +334,6 @@ export class LoginForm extends Component {
         }
       </Modal>
       { !loading && 
-      <div className='not-loading'>
       <section className="loginSection">
         <form id="form" className="topBefore animated headShake"> 
         <div id="login-title"><span> <header className="animated headShake">Log In</header></span></div>
@@ -368,7 +365,6 @@ export class LoginForm extends Component {
         </form>
         <button onClick={this.openModal}>SIGN UP</button>
       </section>
-      </div> 
       }
       <div id='loading'>
       {
@@ -391,6 +387,7 @@ const mapStateToProps = (state) => ({
   //element location is right, key is left
   isAuthenticated: state.auth.isAuthenticated,
   button: state.ui.buton,
+  authState: state.auth,
   status: state.status,
   loading: state.ui.loading
 });

@@ -27,7 +27,9 @@ const NavBar= (props) => {
   console.log('navbar user authState.user', props.authState.user);
     return (
       <nav className="navbar navbar-default">
-      <h1> { props.authState.isAuthenticated ? (`Welcome ${props.authState.user.userInfo.firstname} `) : '' }</h1>
+      { props.authState.isAuthenticated &&
+      <h1>     Welcome {props.authState.user.firstName} </h1>
+      }
         <ul className="nav navbar-nav">
           <li className={window.location.pathname==="/user" ? "active" : "" }>
             <Link className="navbar-title animated headShake" to="/user"> Home</Link>
