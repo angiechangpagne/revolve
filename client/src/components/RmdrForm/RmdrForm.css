@@ -22,6 +22,7 @@
 #logintoregister {
   margin-top: 30px;
   padding-top: 30px;
+  padding-left: 60px;
 }
 
 #PlacesAutocomplete__root{
@@ -97,7 +98,7 @@
 }
 
 .box #buttonlogintoregister :active{
-    background: rgb(138, 186, 169);
+    background: #8abaa9;
     color: rgb(174, 177, 155);
 }
 

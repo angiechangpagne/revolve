@@ -18,7 +18,7 @@
     "lint": "eslint \"**/*.jsx\"",
     "server": "nodemon ./server/server.js",
     "client-install": "npm install --prefix client",
-    "client": "webpack-dev-server --mode development --devtool inline-source-map --hot --prefix ./client",
+    "client": "webpack-dev-server --mode development --devtool cheap-module-source-map --hot --prefix ./client",
     "webpack": "webpack --config ./webpack.config.js",
     "deploy": "npm run build && git add . && git commit -m \"Building for production\" && git push heroku master",
     "test": "NODE_ENV=test jest --coverage",

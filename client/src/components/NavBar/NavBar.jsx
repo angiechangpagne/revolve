@@ -26,9 +26,10 @@ const NavBar= (props) => {
 
   console.log('navbar user authState.user', props.authState.user);
     return (
+      <span>
       <nav className="navbar navbar-default">
       { props.authState.isAuthenticated &&
-      <h1>     Welcome {props.authState.user.firstName} </h1>
+      <h1> Welcome {props.authState.user.firstName} </h1>
       }
         <ul className="nav navbar-nav">
           <li className={window.location.pathname==="/user" ? "active" : "" }>
@@ -39,6 +40,7 @@ const NavBar= (props) => {
           </li>
         </ul>
       </nav>
+      </span>
     )
 }
 NavBar.propTypes = {

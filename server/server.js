@@ -11,7 +11,7 @@ var app = express(); //invoke express  instance
 //require routers
 const apiRouter = require('./api/userAndReminder'); //all the routes in the api routes folder
 // const router = express.Router();
-const PORT = process.env.PORT || 3001;
+const port = process.env.PORT || 3001;
 //notification scheduler 
 
 //configure body parser for AJAX requests, request body
@@ -29,13 +29,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+app.use((req, res, next) => {
+  res.header({ 'Access-Control-Allow-Origin': '*'});
+  res.header({'Access-Control-Allow-Headers': 'Content-Type'});
+  next();
+});
+
 //add routes to be used in our app
 app.use('/api',apiRouter);
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
 // app.post(`/api/signup`,(req, res, next) => {
 //   // apiRouter.route(`/signup`);
 //   console.log('about to go to api routes middleware from express server');
@@ -48,7 +50,7 @@ app.use((req, res, next) => {
 //serve static assets
 console.log("in line 26 of express server and dirname is", __dirname);
 // app.use('/assets', express.static(path.resolve(__dirname, '../client/public/assets')));
-app.use('/public', express.static(path.resolve(__dirname,'client/public')));
+app.use('/public', express.static(path.resolve(__dirname,'../client/public')));
 // app.use(express.static(path.resolve(__dirname, 'client/public/assets')));
 
 // app.use(logger('dev'));
@@ -223,7 +225,7 @@ db.once("open", () => {
 //   app.listen(PORT, () => console.log(`🌎  ==> Server Listening on PORT ${PORT}`));
 // })
 // .catch(err => console.log(err));
-app.listen(PORT, () => console.log(`🌎  ==> Server Listening on PORT ${PORT}`));
+app.listen(port, () => console.log(`🌎  ==> Server Listening on PORT ${port}`));
 
 // const io = socketio(server);
 // io.on('connection', (socket) => {

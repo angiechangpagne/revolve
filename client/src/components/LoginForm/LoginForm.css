@@ -136,7 +136,7 @@ header:hover {
 
 #submit:hover {
   color: #dae4d2;
-  background-color: #a78591;
+  background-color: #adae82;
 }
 
 .ReactModal__Content:focus {
@@ -183,13 +183,13 @@ button {
   align-items: center;
   position: center;
   font-family: 'Oxanium';
-  color: #dae4d2;
-  background-color: #6dcb85;
+  color: #425545;
+  background-color: #b1cfdd;
 }
 
 button:hover{
-  background-color: #90899a;
-  color: #38686c;
+  background-color: #241835d0;
+  color: #82b1c4;
 
 }
 

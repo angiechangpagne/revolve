@@ -39,8 +39,8 @@ module.exports = {
     }).catch(err => console.log(err));
   },
   update: (req, res) => {
-    const id = req.param('id');
-    db.Reminder.findOne({ _id: id })
+    const id = req.param('_id');
+    db.Reminder.findOne({ '_id': id})
       .then(dbRmdr => {
         if(dbRmdr){
           console.log('Updating Reminder');
@@ -57,7 +57,7 @@ module.exports = {
         }
       });
     },
-    remove: (req, res) => {
+    delete: (req, res) => {
       const reminderId=req.param('id');
       db.Reminder.remove({ _id: reminderId })
         .then(dbRmdr => 

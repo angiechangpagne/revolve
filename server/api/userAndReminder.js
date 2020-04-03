@@ -1,5 +1,7 @@
 const express = require('express'); //in case of asyc
 const router = express.Router();
+const cors = require('cors');
+router.use(cors());
 // const bodyParser = require('body-parser');
 // app.use(bodyParser.json()); //make app var available globally
 // app.use(bodyParser.urlencoded({ extended: true }));
@@ -50,8 +52,12 @@ router.route('/signup')
       console.log('in middleware route get reminder res.locals.reminders', res.locals);
       return res.json(res.locals.reminders);
     })
-    .put(rmdrController.update)
-    .delete(rmdrController.remove);
+    .put(rmdrController.update, (req, res) => {
+      return res.json(res.locals);
+    })
+    .delete(rmdrController.remove, (req, res) => {
+      return res.json(res.locals);
+    });
 
 
 module.exports = router;

@@ -25,7 +25,7 @@ module.exports = {
     publicPath: '/dist/',
     filename: 'bundle.js',
   },
-  devtool: 'inline-source-map',
+  devtool: 'cheap-module-source-map',
   mode: 'development',
   devServer: {
     //Docker host required
@@ -33,7 +33,7 @@ module.exports = {
     //host: localhost, port for the webpack dev server
     port: process.env.PORT || '8080',
     //match output path
-    contentBase: path.resolve(__dirname,'./revolve/client'),
+    contentBase: path.resolve(__dirname,'./client'),
     //enable of hot module reload
     hot: true,
     // progress: true, 

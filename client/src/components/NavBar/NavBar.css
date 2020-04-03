@@ -1,12 +1,21 @@
 .navbar {
-  background: rgb(197, 211, 206);
+  background-color: rgba(159, 208, 205, 0.858);
   display: -ms-inline-flexbox;
+  align-items: center;
+  height: 10vh;
+  justify-content: space-around;
   flood-opacity: inherit;
 }
-.navbar-title {
-  align-content: flex-end;
-  color: rgba(68, 87, 76, 0.995) !important;
+/* .span {
+  display: inline-flex;
+} */
+.h1 {
+  margin-left: auto;
+  padding-inline: 10px;
+  align-content: center;
+  align-self: center;
+  color: rgba(56, 54, 65, 0.995) !important;
   font-family: 'Etheriq','Metros',system-ui,'Nidus Sans','Courier Mono', Courier, monospace;
-  font-size: 21px;
+  font-size: 33px;
   font-weight: 6px; 
 }
