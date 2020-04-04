@@ -1,13 +1,12 @@
-// 'use strict';
-// require('dotenv').config();
+require('dotenv').config();
 //declare dependencies
 //production modeif(process.env.NODE_ENV === 'production') {  app.use(express.static(path.join(__dirname, 'client/build')));  //  app.get('*', (req, res) => {    res.sendfile(path.join(__dirname = 'client/build/index.html'));  })}
-
-var mongoose = require('mongoose')
+const mongoose = require('mongoose')
 var path = require('path');
-var express = require('express');
-var bodyParser = require('body-parser');
-var app = express(); //invoke express  instance
+global.path=path;
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express(); //invoke express  instance
 //require routers
 const apiRouter = require('./api/userAndReminder'); //all the routes in the api routes folder
 // const router = express.Router();
@@ -30,23 +29,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use((req, res, next) => {
-  res.header({ 'Access-Control-Allow-Origin': '*'});
-  res.header({'Access-Control-Allow-Headers': 'Content-Type'});
+  // res.header({ 'Access-Control-Allow-Origin': '*'});
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 
+                'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+                );
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
   next();
 });
-
 //add routes to be used in our app
 app.use('/api',apiRouter);
-
-// app.post(`/api/signup`,(req, res, next) => {
-//   // apiRouter.route(`/signup`);
-//   console.log('about to go to api routes middleware from express server');
-//   app.use(`/signup`,apiRouter);
-
-//   next();
-// });
-
-
 //serve static assets
 console.log("in line 26 of express server and dirname is", __dirname);
 // app.use('/assets', express.static(path.resolve(__dirname, '../client/public/assets')));
@@ -58,10 +50,15 @@ app.use('/public', express.static(path.resolve(__dirname,'../client/public')));
 app.get('/', (req, res) => 
   res.status(200).sendFile(path.resolve(__dirname, '../client/public/index.html'))
 );
+// app.post(`/api/signup`,(req, res, next) => {
+//   // apiRouter.route(`/signup`);
+//   console.log('about to go to api routes middleware from express server');
+//   app.use(`/signup`,apiRouter);
 
+//   next();
+// });
 //run reminder notification scheduler
 scheduler.start();
-
 
 const socketio = require('socket.io');
 const Nexmo = require('nexmo');
@@ -76,52 +73,32 @@ const to = '19143648047';
 const text = 'Hello from Nexmo';
 
 nexmo.message.sendSms(from, to, text);
-
-
-
 // const indexRouter = require('./routes/index');
 // const testAPIRouter = require('./api/routes/testAPI');
 // const Users = require('./routes/Users');
 
-// const MongoClient = require('mongodb').MongoClient;
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
-
-
 // app.use('/users',Users);
 
 
-//mongodb+srv://violet:<password>@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority
-//  const client = new MongoClient( mongoURI, { useNewUrlParser: true });
-//  client.connect( err => {
-//    const collection=client.db("test").collection("devices");
-//    client.close();
-//  });
+
 
 //const MongoClient = require('mongodb').MongoClient;
 // const uri = "mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority";
-// const client = new MongoClient(uri, { useNewUrlParser: true });
-// client.connect(err => {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   client.close();
-// });
+
 
 // app.set('index',__dirname, )
 // err => {
 //   const collection = client.db("test").collection("devices");
-//   client.close();
-
-
 
 // app.use('/', indexRouter);
 // app.use('/users', users);
 // app.use('/testAPI', testAPIRouter);
 
-
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname,'public', 'index.html'))
 });
 //catching a form submit
@@ -130,6 +107,39 @@ app.get('/', (req, res) => {
 //   console.log(req.body);
 //   const { number, text } = req.body;
 
+// const io = socketio(server);
+// io.on('connection', (socket) => {
+//   console.log('Connected socket io');
+//   io.on('disconnect', () => {
+//     console.log('Disconnected Socket io');
+//   })
+// });
+
+// catch 404 and forward to error handler
+app.use((req, res) =>  {
+  //next(createError(404));
+  res.sendStatus(404);
+});
+
+// error handler
+app.use((err, req, res, next) =>  {
+  // set locals, only providing error in development
+  console.log('line 33 of server with res.locals:', res.locals);
+  // res.locals.message = err.message;
+  // res.locals.error = req.app.get('env') === 'development' ? err : {};
+  const defaultErr = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 400,
+    message: { err: 'An error occurred' },
+  };
+  const errorObj = Object.assign({}, defaultErr, err);
+  console.log(errorObj.log);
+  return res.status(errorObj.status).json(errorObj.message);
+  // render the error page
+  // res.status(err.status || 500);
+  // console.log('res.status:', res.status);
+  // res.render('error');
+});
 //   nexmo.message.sendSms(
 //     from, number, text, { type: 'unicode' },
 //     (err, responseData) => {
@@ -169,72 +179,26 @@ app.get('/', (req, res) => {
 //   );
 // });
 
-// catch 404 and forward to error handler
-app.use((req, res) =>  {
-  //next(createError(404));
-  res.sendStatus(404);
-});
-
-// error handler
-app.use((err, req, res, next) =>  {
-  // set locals, only providing error in development
-  console.log('line 33 of server with res.locals:', res.locals);
-  // res.locals.message = err.message;
-  // res.locals.error = req.app.get('env') === 'development' ? err : {};
-  const defaultErr = {
-    log: 'Express error handler caught unknown middleware error',
-    status: 400,
-    message: { err: 'An error occurred' },
-  };
-  const errorObj = Object.assign({}, defaultErr, err);
-  console.log(errorObj.log);
-  return res.status(errorObj.status).json(errorObj.message);
-  // render the error page
-  // res.status(err.status || 500);
-  // console.log('res.status:', res.status);
-  // res.render('error');
-});
-
-const MONGODB_URI = 'mongodb+srv://ultraviolet:ultraviolet@revolve-p8i8j.mongodb.net/test?retryWrites=true&w=majority';
 //set up a promise in mongoose
 // const MongoClient = require('mongodb').MongoClient;
-
-mongoose.Promise=global.Promise;
+mongoose.Promise=global.Promise //=global.Promise;
 //Connect to MongoDB
 mongoose.connect(
-  MONGODB_URI || "mongodb://localhost/revolve", {
+  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@revolve-p8i8j.mongodb.net/test?retryWrites=true&w=majority` || 'mongodb://localhost:27017', {
     useNewUrlParser: true,
-    useUnifiedTopology: true, 
-    //sets name of DB that collections are part of
-    dbName: 'revolve'
-    }
-    ).then(() => console.log('MongoDB Connected')).catch(err => console.log(err));
-    //show any mongoose errors
-var db = mongoose.connection;
-// //show any mongoose errors
+    useUnifiedTopology: true
+    }).then(() => {
+      console.log('MongoDB Connected');
+      const db = mongoose.connection;
+      // //show any mongoose errors
+      db.on('error', (err) => {
+        console.log('Mongoose Error: ', err)
+      })
+      //once logged in to db through mongoose, log a success message
+      db.once('open', () => {
+        console.log("Mongoose connection successful.")
+      })
+      app.listen(port, () => console.log(`🌎  ==> Server Listening on PORT ${port}`));
 
-db.on("error", (err) => {
-  console.log("Mongoose Error: ", err);
-});
-//once logged in to db through mongoose, log a success message
-db.once("open", () => {
-  console.log("Mongoose connection successful.");
-
-});
-// mongoose.connect(url,{useNewUrlParser: true})
-// .then(()=>{
-//   app.listen(PORT, () => console.log(`🌎  ==> Server Listening on PORT ${PORT}`));
-// })
-// .catch(err => console.log(err));
-app.listen(port, () => console.log(`🌎  ==> Server Listening on PORT ${port}`));
-
-// const io = socketio(server);
-// io.on('connection', (socket) => {
-//   console.log('Connected socket io');
-//   io.on('disconnect', () => {
-//     console.log('Disconnected Socket io');
-//   })
-// });
-
-
+    }).catch(err => console.log(err));
 module.exports = app;

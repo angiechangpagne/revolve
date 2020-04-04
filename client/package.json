@@ -9,7 +9,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "dev": "NODE_ENV=production webpack --watch",
+    "dev": "NODE_ENV=developement webpack --watch",
     "prod": "webpack -p --watch",
     "env": "client-env",
     "test": "react-scripts test --env=jsdom",

@@ -1,7 +1,7 @@
 // 'use strict'
 const path = require('path');
 const webpack = require('webpack');
-// const Dotenv = require('dotenv-webpack');
+const dotenv = require('dotenv-webpack');
 // const lodash = require('lodash');
 // const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 // const chalk = require('chalk');
@@ -25,15 +25,18 @@ module.exports = {
     publicPath: '/dist/',
     filename: 'bundle.js',
   },
-  devtool: 'cheap-module-source-map',
+  devtool: 'source-map',
   mode: 'development',
   devServer: {
     //Docker host required
-    host: process.env.HOST || "127.0.0.1",
+    host: process.env.HOST || "0.0.0.0",
     //host: localhost, port for the webpack dev server
     port: process.env.PORT || '8080',
     //match output path
-    contentBase: path.resolve(__dirname,'./client'),
+    compress: true,
+    noInfo: false,
+    disableHostCheck: true, // this can be dangerous, do not use unless on a private LAN in a safe network
+    contentBase: path.resolve(__dirname,'./client/public'),
     //enable of hot module reload
     hot: true,
     // progress: true, 
@@ -46,12 +49,12 @@ module.exports = {
     //proxy necessary to make api calls to express server while using hot-reload webpack server
     //route api axios requests from localhost:3001/api/* (webpack dev server) to localhost:3001/api/* where Express
     proxy: {
-      '/api/*': {
-        target: 'http://localhost:3001/',
+      '/api/**': {
+        target: 'http://localhost:3001',
         secure: false,
       },
-      '/assets/*': {
-        target: 'http://localhost:3001/',
+      '/assets/**': {
+        target: 'http://localhost:3001',
         secure: false,
       },
     },
@@ -101,11 +104,12 @@ module.exports = {
     // new DashboardPlugin(),
     // new CleanWebpackPlugin('dist'),
     new HtmlWebpackPlugin({
-      template: './public/index.html'
+      template: './client/public/index.html'
       // manifest: path.resolve(__dirname,'./client/public/manifest.json')
     }),
     new webpack.HotModuleReplacementPlugin(),
     // new OpenBrowserPlugin({ url: 'http://localhost:3001' }),
+    new dotenv(),
   ],
   resolve: {
     //enable import jsx files

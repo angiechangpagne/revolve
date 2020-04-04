@@ -39,6 +39,18 @@ axios
 reactjs
 react
 redux
+react-redux
+expressjs
+mongoose
+mongodb
+no-sql
+productivity
+full-stack
+
+Testing
+jest
+enzyme
+
 
 Deployment Forms:
 Heroku

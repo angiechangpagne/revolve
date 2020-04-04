@@ -1,4 +1,4 @@
-version: "3"
+version: "3.6"
 
 ## TODO add auth to mongo
 ## TODO work out production architecture (add nginx proxy)
@@ -45,7 +45,10 @@ services:
   ### SETUP DB CONTAINER
   ##########################
   db:
+    container_name: mongo
     image: mongo
+    volume: 
+      -./data:/data/db
     ports:
-      - ${MONGO_PORT}:${MONGO_PORT}
+      - "27017":"27017"
     restart: always

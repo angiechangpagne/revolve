@@ -1,10 +1,10 @@
-'use strict'
+// 'use strict'
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Reminder = require('./reminder');
 const bcrypt = require('bcryptjs');
 const SALT_WORK_FACTOR = 10;
-const assert=require('assert');
+// const assert=require('assert');
 // //once logged in to db through mongoose, log a success message
 // db.once("open", () => {
 //   console.log("Mongoose connection successful.");

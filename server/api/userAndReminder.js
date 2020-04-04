@@ -56,7 +56,8 @@ router.route('/signup')
       return res.json(res.locals);
     })
     .delete(rmdrController.remove, (req, res) => {
-      return res.json(res.locals);
+      res.json(res.locals);
+      return next();
     });
 
 

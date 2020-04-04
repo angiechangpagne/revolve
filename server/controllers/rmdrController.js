@@ -63,7 +63,7 @@ module.exports = {
       db.Reminder.findOneAndDelete({ _id: reminderId }, (dbresponse) => {
         console.log(dbresponse);
         res.locals=dbresponse;
-        next();
+        return next();
       }).catch(err => console.log(err));
     }
 };
