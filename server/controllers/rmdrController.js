@@ -39,8 +39,8 @@ module.exports = {
     }).catch(err => console.log(err));
   },
   update: (req, res, next) => {
-    const id = req.param('id');
-    db.Reminder.findOne({ '_id': id})
+    const rmdrId = req.params.rmdrId;
+    db.Reminder.findOne({ '_id': rmdrId})
       .then(dbRmdr => {
         if(dbRmdr){
           console.log('Updating Reminder');
@@ -59,11 +59,23 @@ module.exports = {
       });
     },
     delete: (req, res, next) => {
-      const reminderId=req.param('id');
-      db.Reminder.findOneAndDelete({ _id: reminderId }, (dbresponse) => {
-        console.log(dbresponse);
-        res.locals=dbresponse;
-        return next();
+      const reminderId=req.params.rmdrId;
+      const userId= req.params.userId; //already associated to user, in an array
+      // db.User
+      // .findById(userId)
+      // .then((userDoc) = >{
+      //   //get reminders query specific to this user
+      //   userDoc.Reminder.findOneAndDelete({ _id: reminderId }, (dbresponse) => {
+      //     console.log(dbresponse);
+      //     res.locals=dbresponse;
+      //     return next();
+      //   })
+      // })
+      db.Reminder
+      .findOneAndDelete(reminderId).then((response) => {
+         res.locals.response = response;
+         next();
       }).catch(err => console.log(err));
+      
     }
 };

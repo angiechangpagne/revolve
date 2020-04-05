@@ -1,5 +1,4 @@
 import axios from 'axios';
-// const client = axios.create();
 // const formData = require('form-data');
 //client router to server route middlewares and controller
 const api = {

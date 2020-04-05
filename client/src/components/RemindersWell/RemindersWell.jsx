@@ -4,7 +4,7 @@ import api from '../../Utils/api';
 import Reminder from '../Reminder/Reminder';
 import RmdrForm from "../../components/RmdrForm/RmdrForm";
 import Cookies from 'js-cookie';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 //props sent from user, use for get, redirect exit
 //delete
@@ -30,7 +30,7 @@ export class RemindersWell extends Component{
     this.handleDelete=this.handleDelete.bind(this); //bindint to this class context
     this.handleUpdate=this.handleUpdate.bind(this);
     this.handleRenderMap=this.handleRenderMap.bind(this);
-    this.onUpdateReminder=this.onUpdateReminder.bind(this);
+    this.handleUpdateReminder=this.handleUpdateReminder.bind(this);
     this.loadReminders=this.loadReminders.bind(this);
     this.getPastReminders=this.getPastReminders.bind(this);
     this.getUpcomingReminders=this.getUpcomingReminders.bind(this);
@@ -68,7 +68,9 @@ export class RemindersWell extends Component{
 
   handleDelete = (rmdr) => {
     const { user } = this.state;
-    api.deleteUserReminder(user._id, rmdr._id)
+    const userId=user._id;
+    const rmdrId=rmdr._id;
+    api.deleteUserReminder(userId, rmdrId)
       .then(() => {
         //cookie will update on the loadReminders
         this.loadReminders();
@@ -76,16 +78,20 @@ export class RemindersWell extends Component{
   }
   handleUpdate = (rmdr) => {
     //must find and udpate database
+    const userId = this.state.user._id;
+    const rmdrId = rmdr._id;
+    api.updateUserReminder(userId, rmdrId, rmdr)
 
-    this.setState({
-      rmdrId: rmdr._id,
-      rmdrName: rmdr.reminderName,
-      rmdrTime: rmdr.time,
-      rmdrNotification: rmdr.notification,
-      rmdrNotificationNumber: rmdr.rmdrNotification,
-      rmdrNotificxationLabel: rmdr.rmdrNotificationLabel,
-      isUpdateModalOpen: false
-    });
+    this.loadReminders();
+    // this.setState({
+    //   rmdrId: rmdr._id,
+    //   rmdrName: rmdr.reminderName,
+    //   rmdrTime: rmdr.time,
+    //   rmdrNotification: rmdr.notification,
+    //   rmdrNotificationNumber: rmdr.rmdrNotification,
+    //   rmdrNotificxationLabel: rmdr.rmdrNotificationLabel,
+    //   isUpdateModalOpen: false
+    // });
   }
 
   handleRenderMap = (rmdr) => {
@@ -97,7 +103,7 @@ export class RemindersWell extends Component{
     })
   }
 
-  onUpdateReminder = () => {
+  handleUpdateReminder = () => {
     this.setState({
       rmdrId: '',
       rmdrName: '',
@@ -192,7 +198,7 @@ export class RemindersWell extends Component{
               rmdrTime={rmdrTime}
               rmdrNotification={rmdrNotification}
               rmdrNotificationNumber={rmdrNotificationLabel}
-              handleSubmit={this.onUpdateReminder} />
+              handleUpdate={this.handleUpdateReminder} />
           </Modal>
 
         </div>

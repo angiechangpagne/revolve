@@ -8,26 +8,27 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express(); //invoke express  instance
 //require routers
+const cors = require('cors');
+app.use(cors());
+const cookieParser = require('cookie-parser');
+//configure body parser for AJAX requests, request body
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+
 const apiRouter = require('./api/userAndReminder'); //all the routes in the api routes folder
 // const router = express.Router();
 const port = process.env.PORT || 3001;
 //notification scheduler 
 
-//configure body parser for AJAX requests, request body
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
 const createError = require('http-errors');
 const logger = require('morgan');
 const scheduler = require('./scheduler');
-const cors = require('cors');
-var cookieParser = require('cookie-parser');
-app.use(cors());
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-
+// app.use(logger('dev'));
+//do this before using the middleware
 app.use((req, res, next) => {
   // res.header({ 'Access-Control-Allow-Origin': '*'});
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -82,13 +83,6 @@ nexmo.message.sendSms(from, to, text);
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
 // app.use('/users',Users);
-
-
-
-
-//const MongoClient = require('mongodb').MongoClient;
-// const uri = "mongodb+srv://violet:VIOLET66@cluster0-fpdoy.mongodb.net/test?retryWrites=true&w=majority";
-
 
 // app.set('index',__dirname, )
 // err => {
@@ -178,13 +172,13 @@ app.use((err, req, res, next) =>  {
 //     `POST response is: ${req.body.post}`,
 //   );
 // });
-
+const uri = 'mongodb+srv://ultraviolet:<password>@revolve-p8i8j.mongodb.net/test?retryWrites=true&w=majority';
 //set up a promise in mongoose
 // const MongoClient = require('mongodb').MongoClient;
 mongoose.Promise=global.Promise //=global.Promise;
 //Connect to MongoDB
 mongoose.connect(
-  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@revolve-p8i8j.mongodb.net/test?retryWrites=true&w=majority` || 'mongodb://localhost:27017', {
+ 'mongodb+srv://ultraviolet:ultraviolet@revolve-p8i8j.mongodb.net/test?retryWrites=true&w=majority' || 'mongodb://localhost:27017', {
     useNewUrlParser: true,
     useUnifiedTopology: true
     }).then(() => {
@@ -198,7 +192,9 @@ mongoose.connect(
       db.once('open', () => {
         console.log("Mongoose connection successful.")
       })
-      app.listen(port, () => console.log(`🌎  ==> Server Listening on PORT ${port}`));
 
     }).catch(err => console.log(err));
+
+    app.listen(port, () => console.log(`🌎  ==> Server Listening on PORT ${port}`));
+
 module.exports = app;

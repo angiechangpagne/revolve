@@ -24,10 +24,12 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/dist/',
     filename: 'bundle.js',
+    crossOriginLoading: 'anonymous'
   },
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
   mode: 'development',
   devServer: {
+    headers: { 'Access-Control-Allow-Origin': '*'},
     //Docker host required
     host: process.env.HOST || "0.0.0.0",
     //host: localhost, port for the webpack dev server
@@ -45,7 +47,6 @@ module.exports = {
     //fallback to root for other urls
     historyApiFallback: true, 
     // inline: true, 
-    headers: { 'Access-Control-Allow-Origin': '*'},
     //proxy necessary to make api calls to express server while using hot-reload webpack server
     //route api axios requests from localhost:3001/api/* (webpack dev server) to localhost:3001/api/* where Express
     proxy: {

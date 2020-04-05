@@ -157,11 +157,4 @@ const userController = {
       * @param next - Callback Function w signature (err, users), for the segment of the middleware chain
       */
 };
-
-
-// firstName: req.body.firstName,
-//                 lastName : req.body.lastName,
-//                 email : req.body.email,
-//                 password : hash,
-//                 mobileNumber : req.body.mobileNumber
 module.exports = userController;

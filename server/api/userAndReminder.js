@@ -1,7 +1,8 @@
 const express = require('express'); //in case of asyc
 const router = express.Router();
 const cors = require('cors');
-router.use(cors());
+//express-validator
+router.use(cors()); //subtle
 // const bodyParser = require('body-parser');
 // app.use(bodyParser.json()); //make app var available globally
 // app.use(bodyParser.urlencoded({ extended: true }));
@@ -55,9 +56,8 @@ router.route('/signup')
     .put(rmdrController.update, (req, res) => {
       return res.json(res.locals);
     })
-    .delete(rmdrController.remove, (req, res) => {
-      res.json(res.locals);
-      return next();
+    .delete(rmdrController.delete, (req, res) => {
+      return res.json(res.locals);
     });
 
 
