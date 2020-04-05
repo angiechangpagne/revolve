@@ -41,6 +41,14 @@ const userSchema = new Schema({
     max: 16,
     required: true
   },
+  adminAccess: {
+    type: Boolean,
+    default: false,
+  },
+  systemAccess: {
+    type: Boolean,
+    default: false,
+  },
   mobileNumber: {
     type: String,
     // validate: {
