@@ -72,10 +72,11 @@ module.exports = {
       //   })
       // })
       db.Reminder
-      .findOneAndDelete(reminderId).then((response) => {
+      .findByIdAndDelete(reminderId)
+      .then((response) => {
          res.locals.response = response;
          next();
-      }).catch(err => console.log(err));
-      
+      })
+      .catch(err => console.log(err));
     }
 };

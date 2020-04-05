@@ -1,11 +1,12 @@
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose')
+
 require('dotenv').config();
 //declare dependencies
 //production modeif(process.env.NODE_ENV === 'production') {  app.use(express.static(path.join(__dirname, 'client/build')));  //  app.get('*', (req, res) => {    res.sendfile(path.join(__dirname = 'client/build/index.html'));  })}
-const mongoose = require('mongoose')
-var path = require('path');
-global.path=path;
-const express = require('express');
-const cors = require('cors');
+const path = require('path');
+// global.path=path;
 const bodyParser = require('body-parser');
 const app = express(); //invoke express  instance
 //require routers
@@ -61,19 +62,7 @@ app.get('/', (req, res) =>
 //run reminder notification scheduler
 // scheduler.start();
 
-// const socketio = require('socket.io');
-// const Nexmo = require('nexmo');
 
-// const nexmo = new Nexmo({
-//   apiKey: 'df0eb028',
-//   apiSecret: 'vgzyF8q3FPMz9Sep',
-// }, { debug: true });
-
-// const from = '17402426262';
-// const to = '19143648047';
-// const text = 'Hello from Nexmo';
-
-// nexmo.message.sendSms(from, to, text);
 // const indexRouter = require('./routes/index');
 // const testAPIRouter = require('./api/routes/testAPI');
 // const Users = require('./routes/Users');
@@ -172,27 +161,27 @@ app.use((err, req, res, next) =>  {
 //     `POST response is: ${req.body.post}`,
 //   );
 // });
-const uri = 'mongodb+srv://ultraviolet:<password>@revolve-p8i8j.mongodb.net/test?retryWrites=true&w=majority';
+const uri = process.env.MONGODB_URI;
 //set up a promise in mongoose
 // const MongoClient = require('mongodb').MongoClient;
 mongoose.Promise=global.Promise //=global.Promise;
+var db;
 //Connect to MongoDB
 mongoose.connect(
- 'mongodb+srv://ultraviolet:ultraviolet@revolve-p8i8j.mongodb.net/test?retryWrites=true&w=majority' || 'mongodb://localhost:27017', {
+ uri || 'mongodb://localhost:27017', {
     useNewUrlParser: true,
     useUnifiedTopology: true
     }).then(() => {
       console.log('MongoDB Connected');
-      const db = mongoose.connection;
+      db = mongoose.connection;
       // //show any mongoose errors
       db.on('error', (err) => {
-        console.log('Mongoose Error: ', err)
+        console.log('Mongoose Error: ', err);
       })
       //once logged in to db through mongoose, log a success message
       db.once('open', () => {
-        console.log("Mongoose connection successful.")
+        console.log("Mongoose connection successful.");
       })
-
     }).catch(err => console.log(err));
 
     app.listen(port, () => console.log(`🌎  ==> Server Listening on PORT ${port}`));

@@ -4,7 +4,8 @@ import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 // import './UpdateForm.css';
 import '../Reminder/Reminder.css'; //same size and positioning on the reminder
-class UpdateForm extends React.Component{
+
+export class UpdateForm extends React.Component{
   constructor(props){
     super(props);
     this.state={
@@ -14,8 +15,7 @@ class UpdateForm extends React.Component{
       rmdrNotificationLabel: '1 minute',
       rmdrNotificationNumber: "",
       rmdrTime: new Date(),
-      rmdrName: "",
-
+      rmdrName: ""
     }
     this.handleSubmit=this.handleSubmit.bind(this);
     this.handleDateChange=this.handleDateChange.bind(this);
@@ -24,13 +24,21 @@ class UpdateForm extends React.Component{
     this.closeModal=this.closeModal.bind(this);
   }
 
-  componentWillMount(){
+  static getDerivedStateFromProps(){
     this.setState({
       isModalOpen: this.props.isModalOpen,
       rmdr: this.props.rmdr,
-      rmdrNotificationNumber: this.props.reminderNumber,
+      rmdrNotificationNumber: this.props.reminderNumber
     });
   }
+
+  // componentDidMount(){
+  //   // this.setState({
+  //   //   isModalOpen: this.props.isModalOpen,
+  //   //   rmdr: this.props.rmdr,
+  //   //   rmdrNotificationNumber: this.props.reminderNumber
+  //   // });
+  // }
   
   handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -39,17 +47,24 @@ class UpdateForm extends React.Component{
     });
   };
 
-  handleSubmit(){
+  handleSubmit = (event) => {
     event.preventDefault();
+
     const { 
       rmdrName, 
       rmdrNotification, 
       rmdrNotificationLabel,
       rmdrNotificationNumber,
       rmdrTime } = this.state;
+    const reminder = this.props.rmdr; //aliasing original rmdr state back to props
+    reminder.rmdrName=rmdrName;
+    reminder.rmdrNotification=rmdrNotification;
+    reminder.rmdrNotificationLabel=rmdrNotificationLabel;
+    reminder.rmdrNotificationNumber=rmdrNotificationNumber;
+    reminder.rmdrTime=rmdrTime;
     //do not check for empty, automatically filled with old components
     //send back same reminder with it's id and changed key value mappings
-    this.props.handleUpdate(rmdr);
+    this.props.handleUpdate(reminder); //still attached to original state, id, model attributes, etc
     this.closeModal();
   }
 
@@ -71,10 +86,6 @@ class UpdateForm extends React.Component{
   }
 
   render(){
-    this.setState({
-      isModalOpen: this.props.isModalOpen
-    })
-
     return (
       <Modal 
         id="modal" 

@@ -67,3 +67,10 @@ Next To Do:
 -Typescript conversion
 -Rust
 -Python
+
+
+Compatible Browsers:
+Google Chrome
+
+Safari? Haha. Funny. 
+Internet Explorer

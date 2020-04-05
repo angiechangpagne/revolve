@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import api from '../../Utils/api';
 import './RmdrForm.css';
 import DatePicker from 'react-datepicker';
-// import this.props.cookies from "js-cookie";
 import Cookies from 'js-cookie';
 import Modal from 'react-modal';
 import moment from 'moment';

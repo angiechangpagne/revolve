@@ -36,7 +36,6 @@ export class RemindersWell extends Component{
     this.loadReminders=this.loadReminders.bind(this);
     this.getPastReminders=this.getPastReminders.bind(this);
     this.getUpcomingReminders=this.getUpcomingReminders.bind(this);
-    this.openUpdateModal=this.openUpdateModal.bind(this);
   }
   
   componentWillMount() {
@@ -65,6 +64,10 @@ export class RemindersWell extends Component{
     //   // rmdrNotificationLabel: rmdrNotificationLabel || '',
     //   user: user || {}
     // });
+    
+  }
+
+  componentDidMount(){
     this.loadReminders();
   }
 
@@ -82,7 +85,7 @@ export class RemindersWell extends Component{
     //must find and udpate database
     const userId = this.state.user._id;
     const rmdrId = rmdr._id;
-    api.updateUserReminder(userId, rmdrId, rmdr).then(() => {
+    api.updateUserReminder(userId, rmdrId, rmdr).then((res) => {
       console.log('updated user reminder', res);
     })
     this.loadReminders();
@@ -121,15 +124,15 @@ export class RemindersWell extends Component{
   }
 
   openUpdateModal = () => {
-      this.setState({
-      rmdrId: rmdr._id,
-      rmdrName: rmdr.reminderName,
-      rmdrTime: rmdr.time,
-      rmdrNotification: rmdr.notification,
-      rmdrNotificationNumber: rmdr.rmdrNotification,
-      rmdrNotificxationLabel: rmdr.rmdrNotificationLabel,
-      isUpdateModalOpen: false
-    });
+    //   this.setState({
+    //   rmdrId: rmdr._id,
+    //   rmdrName: rmdr.reminderName,
+    //   rmdrTime: rmdr.time,
+    //   rmdrNotification: rmdr.notification,
+    //   rmdrNotificationNumber: rmdr.rmdrNotification,
+    //   rmdrNotificxationLabel: rmdr.rmdrNotificationLabel,
+    //   isUpdateModalOpen: false
+    // });
     this.setState({ isUpdateModalOpen: true});
   }
 

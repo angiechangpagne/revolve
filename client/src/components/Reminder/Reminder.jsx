@@ -7,13 +7,13 @@ import UpdateForm from '../UpdateForm/UpdateForm';
 //{ rmdr, handleUpdate, handleDelete, handleRenderMap, }
 //no this in functional anonymous functional context
 //pass props from reminders well
-const Reminder = (props) => {
+export const Reminder = (props) => {
   const pseudoState = {
-    isUpdateModalOpen:"",
-  }
+    isUpdateModalOpen: "",
+  };
   //to do//wrapp modal around and morph to conditional form of regex with respect to isUpdateModalOpenState
 
-  console.log('reminder component props passed ',props);
+  console.log('reminder component props passed ', props);
     return (
       <div className="panel-body">
       <p></p>
@@ -22,7 +22,7 @@ const Reminder = (props) => {
         <h5> Date/Time: {moment.tz(props.rmdr.time, props.rmdr.timezone).format('MMMM Do YYYY, h:mm A')}</h5>
         <h5> Notification: {`${props.rmdr.notificationLabel} before` } </h5> 
         {props.handleUpdate && 
-        <button className="btn btn-default" onClick={() => { pseudoState.isUpdateModalOpen= true} }> Update </button>
+        <button className="btn btn-default" onClick={() => { pseudoState.isUpdateModalOpen= true } }> Update </button>
         } &nbsp;
         {props.handleDelete && 
         <button className="btn btn-default" onClick={() => props.handleDelete(props.rmdr)}> Delete</button>
@@ -30,7 +30,6 @@ const Reminder = (props) => {
         <UpdateForm isModalOpen={pseudoState.isUpdateModalOpen} rmdr={props.rmdr} handleUpdate={props.handleUpdate} />
       </div>
   );
-
 }
 
 export default Reminder;
