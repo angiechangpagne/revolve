@@ -4,8 +4,8 @@
   "description": "pure-revolve",
   "author": "angiechangpgne",
   "license": "MIT",
-  "private": true,
-  "proxy": "http://localhost:3001/",
+  "private": false,
+  "proxy": "http://localhost:3001",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

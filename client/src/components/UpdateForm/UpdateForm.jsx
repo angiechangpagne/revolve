@@ -24,12 +24,17 @@ export class UpdateForm extends React.Component{
     this.closeModal=this.closeModal.bind(this);
   }
 
-  static getDerivedStateFromProps(){
-    this.setState({
-      isModalOpen: this.props.isModalOpen,
-      rmdr: this.props.rmdr,
-      rmdrNotificationNumber: this.props.reminderNumber
-    });
+  static getDerivedStateFromProps(props, state){
+    if(props){
+      return(
+        {
+        isModalOpen: props.isModalOpen,
+        rmdr: props.rmdr,
+        rmdrNotificationNumber: props.reminderNumber
+        }
+      );
+    }
+    return null;
   }
 
   // componentDidMount(){

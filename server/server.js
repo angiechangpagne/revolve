@@ -1,10 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose')
-
+const compression = require('compression');
 require('dotenv').config();
 //declare dependencies
-//production modeif(process.env.NODE_ENV === 'production') {  app.use(express.static(path.join(__dirname, 'client/build')));  //  app.get('*', (req, res) => {    res.sendfile(path.join(__dirname = 'client/build/index.html'));  })}
+if(process.env.NODE_ENV === 'production') {  
+  app.use(express.static(path.join(__dirname, 'client/build'))); 
+}  //  app.get('*', (req, res) => {    res.sendfile(path.join(__dirname = 'client/build/index.html'));  })}
 const path = require('path');
 // global.path=path;
 const bodyParser = require('body-parser');
@@ -39,6 +41,8 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
   next();
 });
+
+// app.use(compression());
 //add routes to be used in our app
 app.use('/api',apiRouter);
 //serve static assets
@@ -168,7 +172,7 @@ mongoose.Promise=global.Promise //=global.Promise;
 var db;
 //Connect to MongoDB
 mongoose.connect(
- uri || 'mongodb://localhost:27017', {
+ uri || 'mongodb://localhost:27017/revolve', {
     useNewUrlParser: true,
     useUnifiedTopology: true
     }).then(() => {

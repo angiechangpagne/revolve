@@ -50,11 +50,11 @@ module.exports = {
     //proxy necessary to make api calls to express server while using hot-reload webpack server
     //route api axios requests from localhost:3001/api/* (webpack dev server) to localhost:3001/api/* where Express
     proxy: {
-      '/api/**': {
+      '/api**': {
         target: 'http://localhost:3001',
         secure: false,
       },
-      '/assets/**': {
+      '/assets**': {
         target: 'http://localhost:3001',
         secure: false,
       },

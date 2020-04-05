@@ -10,18 +10,20 @@ import  configureStore, { history } from './configureStore';
 import { ConnectedRouter } from 'connected-react-router';
 import './App.css';
 
-// import { register } from './serviceWorker';
+import * as serviceWorker from './serviceWorker';
 const store = configureStore();
 
 const renderApp = () =>
     ReactDOM.render( 
+    <React.StrictMode>
     <div className="AppContainer">
     <Provider store={store}>
         <ConnectedRouter history={history}>
             <App />
         </ConnectedRouter>
     </Provider>
-    </div>, 
+    </div>
+    </React.StrictMode>, 
     document.getElementById('root')
     )
 
@@ -34,4 +36,4 @@ renderApp();
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-// register();
+serviceWorker.unregister();
