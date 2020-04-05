@@ -5,10 +5,10 @@ const mongoose = require('mongoose')
 var path = require('path');
 global.path=path;
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const app = express(); //invoke express  instance
 //require routers
-const cors = require('cors');
 app.use(cors());
 const cookieParser = require('cookie-parser');
 //configure body parser for AJAX requests, request body
@@ -59,21 +59,21 @@ app.get('/', (req, res) =>
 //   next();
 // });
 //run reminder notification scheduler
-scheduler.start();
+// scheduler.start();
 
-const socketio = require('socket.io');
-const Nexmo = require('nexmo');
+// const socketio = require('socket.io');
+// const Nexmo = require('nexmo');
 
-const nexmo = new Nexmo({
-  apiKey: 'df0eb028',
-  apiSecret: 'vgzyF8q3FPMz9Sep',
-}, { debug: true });
+// const nexmo = new Nexmo({
+//   apiKey: 'df0eb028',
+//   apiSecret: 'vgzyF8q3FPMz9Sep',
+// }, { debug: true });
 
-const from = '17402426262';
-const to = '19143648047';
-const text = 'Hello from Nexmo';
+// const from = '17402426262';
+// const to = '19143648047';
+// const text = 'Hello from Nexmo';
 
-nexmo.message.sendSms(from, to, text);
+// nexmo.message.sendSms(from, to, text);
 // const indexRouter = require('./routes/index');
 // const testAPIRouter = require('./api/routes/testAPI');
 // const Users = require('./routes/Users');

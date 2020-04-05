@@ -277,11 +277,11 @@ export class RmdrForm extends Component{
         }
   };
 //moment(date).format('DD-MM-YYYY')
-  handleDateChange = date => {
+  handleDateChange = (date) => {
     this.setState({
       rmdrTime : date
     });
-    this.validate();
+    // this.validate();
   };
 
   handleNotificationChange = (selectedOption) => {
@@ -290,22 +290,13 @@ export class RmdrForm extends Component{
       rmdrNotificationLabel : selectedOption.label
     });
     console.log(`Selected: ${selectedOption.label}`);
-    this.validate();
+    // this.validate();
   };
 
   closeModal = () => {
     this.setState({ modalIsOpen: false });
   }
-  // loadReminders = () => {
-  //   console.log("I am trying to load my reminders");
-  //   api.getUserReminders(this.props.user ? this.props.user.id : 17)
-  //     .then(res => {
-  //       console.log("I got my reminders back!");
-  //       console.log(res.data[0].reminders);
-  //       this.setState({ reminders: res.locals[0].reminders });
-  //     })
-  //     .catch(err => console.error(err));
-  // }
+
   openModal = () => {
     this.setState({ modalIsOpen: true });
   }
@@ -402,7 +393,7 @@ export class RmdrForm extends Component{
                 <span className="bar"></span>
             </div>
             <div className="group">
-            <input id="buttonlogintoregister" type="submit" value="Full Send" value="Full Send" 
+            <input id="buttonlogintoregister" type="submit" value="Full Send"
             className="loginHover" onClick={this.handleFormSubmit}></input>
             </div>
           </form>

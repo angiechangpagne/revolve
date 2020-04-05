@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import Modal from 'react-modal';
 import api from '../../Utils/api';
 import Reminder from '../Reminder/Reminder';
-import RmdrForm from "../../components/RmdrForm/RmdrForm";
+import RmdrForm from '../RmdrForm/RmdrForm';
 import Cookies from 'js-cookie';
+import './RemindersWell.css';
 // import { connect } from 'react-redux';
+//well controlls CRUD functional states, passings to functional components
 import PropTypes from 'prop-types';
 //props sent from user, use for get, redirect exit
 //delete
@@ -21,6 +23,7 @@ export class RemindersWell extends Component{
       rmdrNotificationLabel: '',
       reminders: [],
       isMapModalOpen: "",
+      isUpdateModalOpen:"",
       lat: '',
       lng: '',
       address: '',
@@ -28,7 +31,6 @@ export class RemindersWell extends Component{
       userCookie:''
     }
     this.handleDelete=this.handleDelete.bind(this); //bindint to this class context
-    this.handleUpdate=this.handleUpdate.bind(this);
     this.handleRenderMap=this.handleRenderMap.bind(this);
     this.handleUpdateReminder=this.handleUpdateReminder.bind(this);
     this.loadReminders=this.loadReminders.bind(this);
@@ -71,27 +73,19 @@ export class RemindersWell extends Component{
     const userId=user._id;
     const rmdrId=rmdr._id;
     api.deleteUserReminder(userId, rmdrId)
-      .then(() => {
-        //cookie will update on the loadReminders
+      .then((res) => {
+        console.log('deleted reminder', res);
         this.loadReminders();
       });
   }
-  handleUpdate = (rmdr) => {
+  handleUpdateReminder = (rmdr) => {
     //must find and udpate database
     const userId = this.state.user._id;
     const rmdrId = rmdr._id;
-    api.updateUserReminder(userId, rmdrId, rmdr)
-
+    api.updateUserReminder(userId, rmdrId, rmdr).then(() => {
+      console.log('updated user reminder', res);
+    })
     this.loadReminders();
-    // this.setState({
-    //   rmdrId: rmdr._id,
-    //   rmdrName: rmdr.reminderName,
-    //   rmdrTime: rmdr.time,
-    //   rmdrNotification: rmdr.notification,
-    //   rmdrNotificationNumber: rmdr.rmdrNotification,
-    //   rmdrNotificxationLabel: rmdr.rmdrNotificationLabel,
-    //   isUpdateModalOpen: false
-    // });
   }
 
   handleRenderMap = (rmdr) => {
@@ -101,21 +95,6 @@ export class RemindersWell extends Component{
       address : rmdr.address,
       isMapModalOpen: true
     })
-  }
-
-  handleUpdateReminder = () => {
-    this.setState({
-      rmdrId: '',
-      rmdrName: '',
-      rmdrTime: '',
-      rmdrNotification: '',
-      rmdrNotificationLabel: '',
-      rmdrNotificationNumber: '',
-      isUpdateModalOpen: false
-    });
-    this.loadReminders();
-
-    console.log('on update reminder')
   }
 
   loadReminders = () => {
@@ -133,15 +112,24 @@ export class RemindersWell extends Component{
       })
       .catch(err => console.error(err));
   }
-  getUpcomingReminders(){
+  getUpcomingReminders =() => {
     return this.state.reminders.filter(rmdr => rmdr.notification > 0);
   }
 
-  getPastReminders(){
+  getPastReminders = () => {
     return this.state.reminders.filter(rmdr => rmdr.notification <= 0);
   }
 
   openUpdateModal = () => {
+      this.setState({
+      rmdrId: rmdr._id,
+      rmdrName: rmdr.reminderName,
+      rmdrTime: rmdr.time,
+      rmdrNotification: rmdr.notification,
+      rmdrNotificationNumber: rmdr.rmdrNotification,
+      rmdrNotificxationLabel: rmdr.rmdrNotificationLabel,
+      isUpdateModalOpen: false
+    });
     this.setState({ isUpdateModalOpen: true});
   }
 
@@ -162,14 +150,14 @@ export class RemindersWell extends Component{
     return(
       <div>
         <div className="container">
-          <h4 className="animated headShake" id="UpcomingEvents"> Revolve Reminders </h4>
+          <h4 className="animated headShake" id="UpcomingEvents"> Revolve </h4>
           <div className="well" id="upcoming-well">
             {upcomingRmdrs.map(rmdr => 
             (<div>
               <Reminder 
                 rmdr={rmdr}
                 key={rmdr._id}
-                handleUpdate={this.handleUpdate}
+                handleUpdate={this.handleUpdateReminder}
                 handleDelete={this.handleDelete}
                 handleRenderMap={this.handleRenderMap} />
             </div>)
@@ -179,7 +167,6 @@ export class RemindersWell extends Component{
           <div className="row">
             <RmdrForm user={this.props.user} reminders={this.state.reminders} />
           </div>
-          
 
           <h4 className="animated headShake"> Past Reminders</h4>
           <div className="well" id="past-well">
@@ -187,19 +174,11 @@ export class RemindersWell extends Component{
                 (<Reminder 
                     rmdr={rmdr}
                     key={rmdr._id}
+                    handleUpdate={this.handleUpdateReminder}
                     handleDelete={this.handleDelete}
                     />)
             )}
           </div>
-          <Modal isOpen={this.state.isUpdateModalOpen}>
-            <Reminder user={this.state.user}
-              rmdrId={rmdrId}
-              rmdrName={rmdrName}
-              rmdrTime={rmdrTime}
-              rmdrNotification={rmdrNotification}
-              rmdrNotificationNumber={rmdrNotificationLabel}
-              handleUpdate={this.handleUpdateReminder} />
-          </Modal>
 
         </div>
       </div>
