@@ -8,17 +8,27 @@ p.error {
   align-items: center;
   align-content: center;
   align-self: center;
-  position:center;
-
+  /* margin: 22px; */
+  box-sizing: border-box;
+  position: relative;
+  border-radius: 25px;
+  background-color: #a7aeaee5;
+  height: 50vh;
+  width: 100vw;
 }
 .input{
   border-radius:25px;
+  align-self: center;
+  align-content: center;
+  align-self: center;
+  margin: 32px;
   font-family: 'Oxanium', monospace;
 }
 
 input:hover::-webkit-input-placeholder, textarea:hover::-webkit-input-placeholder {
   color: #e2dedb;
   font-size: 1em;
+  border: 3px solid seagreen;
 }
 
 input:hover:focus::-webkit-input-placeholder, textarea:hover:focus::-webkit-input-placeholder {
@@ -57,14 +67,24 @@ body {
   background: #E3DEDB;
   color: #94bfa4;
   align-content: center;
+  position: relative;
+  align-items: center;
+  align-self: center;
 }
 #sign-up:hover {
   text-decoration: none;
 }
 
 #login-title {
-  background-color: #575b5ae5;
-  margin: 17px;
+  background-color: #9bcbc4bb;
+  /* padding: 17px; */
+  /* margin: 21px; */
+  margin-bottom: 36px;
+  align-content: center;
+  width: 56vh;
+  height: 10vh;
+  align-self: center;
+  align-items: center;
   font-family: 'Oxanium', monospace;
   border-radius: 66% 21% 17% 3%;
 }
@@ -74,6 +94,10 @@ header {
   margin: auto;
   font-size: 3.3em;
   text-align: center;
+  align-self: center;
+  align-content: center;
+  align-items: center;
+  width: 65vw;
   color:  #7d9d9a;
   letter-spacing: 7px;
 }
@@ -81,14 +105,20 @@ header {
 header:hover {
   letter-spacing: 17px;
   border-radius: 21% 23% 17% 67%;
+  width: 85vh;
 }
 
 #form {
-  position: relative;
   font-family: 'Oxanium', monospace;
-  display: inline-flexbox;
-  width: 500px;
-  margin: 50px auto 50px auto;
+  box-sizing: border-box;
+  align-items: center;
+  align-content: center;
+  align-self: center;
+  position: relative;
+  /* margin: 33px; */
+  width: 66vw;
+  height: 56vh;
+  border-radius: 21px solid silver;
 }
 
 .loginHover {
@@ -117,20 +147,21 @@ header:hover {
 
 .modal{
   align-self: inherit;
+  width: 60vw;
 }
 .modal-header {
-  width: 470px;
+  width: 56vw;
 }
 
 #submit {
-  width: 470px;
-  margin: 0x 0px 0px 0px;
+  width: 39vw;
   font-family: 'Oxanium', monospace;  font-size: 1em;
   color: #4b634f;
   background-color: rgb(245, 245, 245);
   outline:none;
+  align-self: center;
+  align-content: center;
   cursor: pointer;
-  
   border: solid 2px #b3aca7;
 }
 
@@ -151,8 +182,12 @@ header:hover {
     left: -12px;
 }
 h1 {
-  margin: 0;
+  width: 85vw;
   font-family: 'Oxanium';
+  align-items: center;
+  position: relative;
+  align-self: center;
+  align-content: center;
   display: flex;
   @media only screen and (max-width: 31.25em) {
     .header {
@@ -163,17 +198,26 @@ h1 {
   }
 
 }
-.loginSection {
-  position: center;
-  margin: auto;
-  /* padding: 10px; */
-  /* height: 100vh; */
-  font-family: 'Oxanium', monospace, 'Nidus Sans';
-  align-self: center;
+.section{
   align-content: center;
-  /* perspective:1000px; */
-  /* width: 65vh; */
+  align-self: center;
   align-items: center;
+  position: relative;
+  width: 86vw;
+}
+.loginSection {
+  position: relative;
+  width: 66vw;
+  align-items: center;
+  align-content: center;
+  align-self: center;
+  /* margin: 21px;
+  padding: 17px; */
+  border: 42px solid seashell;
+  box-sizing: border-box;
+  height: 66vh;
+  font-family: 'Oxanium', monospace, 'Nidus Sans';
+  /* perspective:1000px; */
 	transform-style: preserve-3d;
   box-shadow: var(--shadow-dark);
 }
@@ -190,7 +234,6 @@ button {
 button:hover{
   background-color: #241835d0;
   color: #82b1c4;
-
 }
 
 .notLoading{
@@ -201,12 +244,25 @@ button:hover{
   align-items: center;
   padding: 0px,
 }
+#loading{
+  margin: 0px;
+  position: center;
+  align-self: center;
+  align-content: center;
+  align-items: center;
+  padding: 0px;
+  width: 20vh;
+  height: 2vh;
+
+}
 
 .createAccount{
   align-content: space-around;
   align-self: center;
+  align-items: center;
+  margin: 7px;
   font-family: 'Oxanium', monospace;
-  position: center;
+  position: relative;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Oxanium&display=swap');

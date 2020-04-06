@@ -3,22 +3,33 @@
 .AppContainer {
   align-content: center;
   align-items: center;
+  align-self: center;
+  position: relative;
   font-family: 'Oxanium';
   background-color: rgb(249, 249, 249);
   box-shadow: var(--shadow-dark);
   height: 100%;
+  width: 100%;
 }
 .container{
   font-family: 'Oxanium';
   align-content: center;
+  align-items: center;
+  align-self: ceter;
+  height: 70vh;
+  width: 70vh;
+  position: relative;
+  background-color: ghostwhite;
 }
 
 .body{
   font-family: 'Oxanium', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  background-color:whitesmoke;
+  background-color: ghostwhite;
   align-items: center;
   align-content: center;
   height: 100%;
+  width: 100%;
+  position: relative;
    /* aliceblue; */
 }
 
@@ -38,6 +49,7 @@
   background-color: #7d9d81;
   min-height: 100vh;
   display: -ms-inline-flexbox;
+  position: relative;
   flex-direction: column;
   align-items: center;
   justify-content: center;

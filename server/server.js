@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 const cookieParser = require('cookie-parser');
 //configure body parser for AJAX requests, request body
 app.use(cookieParser());
-// app.options('*', cors()) // include preflight before other routes
+app.options('*', cors()) // include preflight before other routes
 
 //do this before using the middleware
 app.use((req, res, next) => {
@@ -28,7 +28,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
   console.log('cors headers', res);
   // res.status(200).json({});
-  // next();
+  next();
 });
 
 //add routes to be used in our app

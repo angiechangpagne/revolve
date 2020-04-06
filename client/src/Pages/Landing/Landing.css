@@ -6,25 +6,40 @@
 
 html {
   scroll-behavior: smooth;
+  align-items: center;
+  align-self: center;
+  align-content: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 #arr:hover {
 text-decoration: none;
 }
 .landing{
-  color:#a5a5b6;
-  font-family: 'Major Mono Display', monospace;
+  color:#81b5a9b7;
+  background-color: beige;
   align-content: center;
   align-items: center;
+  align-self: center;
   position: relative;
+  border-radius: 21px;
+  box-sizing: border-box;
+  height: 100vh;
+  /* padding: 42px; */
+  /* margin: 42px; */
+  border: 42px  solid rgba(225, 218, 176, 0.7);
+  width: 100vw;
+  font-family: 'Oxanium','Major Mono Display', monospace;
 }
 
 .arrow-container{
 width: 10px;
-height: 0px;
-margin: 0 auto;
+height: 10px;
+margin:  6px;
 position: relative;
-bottom: 0px;
-left: 0px;
+bottom: 2px;
+left: 2px;
 right: 0;
 }
 
@@ -42,7 +57,7 @@ width: 60px;
 height: 60px;
 background: rgb(231, 238, 154);
 border-radius: 21% 83% 17% 69%;
-position: absolute;
+position: relative;
 top: 20px;
 left: 20px;
 z-index: 3;

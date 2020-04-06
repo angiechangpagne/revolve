@@ -12,7 +12,7 @@
   "scripts": {
     "start": "nodemon ./server/server.js",
     "start:ci": "concurrently \"nodemon server\" \"node client\"",
-    "dev": "concurrently --kill-others \"npm run server\" \"npm run client\"",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "docker-dev:hot": "docker-compose -f docker-compose-dev-hot.yml up",
     "start:prod": "pushstate-server build",
     "build": "webpack --config ./webpack.config.js",
