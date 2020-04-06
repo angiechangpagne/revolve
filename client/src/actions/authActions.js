@@ -14,7 +14,7 @@ import {
 } from './types';
 
 //local testing
-// axios.defaults.baseURL='http://localhost:3000';
+// axios.defaults.baseURL='http://localhost:5000';
 
 //production url
 export const isAuth = (loginData) => (dispatch) => {

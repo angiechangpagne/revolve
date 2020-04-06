@@ -23,13 +23,15 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/dist/',
-    filename: 'bundle.js',
-    crossOriginLoading: 'anonymous'
-  },
-  devtool: 'inline-source-map',
+    filename: 'bundle.js'
+    },
+  devtool: 'eval-source-map',
   mode: 'development',
   devServer: {
-    headers: { 'Access-Control-Allow-Origin': '*'},
+    headers: { 'Access-Control-Allow-Origin': '*',
+               'Access-Control-Allow-Headers' : 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+               'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE'
+              },
     //Docker host required
     host: process.env.HOST || "0.0.0.0",
     //host: localhost, port for the webpack dev server
@@ -43,22 +45,16 @@ module.exports = {
     hot: true,
     // progress: true, 
     //match output 'publicPath'
-    publicPath: '/',
+    publicPath: '/dist',
     //fallback to root for other urls
     historyApiFallback: true, 
     // inline: true, 
     //proxy necessary to make api calls to express server while using hot-reload webpack server
-    //route api axios requests from localhost:3001/api/* (webpack dev server) to localhost:3001/api/* where Express
-    proxy: {
-      '/api**': {
-        target: 'http://localhost:3001',
-        secure: false,
-      },
-      '/assets**': {
-        target: 'http://localhost:3001',
-        secure: false,
-      },
-    },
+    //route api axios requests from localhost:5000/api/* (webpack dev server) to localhost:3001/api/* where Express
+    proxy: [{
+      context : ['/api**', '/assets**', '*'],
+      target : 'http://localhost:5000'
+    }],
   },
   module: {  
     rules: [
@@ -116,10 +112,10 @@ module.exports = {
     //enable import jsx files
     extensions: ['.js', '.jsx'],
     modules: [
-      "node_modules"
+      'node_modules'
     ]
   },
   resolveLoader: {
-    modules: ["./node_modules"]
+    modules: ['./node_modules']
   },
 };

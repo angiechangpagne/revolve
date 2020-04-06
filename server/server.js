@@ -1,61 +1,67 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose')
-const compression = require('compression');
-require('dotenv').config();
-//declare dependencies
-if(process.env.NODE_ENV === 'production') {  
-  app.use(express.static(path.join(__dirname, 'client/build'))); 
-}  //  app.get('*', (req, res) => {    res.sendfile(path.join(__dirname = 'client/build/index.html'));  })}
-const path = require('path');
-// global.path=path;
+// const compression = require('compression');
 const bodyParser = require('body-parser');
+const apiRouter = require('./api/userAndReminder'); //all the routes in the api routes folder
+require('dotenv').config();
+const path = require('path');
+const port = process.env.PORT || 5001;
+global.path=path;
 const app = express(); //invoke express  instance
 //require routers
 app.use(cors());
-const cookieParser = require('cookie-parser');
-//configure body parser for AJAX requests, request body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const cookieParser = require('cookie-parser');
+//configure body parser for AJAX requests, request body
 app.use(cookieParser());
+// app.options('*', cors()) // include preflight before other routes
 
-
-const apiRouter = require('./api/userAndReminder'); //all the routes in the api routes folder
-// const router = express.Router();
-const port = process.env.PORT || 3001;
-//notification scheduler 
-
-const createError = require('http-errors');
-const logger = require('morgan');
-const scheduler = require('./scheduler');
-// app.use(logger('dev'));
 //do this before using the middleware
 app.use((req, res, next) => {
-  // res.header({ 'Access-Control-Allow-Origin': '*'});
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 
-                'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-                );
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
-  next();
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 
+                'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+  console.log('cors headers', res);
+  // res.status(200).json({});
+  // next();
 });
 
-// app.use(compression());
 //add routes to be used in our app
-app.use('/api',apiRouter);
+app.use('/api', apiRouter);
+
+//declare dependencies
+// if(process.env.NODE_ENV === 'production') {  
+//   app.use(express.static(path.join(__dirname, 'client/build'))); 
+// }  //  app.get('*', (req, res) => {    res.sendfile(path.join(__dirname = 'client/build/index.html'));  })}
+
+// const router = express.Router();
+
+//notification scheduler 
+// const createError = require('http-errors');
+// const logger = require('morgan');
+// const scheduler = require('./scheduler');
+// app.use(logger('dev'));
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve(__dirname,'public', 'index.html'))
+});
+app.use('/assets', express.static(path.resolve(__dirname, '../client/public/assets')));
+app.use('/public', express.static(path.resolve(__dirname,'../client/public')));
+// app.use(compression());
+
 //serve static assets
 console.log("in line 26 of express server and dirname is", __dirname);
-// app.use('/assets', express.static(path.resolve(__dirname, '../client/public/assets')));
-app.use('/public', express.static(path.resolve(__dirname,'../client/public')));
 // app.use(express.static(path.resolve(__dirname, 'client/public/assets')));
 
 // app.use(logger('dev'));
 //react-router handles route on client side
-app.get('/', (req, res) => 
-  res.status(200).sendFile(path.resolve(__dirname, '../client/public/index.html'))
-);
+// app.get('*', (req, res) => 
+//   res.status(200).sendFile(path.resolve(__dirname, '../client/public/index.html'))
+// );
 // app.post(`/api/signup`,(req, res, next) => {
 //   // apiRouter.route(`/signup`);
 //   console.log('about to go to api routes middleware from express server');
@@ -85,9 +91,6 @@ app.get('/', (req, res) =>
 // app.use('/users', users);
 // app.use('/testAPI', testAPIRouter);
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname,'public', 'index.html'))
-});
 //catching a form submit
 // app.post('/',(req, res) => {
 //   res.send(req.body);
@@ -165,11 +168,13 @@ app.use((err, req, res, next) =>  {
 //     `POST response is: ${req.body.post}`,
 //   );
 // });
+
+//order of routes matters, there is no hoisting
+
 const uri = process.env.MONGODB_URI;
 //set up a promise in mongoose
 // const MongoClient = require('mongodb').MongoClient;
 mongoose.Promise=global.Promise //=global.Promise;
-var db;
 //Connect to MongoDB
 mongoose.connect(
  uri || 'mongodb://localhost:27017/revolve', {
@@ -177,8 +182,10 @@ mongoose.connect(
     useUnifiedTopology: true
     }).then(() => {
       console.log('MongoDB Connected');
-      db = mongoose.connection;
+      const db = mongoose.connection;
       // //show any mongoose errors
+      app.listen(port, () => console.log(`🌎  ==> Server Listening on PORT ${port}`));
+
       db.on('error', (err) => {
         console.log('Mongoose Error: ', err);
       })
@@ -187,7 +194,5 @@ mongoose.connect(
         console.log("Mongoose connection successful.");
       })
     }).catch(err => console.log(err));
-
-    app.listen(port, () => console.log(`🌎  ==> Server Listening on PORT ${port}`));
 
 module.exports = app;

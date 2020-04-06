@@ -1,8 +1,7 @@
 const express = require('express'); //in case of asyc
 const router = express.Router();
-const cors = require('cors');
+// const cors = require('cors');
 //express-validator
-router.use(cors()); //subtle
 // const bodyParser = require('body-parser');
 // app.use(bodyParser.json()); //make app var available globally
 // app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,8 +19,7 @@ router.route('/login')
     else{
       return res.json(res.locals);
     }
-  });
-
+  })
 //   .post(userController.create(req,res,
 //    
 //     );
@@ -38,7 +36,7 @@ router.route('/signup')
         // res.status(403);
         return res.json(res.locals);
       }
-  });
+  })
   // ,(req,res) => {
   //   console.log('req.body', req.body);
   //   res.status(200).json(res.locals.user)
@@ -46,8 +44,8 @@ router.route('/signup')
   // }
   router.route(`/user/:userId/rmdr:id*?`)
     .post(rmdrController.create, (req, res) => {
-    console.log('post request of reminder in reminder api routes middleware', res.locals);
-    return res.json(res.locals);
+      console.log('post request of reminder in reminder api routes middleware', res.locals);
+      return res.json(res.locals);
     })
     .get(rmdrController.get, (req, res) => {
       console.log('in middleware route get reminder res.locals.reminders', res.locals);
@@ -58,7 +56,7 @@ router.route('/signup')
     })
     .delete(rmdrController.delete, (req, res) => {
       return res.json(res.locals);
-    });
+    })
 
 
 module.exports = router;

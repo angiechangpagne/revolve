@@ -5,7 +5,7 @@ const api = {
   //get user document from User Collection
   getUser: (loginData) => {
     //console.log("In the api call function");
-    return axios.post('/api/login', loginData).then(res => {
+    return axios.post('/api/login', loginData).then((res) => {
       console.log('axios res for login received', res);
       // axios.interceptors.response.use((res) => {
       //   console.log('res interceptions', client.interceptors.response);
@@ -87,11 +87,17 @@ const api = {
   },
   //update reminder
   updateUserReminder : (userId, rmdrId, rmdrData) => {
-    return axios.put(`/api/user/${userId}/rmdr/${rmdrId}`, rmdrData);
+    return axios.put(`/api/user/${userId}/rmdr/${rmdrId}`, rmdrData)
+    .then((res) => {
+      return res;
+    }).catch((err) => console.log(err));
   },
   //delete appointment for current user
   deleteUserReminder : (userId, rmdrId) => {
-    return axios.delete(`/api/user/${userId}/rmdr/${rmdrId}`);
+    return axios.delete(`/api/user/${userId}/rmdr/${rmdrId}`)
+    .then((res) => {
+      return res;
+    }).catch((err) => console.log(err));
   }
 };
 

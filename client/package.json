@@ -4,8 +4,8 @@
   "description": "pure-revolve",
   "author": "angiechangpgne",
   "license": "MIT",
-  "private": false,
-  "proxy": "http://localhost:3001",
+  "private": true,
+  "proxy": "http://localhost:8080",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -29,6 +29,7 @@
     "babel-preset-react": "^6.24.1",
     "connected-react-router": "^6.8.0",
     "css-loader": "^3.4.2",
+    "dotenv": "^8.2.0",
     "google-maps-react": "^2.0.2",
     "history": "^4.10.1",
     "install": "^0.13.0",

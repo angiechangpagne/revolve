@@ -14,8 +14,14 @@ const systemAdminSchema = new Schema({
     type : Number,
     min : 1, 
     max : 13, //publicly say clearance only goes up to level 12 when in actuality Roko has level 13 access
-    isRequired: true
-  } 
+    required: true
+  },
+  title : {
+    type : String
+  },
+  universalTruth : {
+    type: String
+  }
   //do not store the list of all users, not necessary, only track on call and then encrypt
 });
 
