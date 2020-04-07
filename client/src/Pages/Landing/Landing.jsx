@@ -26,9 +26,9 @@ export class Landing extends React.Component{
     return (
       <div className="landing" id="land">
           <p></p>
-            <h3>Revolve Reminders</h3>
+            <h2 id="revolve-front">Revolve Reminders</h2>
             <LoginForm/>
-          </div>
+      </div>
     );
   }
 }

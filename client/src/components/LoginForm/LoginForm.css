@@ -1,87 +1,99 @@
-.loginContainer {
+html, body{
   font-family: 'Oxanium', monospace;
-  align-items: center;
-  align-content: space-around;
-  box-sizing: border-box;
+  background: mintcream;
+  color: #94bfa4;
+  min-width: 36vw;
+  max-width: 42vw;
+  min-height: 66vh;
+  align-content: center;
   position: relative;
+  overflow-y: auto;
+  overflow-x: visible;
+  align-items: center;
+}
+.loginContainer {
+  min-width: 36vw;
+  max-width: 42vw;
+  flex-grow: 2;
   display: inline-block;
-  border-radius: 25px;
+  box-sizing: border-box;
+  font-family: 'Oxanium', monospace;
+  justify-content: center;
+  /* align-items: center;
+  align-content: center; */
+  position: relative;
+  border: 17px lightsteelblue;
+  border-radius: 17px;
   background-color: #a7aeaee5;
   min-height: 72vh;
-  min-width: 45vw;
-  max-width: 75vw;
   outline: 17px groove turquoise;
   overflow-x: visible;
-  overflow-y: auto;
+  overflow-y: scroll;
+  transform-style: preserve-3d;
+  box-shadow: var(--shadow-dark);
 }
 
-/* .section{
+.section{
+  min-width: 36vw;
+  max-width: 42vw;
   box-sizing: border-box;
+  display: inline-block;
+  justify-content: center;
   align-content: center;
   align-items: center;
   position: relative;
-  min-width: 50vw;
-  max-width: 70vw;
   min-height: 66vh;
   overflow-y: auto;
+  overflow-x: visible;
   border: 17px solid magenta;
   outline: 17px groove turquoise;
-} */
-
+}
 .loginSection {
+  min-width: 36vw;
+  max-width: 42vw;
   box-sizing: border-box;
-  display: grid;
+  display: inline-block;
+  flex-direction: column;
   position: relative;
-  min-width: 42vw;
-  max-width: 60vw;
   align-items: center;
+  justify-content: center;
   align-content: space-around;
-  align-self: center;
+  /* align-self: center; */
   border: 17px solid lightgoldenrodyellow;
   min-height: 80vh;
   overflow-x: visible;
   overflow-y: auto;
   font-family: 'Oxanium', monospace, 'Nidus Sans';
-  perspective:1000px;
+  /* perspective:1000px; */
 	transform-style: preserve-3d;
   box-shadow: var(--shadow-dark);
 }
 
 #form {
+  min-width: 36vw;
+  max-width: 42vw;
+  display: flex;
+  flex-direction: column;
   font-family: 'Oxanium', monospace;
   box-sizing: border-box;
-  /* font-size: small; */
   align-items: center;
-  align-content: center;
-  align-self: center;
+  justify-content: center;
+  /* align-content: space-between; */
+  /* align-self: center; */
   position: relative;
-  min-width: 50vw;
-  max-width: 80vw;
   min-height: 66vh;
   border-radius: 21px;
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: visible;
   border: 12px solid silver;
+  transform-style: preserve-3d;
+  box-shadow: var(--shadow-dark);
 }
-
-/* body, html {
-  font-family: 'Oxanium', monospace;
-  background: mintcream;
-  color: #94bfa4;
-  min-width: 55vw;
-  max-width: 80vw;
-  min-height: 66vh;
-  align-content: center;
-  position: relative;
-  overflow-y: auto;
-  align-items: center;
-} */
 
 .input{
   border-radius: 25px;
-  align-self: center;
-  align-content: center;
-  align-self: center;
+  /* align-content: center;
+  align-self: center; */
   font-size: 23px;
   max-height: 3em;
   /* margin: 32px; */
@@ -131,13 +143,14 @@ input:hover:focus::-ms-placeholder, textarea:hover::focus:-ms-placeholder {
 }
 
 #login-title {
-  background-color: #9bcbc4bb;
-  margin-bottom: 36px;
-  align-content: center;
-  min-width: 56vw;
-  min-height: 10vh;
+  background-color: mediumturquoise;
+  display: inline-flex;
+  flex-direction: center;
+  margin: 1em;
+  min-width: 21vw;
+  max-width: 28vw;
+  min-height: 4vh;
   align-self: center;
-  align-items: center;
   font-family: 'Oxanium', monospace;
   border-radius: 66% 21% 17% 3%;
 }
@@ -147,10 +160,10 @@ header {
   border-radius: 50% 23% 17% 22%;
   font-size: 3.3em;
   text-align: center;
-  align-self: center;
-  align-content: center;
-  align-items: center;
-  min-width: 49vw;
+  /* align-self: center; */
+  /* align-content: center; */
+  /* align-items: center; */
+  min-width: 17vw;
   color:  #7d9d9a;
   letter-spacing: 7px;
 }
@@ -158,14 +171,14 @@ header {
 header:hover {
   letter-spacing: 17px;
   border-radius: 21% 23% 17% 67%;
-  min-width: 55vh;
+  min-width: 17vh;
 }
 
 .loginHover {
   font-family: 'Oxanium', monospace;  font-size: 1em;
-  width: 55vw;
+  width: 32vw;
   background: rgb(87, 94, 89);
-  outline: none;
+  outline: ridge 2px navy;
   color: #726659;
   border: solid 2px #b3aca7;
   border-bottom: none;
@@ -189,20 +202,20 @@ header:hover {
 }
 
 #submit {
-  min-width: 39vw;
+  min-width: 21vw;
   font-family: 'Oxanium', monospace;  font-size: 1em;
   color: #4b634f;
   background-color: rgb(245, 245, 245);
-  outline:none;
+  outline: 6px inset rgba(20, 255, 192, 0.474);
   align-self: center;
   align-content: center;
   cursor: pointer;
-  border: solid 2px #b3aca7;
+  border: solid 3px #689293ad;
 }
 
 #submit:hover {
-  color: #dae4d2;
-  background-color: #adae82;
+  color: #d2ccd3db;
+  background-color: #ff1c7e;
 }
 
 .ReactModal__Content:focus {
@@ -216,18 +229,18 @@ header:hover {
     /* left: -12px; */
 }
 h1 {
-  min-width: 75vw;
+  min-width: 21vw;
   font-family: 'Oxanium';
   align-items: center;
   position: relative;
   align-self: center;
   align-content: center;
-  display: block;
+  display: inline-block;
   @media only screen and (max-width: 31.25em) {
     .header {
       flex-wrap: wrap;
       align-content: space-around;
-      height: 11rem; 
+      height: 6rem; 
     } 
   }
 
@@ -263,10 +276,13 @@ button:hover{
   min-height: 2vh;
 }
 
-.createAccount{
+#create-account{
+  color: ghostwhite;
+  font-size: 1.1em;
+  font-weight:2px;
   align-content: space-around;
   align-self: center;
-  align-items: center;
+  /* align-items: center; */
   /* margin: 7px; */
   font-family: 'Oxanium', monospace;
   position: relative;
