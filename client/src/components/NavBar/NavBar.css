@@ -1,7 +1,8 @@
 .navbar {
   background-color: rgba(159, 208, 205, 0.858);
   display: -ms-inline-flexbox;
-  align-items: center;
+  position: fixed;
+  /* align-items: center; */
   height: 10vh;
   justify-content: space-around;
   flood-opacity: inherit;

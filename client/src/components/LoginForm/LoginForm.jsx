@@ -278,7 +278,7 @@ export class LoginForm extends Component {
     if(this.props.isAuth){ return <Redirect to="/user" />}
     const { loading } = this.props;
     return (
-      <div className="container">
+      <div className="loginContainer">
       <Modal 
         id="modal" 
         className="animated pulse"

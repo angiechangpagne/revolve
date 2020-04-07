@@ -1,42 +1,44 @@
-.glyphicon {
-  top: 20px;
-  font-size: inherit;
-  color: #817f85;
-}
 
-html {
-  scroll-behavior: smooth;
+.landing{
+  box-sizing: border-box;
+  display: grid;
+  color:#81b5a9b7;
+  background-color: blanchedalmond;
+  justify-content: space-evenly;
   align-items: center;
-  align-self: center;
-  align-content: center;
   position: relative;
-  width: 100%;
-  height: 100%;
+  border-radius: 21px;
+  min-height: 95vh;
+  overflow-y: scroll;
+  overflow-x: visible;
+  border: 42px  solid dimgray;
+  min-width: 70vw;
+  font-family: 'Oxanium','Major Mono Display', monospace;
+}
+html, body {
+  scroll-behavior: smooth;
+  /* align-items: center;
+  align-content: center; */
+  /* align-self:center; */
+  position: static;
+  background-color: floralwhite;
+  max-width: 80vw;
+  max-height: 100vh;
 }
 #arr:hover {
 text-decoration: none;
 }
-.landing{
-  color:#81b5a9b7;
-  background-color: beige;
-  align-content: center;
-  align-items: center;
+
+header{
+  /* align-content: center;
+  align-items: center; */
   align-self: center;
   position: relative;
-  border-radius: 21px;
-  box-sizing: border-box;
-  height: 100vh;
-  /* padding: 42px; */
-  /* margin: 42px; */
-  border: 42px  solid rgba(225, 218, 176, 0.7);
-  width: 100vw;
-  font-family: 'Oxanium','Major Mono Display', monospace;
 }
 
 .arrow-container{
 width: 10px;
 height: 10px;
-margin:  6px;
 position: relative;
 bottom: 2px;
 left: 2px;
@@ -49,7 +51,7 @@ height: 100px;
 background: rgba(88, 114, 96, 0.837);
 opacity: 0.5;
 border-radius: 50%;
-position: absolute;
+position: relative;
 }
 
 .arrow-2{
@@ -69,7 +71,7 @@ width: 56px;
 height: 56px;
 content: "";
 border: 2px solid #7fa297;
-position: absolute;
+position: relative;
 top: 2px;
 left: 2px;
 }
@@ -124,4 +126,9 @@ opacity: 0;
 .zoomIn {
 -webkit-animation-name: zoomIn;
       animation-name: zoomIn;
+}
+.glyphicon {
+  top: 20px;
+  font-size: inherit;
+  color: #817f85;
 }

@@ -4,11 +4,12 @@ import 'react-hot-loader/patch';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './App.css';
 import App from './App';
 import { Provider } from 'react-redux';
 import  configureStore, { history } from './configureStore';
 import { ConnectedRouter } from 'connected-react-router';
-import './App.css';
+
 
 import * as serviceWorker from './serviceWorker';
 const store = configureStore();

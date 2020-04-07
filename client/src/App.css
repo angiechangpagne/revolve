@@ -1,36 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Oxanium&display=swap');
 
+html, body {
+  font-family: 'Oxanium', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: ivory;
+  height: 100%;
+  width: 100%;
+  /* overflow-x: hidden; */
+  position: static;
+ } 
+
 .AppContainer {
-  align-content: center;
-  align-items: center;
-  align-self: center;
+  box-sizing: border-box;
+  /* align-content: center;
+  align-items: center; */
+  /* align-self: center; */
   position: relative;
+  /* overflow-x: hidden; */
   font-family: 'Oxanium';
-  background-color: rgb(249, 249, 249);
+  background-color: floralwhite;
   box-shadow: var(--shadow-dark);
   height: 100%;
   width: 100%;
 }
 .container{
-  font-family: 'Oxanium';
-  align-content: center;
-  align-items: center;
-  align-self: ceter;
-  height: 70vh;
-  width: 70vh;
-  position: relative;
-  background-color: ghostwhite;
-}
-
-.body{
-  font-family: 'Oxanium', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  background-color: ghostwhite;
-  align-items: center;
-  align-content: center;
+  /* display: inline-block; */
+  /* align-items: center;
+  align-self: center; */
+  font-family: 'Oswald', 'Oxanium';
   height: 100%;
   width: 100%;
   position: relative;
-   /* aliceblue; */
+  background-color: floralwhite;
 }
 
 .App-logo {
@@ -47,19 +47,16 @@
 
 .App-header {
   background-color: #7d9d81;
-  min-height: 100vh;
-  display: -ms-inline-flexbox;
+  /* display: -ms-inline-flexbox; */
   position: relative;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  /* flex-direction: column; */
+  /* align-items: center; */
   font-size: calc(17px + 2vmin);
-  color: white;
+  color: floralwhite;
 }
 
 .App-title {
   font-size: 1.5em;
-  
 }
 
 .App-intro {
