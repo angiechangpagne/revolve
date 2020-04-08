@@ -1,7 +1,6 @@
 html, body{
   height: 100%;
   width: 100%;
-  /* overflow-x: hidden; */
   position: static; 
   background-color: floralwhite;
 }
@@ -10,21 +9,23 @@ html, body{
   position: relative;
   text-align: center;
   /* align-self: center; */
-  background-color: floralwhite;
+  background-color: ghostwhite;
   align-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
+  background-image: radial-gradient( rgba(138, 152, 164, 0.55), rgba(105, 105, 105, 0.844));
   /* overflow-x: hidden; */
   /* overflow-y: scroll; */
   font-family: 'Oxanium', 'Major Mono Display', monospace;
+  box-shadow: var(--shadow-dark);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* *, *::before, *::after {
+*, *::before, *::after {
   box-sizing: inherit;
-} */
+}
 
 
 code {

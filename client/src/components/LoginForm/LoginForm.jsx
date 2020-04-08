@@ -333,10 +333,10 @@ export class LoginForm extends Component {
         </form>
         }
       </Modal>
-      { !loading && 
+
       <section className="loginSection">
         <form id="form" className="topBefore animated headShake"> 
-        <div id="login-title"><span> <header className="animated headShake">Log In</header></span></div>
+        <div id="login-title"> <header className="animated headShake">Log In</header></div>
           <input id="name" type="email" placeholder="email" value={this.state.loginEmail} name="loginEmail" onChange={this.handleInputChange} type="text" id="input-email" className="loginHover"></input>
             {this.state.isLoginEmailEmpty &&
               <div id="error-email-left-empty">
@@ -354,23 +354,25 @@ export class LoginForm extends Component {
                 <p className="error text-center">The password is incorrect!</p>
               </div>
             }  
-          <input id="submit" type="submit" value="Sign In!" className="loginHover" onClick={this.handleLoginFormSubmit}></input>
+          <input id="submit" type="submit" value="Enter Revolve" className="loginHover" onClick={this.handleLoginFormSubmit}></input>
           {!this.state.isValidEmail &&
             <div id="error-username-not-exist">
               <p className="error text-center">Sorry! Your email or password is incorrect</p>
             </div>
           }
         <hr></hr>
-        <span id="create-account"> <p id="create-acct" className="animated bounceInLeft">Need an account?</p></span>
-        </form>
+      
+         <p id="create-account" className="animated bounceInLeft">Need an account?</p>
         <button onClick={this.openModal}>SIGN UP</button>
-      </section>
-      }
-      <div id='loading'>
+
+        </form>
+        <div id='loading'>
       {
         loading && <span><Spinner size="sm" color="light"/><p>Pure Revolve...</p> </span> 
       }
       </div>
+      </section>
+
     </div>
     );
   }

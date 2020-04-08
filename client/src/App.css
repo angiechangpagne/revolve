@@ -2,10 +2,9 @@
 
 html, body {
   font-family: 'Oxanium', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  background-color: ivory;
+  background-color: transparent;
   height: 100%;
   width: 100%;
-  /* overflow-x: hidden; */
   position: static;
  } 
 
@@ -17,7 +16,7 @@ html, body {
   position: relative;
   /* overflow-x: hidden; */
   font-family: 'Oxanium';
-  background-color: floralwhite;
+  background-color: transparent;
   box-shadow: var(--shadow-dark);
   height: 100%;
   width: 100%;
@@ -30,7 +29,7 @@ html, body {
   height: 100%;
   width: 100%;
   position: relative;
-  background-color: floralwhite;
+  background-color: transparent;
 }
 
 .App-logo {
@@ -46,7 +45,7 @@ html, body {
 }
 
 .App-header {
-  background-color: #7d9d81;
+  /* background-color: #7d9d81; */
   /* display: -ms-inline-flexbox; */
   position: relative;
   /* flex-direction: column; */

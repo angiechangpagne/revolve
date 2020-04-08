@@ -1,109 +1,120 @@
 html, body{
   font-family: 'Oxanium', monospace;
-  background: mintcream;
-  color: #94bfa4;
-  min-width: 36vw;
-  max-width: 42vw;
-  min-height: 66vh;
+  background: transparent;
+  /* color: #94bfa4; */
+  min-width: 44vw;
+  max-width: 44vw;
+  min-height: 100vh;
   align-content: center;
   position: relative;
   overflow-y: auto;
   overflow-x: visible;
-  align-items: center;
+  /* align-items: center; */
 }
 .loginContainer {
-  min-width: 36vw;
-  max-width: 42vw;
+  min-width: 44vw;
+  max-width: 44vw;
   flex-grow: 2;
-  display: inline-block;
   box-sizing: border-box;
+  display: inline-block;
   font-family: 'Oxanium', monospace;
   justify-content: center;
-  /* align-items: center;
-  align-content: center; */
+  align-items: center;
+  align-content: center;
   position: relative;
-  border: 17px lightsteelblue;
-  border-radius: 17px;
-  background-color: #a7aeaee5;
-  min-height: 72vh;
-  outline: 17px groove turquoise;
+  border: 17px groove mintcream;
+  border-radius: 6px;
+  background-color: transparent;
+  background-image: linear-gradient(mintcream, transparent);
+  min-height: 100vh;
+  outline: 17px groove darkseagreen;
   overflow-x: visible;
   overflow-y: scroll;
   transform-style: preserve-3d;
   box-shadow: var(--shadow-dark);
+  margin-bottom: 3.9em;
 }
 
-.section{
-  min-width: 36vw;
+/* .section{
+  min-width: 42vw;
   max-width: 42vw;
   box-sizing: border-box;
   display: inline-block;
   justify-content: center;
   align-content: center;
+  justify-items: center;
   align-items: center;
   position: relative;
-  min-height: 66vh;
   overflow-y: auto;
   overflow-x: visible;
-  border: 17px solid magenta;
+  margin-bottom: 3rem;
+  box-shadow: var(--shadow-dark);
+  border: 17px ridge magenta;
   outline: 17px groove turquoise;
-}
-.loginSection {
-  min-width: 36vw;
+} */
+
+.loginSection, .section {
+  min-width: 40vw;
   max-width: 42vw;
   box-sizing: border-box;
   display: inline-block;
-  flex-direction: column;
+  /* flex-direction: row; */
+  /* flex-wrap: wrap; */
   position: relative;
   align-items: center;
   justify-content: center;
-  align-content: space-around;
-  /* align-self: center; */
-  border: 17px solid lightgoldenrodyellow;
+  align-self: center;
+  border: 17px ridge lightgoldenrodyellow;
+  border-radius: 3px;
+  outline: 6px ridge beige;
   min-height: 80vh;
   overflow-x: visible;
-  overflow-y: auto;
+  overflow-y: inherit;
   font-family: 'Oxanium', monospace, 'Nidus Sans';
   /* perspective:1000px; */
 	transform-style: preserve-3d;
   box-shadow: var(--shadow-dark);
+  padding-bottom: 2.1em;
 }
 
 #form {
   min-width: 36vw;
-  max-width: 42vw;
-  display: flex;
-  flex-direction: column;
-  font-family: 'Oxanium', monospace;
+  max-width: 38vw;
   box-sizing: border-box;
-  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-family: 'Oxanium', monospace;
+  align-content: center;
   justify-content: center;
-  /* align-content: space-between; */
-  /* align-self: center; */
   position: relative;
   min-height: 66vh;
-  border-radius: 21px;
+  border-radius: 17px;
   overflow-y: auto;
-  overflow-x: visible;
-  border: 12px solid silver;
+  /* overflow-x: visible; */
+  border: 6px solid transparent;
   transform-style: preserve-3d;
   box-shadow: var(--shadow-dark);
+  margin-bottom: 3.2em;
 }
 
 .input{
-  border-radius: 25px;
-  /* align-content: center;
-  align-self: center; */
+  border-radius: 33px;
+  border: 9px solid transparent;
+  display: inline-block;
+  justify-items: center;
+  align-content: center;
+  align-self: center;
   font-size: 23px;
   max-height: 3em;
-  /* margin: 32px; */
+  margin: 32px;
   font-family: 'Oxanium', monospace;
 }
 
 input:hover::-webkit-input-placeholder, textarea:hover::-webkit-input-placeholder {
   color: #e2dedb;
   font-size: 1em;
-  border: 3px solid seagreen;
+  border: 3px transparent;
 }
 
 input:hover:focus::-webkit-input-placeholder, textarea:hover:focus::-webkit-input-placeholder {
@@ -137,58 +148,72 @@ input:hover:focus::-ms-placeholder, textarea:hover::focus:-ms-placeholder {
   color: #cbc6c1;
 }
 
-
 #sign-up:hover {
   text-decoration: none;
 }
 
 #login-title {
-  background-color: mediumturquoise;
+  background-color: midnightblue;
+  box-sizing: border-box;
   display: inline-flex;
-  flex-direction: center;
-  margin: 1em;
-  min-width: 21vw;
-  max-width: 28vw;
-  min-height: 4vh;
-  align-self: center;
+  color: mintcream;
+  /* flex-direction: center; */
+  margin: 2.1em;
+  font-size: 1.3em;
+  font-weight: 17px;
+  min-width: 17vw;
+  max-width: 24vw;
+  max-height: 2.4em;
   font-family: 'Oxanium', monospace;
-  border-radius: 66% 21% 17% 3%;
+  border-radius: 17% 17% 17% 17%;
 }
 header {
   position: relative;
   font-family: 'Oxanium', monospace;  
-  border-radius: 50% 23% 17% 22%;
-  font-size: 3.3em;
+  box-sizing: border-box;
+  /* border-radius: 50% 23% 17% 22%; */
+  font-size: 1.7em;
+  font-weight: 3px;
   text-align: center;
-  /* align-self: center; */
+  max-height: 3.1em;
+  align-self: center;
   /* align-content: center; */
   /* align-items: center; */
   min-width: 17vw;
-  color:  #7d9d9a;
-  letter-spacing: 7px;
+  color: mintcream;
+  /* letter-spacing: 7px; */
 }
 
 header:hover {
-  letter-spacing: 17px;
-  border-radius: 21% 23% 17% 67%;
+  /* letter-spacing: 17px; */
+  /* border-radius: 21% 23% 17% 67%; */
   min-width: 17vh;
+  max-height: 3.1em;
 }
 
 .loginHover {
-  font-family: 'Oxanium', monospace;  font-size: 1em;
+  font-family: 'Oxanium', monospace;  
+  font-size: 1em;
+  flex-grow: 2;
+  display:inline-block;
+  justify-items: center;
+  position: center;
+  align-self: center;
+  flex-direction: row;
   width: 32vw;
+  height: 2.1vh;
   background: rgb(87, 94, 89);
-  outline: ridge 2px navy;
+  box-sizing: border-box;
+  /* outline: ridge 2px navy; */
   color: #726659;
-  border: solid 2px #b3aca7;
-  border-bottom: none;
+  border: solid 2px transparent ;
   transition: all 0.3s ease-in-out;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
 }
 
-.loginHover:hover {
+.loginHover::hover {
   background: rgb(153, 159, 175);
   color: #e2dedb;
 }
@@ -202,15 +227,24 @@ header:hover {
 }
 
 #submit {
-  min-width: 21vw;
-  font-family: 'Oxanium', monospace;  font-size: 1em;
+  min-width: 17vw;
+  max-width: 24vw;
+  font-family: 'Oxanium', monospace; 
+  box-sizing: border-box;
+  display: inline;
+  flex-direction: column;
+  align-items: center;
+  /* flex-wrap: wrap; */
+  justify-content: center;
+  /* flex-grow: 3;  */
+  font-size: 1em;
   color: #4b634f;
   background-color: rgb(245, 245, 245);
   outline: 6px inset rgba(20, 255, 192, 0.474);
   align-self: center;
-  align-content: center;
+  /* align-content: center; */
   cursor: pointer;
-  border: solid 3px #689293ad;
+  border: 3px groove #75a3a49c;
 }
 
 #submit:hover {
@@ -229,27 +263,33 @@ header:hover {
     /* left: -12px; */
 }
 h1 {
-  min-width: 21vw;
+  min-width: 17vw;
   font-family: 'Oxanium';
-  align-items: center;
+  /* align-items: center; */
   position: relative;
-  align-self: center;
-  align-content: center;
-  display: inline-block;
+  box-sizing: border-box;
+
+  /* align-self: center; */
+  /* align-content: center; */
+  display: inline-flex;
   @media only screen and (max-width: 31.25em) {
     .header {
       flex-wrap: wrap;
       align-content: space-around;
-      height: 6rem; 
+      height: 6em; 
     } 
   }
 
 }
-
 button {
-  align-self: center;
-  align-content: center;
-  align-items: center;
+  /* align-self: center; */
+  /* align-content: center; */
+  /* align-items: center; */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  /* flex-grow: 2; */
+  height: 4.2em;
   position: center;
   font-family: 'Oxanium';
   color: #425545;
@@ -261,28 +301,31 @@ button:hover{
   color: #82b1c4;
 }
 
-.notLoading{
+/* .notLoading{
   position: center;
   align-self: center;
   align-content: center;
   align-items: center;
-}
+} */
 #loading{
   position: center;
   align-self: center;
   align-content: center;
   align-items: center;
-  min-width: 20vh;
+  min-width: 20vw;
   min-height: 2vh;
 }
 
 #create-account{
-  color: ghostwhite;
+  color: rgb(50, 84, 75);
   font-size: 1.1em;
-  font-weight:2px;
-  align-content: space-around;
-  align-self: center;
-  /* align-items: center; */
+  font-weight: 4px;
+  display: inline-flex;
+  flex-direction: column;
+  flex-grow: 2;
+  flex-wrap: wrap;
+  align-content: stretch;
+  /* align-self: center; */
   /* margin: 7px; */
   font-family: 'Oxanium', monospace;
   position: relative;
